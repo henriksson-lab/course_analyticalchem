@@ -1,0 +1,255 @@
+---
+title: "Exercise: the analytical question"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+By the end you should be able to define a chemical **measurand**, distinguish
+concentration from amount, show individual analytical observations, and explain
+what a sample comparison supports. Do the small calculations on paper before R.
+
+## Background
+
+A measurand names the intended quantity, material and conditions. Here it is
+chloride mass concentration in supplied collected water, in **mg chloride/L**.
+The analyte is chloride; the matrix contains water and other species. A measured
+signal becomes this quantity only through a suitable chemical measurement model.
+
+For a homogeneous solution, $c=m/V$ and $m=cV$. If no analyte is lost or added,
+dilution gives $c_f=c_oV_a/V_f$. Final volume means the **total** after preparation,
+including solvent and reagents. The collected material, aliquot and final flask
+are different stages; name the stage in a reported concentration.
+
+## By hand
+
+**B1.** The analysis establishes 0.0750 mg chloride in a 25.00 mL portion.
+Calculate concentration in mg/L. What information would still be needed to claim
+a location-wide mean? [Hint](#hint-b1)
+
+**B2.** A homogeneous solution is 20.0 mg/L. Calculate the analyte amount in
+(a) 0.250 L and (b) 0.500 L. Does its concentration change when a larger portion
+is taken? [Hint](#hint-b2)
+
+**B3.** A 10.00 mL aliquot is made to 50.00 mL total. The final concentration is
+0.800 mg/L. Find the original concentration and analyte amount in the aliquot.
+[Hint](#hint-b3)
+
+**B4.** Four inlet samples give 18, 20, 19 and 21 mg/L; four outlet samples give
+12, 13, 11 and 14 mg/L. Calculate both means and their difference. State one
+supported descriptive claim and one unsupported causal claim. [Hint](#hint-b4)
+
+**B5.** A colleague proposes conductivity as a direct chloride concentration
+measurement in a new water matrix. What chemical relation is missing? Would a
+perfectly reproducible R report establish it? [Hint](#hint-b5)
+
+## Explore {#explore}
+
+Predict whether each action changes concentration, amount, or both before using
+the demo. The solution is homogeneous and the solvent adds no chloride. There is
+no reaction, adsorption or transfer loss. Model inputs are exact, not a supplied
+uncertainty budget.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="sample-answer"></div>
+<script src="../demos/dist/sample-answer.js"></script>
+```
+
+
+**E1.** At the defaults (20 mg/L original, 250 mL aliquot, twofold dilution),
+select each reporting quantity. Give the value, unit and material stage for all
+three. [Hint](#hint-explore)
+
+**E2.** Keep concentration and dilution factor fixed; double aliquot volume from
+250 to 500 mL. Explain what changes and why the plotted final concentration does
+not. [Hint](#hint-explore)
+
+**E3.** Restore 250 mL, then increase dilution factor from 2 to 5. What is
+conserved? Explain why multiplying the final concentration by 5 recovers the
+original value. Set original concentration to zero and repeat. [Hint](#hint-explore)
+
+**E4.** Export the CSV. Which column changes between the original aliquot and
+final flask? Which equality should both rows satisfy in R? [Hint](#hint-explore)
+
+## In R
+
+Open the supplied R project and run these commands **from its root**, where
+`data/` is located. Keep raw data unchanged. The dataset is simulated and one
+row represents one independently collected water sample, not a repeated reading.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+water <- read_csv("data/course/water.csv", show_col_types = FALSE)
+stopifnot(!anyDuplicated(water$sample_id), !anyNA(water$chloride_mg_l),
+          all(water$collected_l > 0))
+summary_water <- water |>
+  group_by(location) |>
+  summarise(n_samples = n(), mean_mg_l = mean(chloride_mg_l),
+            sd_mg_l = sd(chloride_mg_l), .groups = "drop")
+summary_water
+water <- water |>
+  mutate(chloride_g_l = chloride_mg_l / 1000,
+         chloride_mg = chloride_mg_l * collected_l)
+fig <- ggplot(water, aes(location, chloride_mg_l)) +
+  geom_point(position = position_jitter(width = .08, height = 0, seed = 7)) +
+  labs(x = "Sampling location", y = "Chloride (mg/L)") + theme_minimal()
+fig
+dir.create("output", showWarnings = FALSE)
+write_csv(water, "output/water-derived.csv")
+ggsave("output/water-observations.png", plot = fig, width = 7, height = 4)
+```
+
+**R1.** Check B4 and report both sample counts. Does the row order establish
+before/after pairs? [Hint](#hint-r1)
+
+**R2.** Inspect `chloride_g_l` and `chloride_mg`. For W2, explain why the values
+are 0.020 g/L and 5.00 mg, with different units and meanings. [Hint](#hint-r2)
+
+**R3.** Write a short result paragraph using the observations and means, then
+name the sampling information absent from a location-wide claim. [Hint](#hint-r3)
+
+**R4.** Save the demo export next to the R project, then verify mass conservation.
+This guarded block does nothing until that optional file exists:
+
+```r
+if (file.exists("concentration-and-amount.csv")) {
+  demo <- read_csv("concentration-and-amount.csv", show_col_types = FALSE)
+  demo <- demo |>
+    mutate(recomputed_mg = concentration_mg_l * volume_ml / 1000)
+  print(demo)
+  stopifnot(all(abs(demo$recomputed_mg - demo$analyte_mg) < 1e-8))
+}
+```
+
+Which physical failure would make the demo's conservation assumption unsuitable
+for a real preparation? [Hint](#hint-r4)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="Hint B1"}
+Convert millilitres to litres before dividing. One portion supplies no sampling
+design for an entire location or time period.
+:::
+
+::: {#hint-b2 .callout-tip collapse="true" title="Hint B2"}
+Use $m=cV$ with litres. The intensive concentration remains fixed when a larger
+portion of a homogeneous solution is taken.
+:::
+
+::: {#hint-b3 .callout-tip collapse="true" title="Hint B3"}
+The preparation factor is final total volume divided by aliquot volume. Calculate
+amount either before or after dilution; it should agree.
+:::
+
+::: {#hint-b4 .callout-tip collapse="true" title="Hint B4"}
+Average each set separately. The observations are from collected waters; they do
+not establish a treatment assignment, matching or representative temporal design.
+:::
+
+::: {#hint-b5 .callout-tip collapse="true" title="Hint B5"}
+Conductivity responds to several mobile ionic species. Reproducing a calculation
+does not establish that its chemical model is selective enough.
+:::
+
+::: {#hint-explore .callout-tip collapse="true" title="Hints E1–E4"}
+Track $c$, $V$ and $m$ separately. Changing aliquot volume at fixed dilution
+factor changes both original and final volumes proportionally. Adding solvent
+at fixed aliquot does not add analyte.
+:::
+
+::: {#hint-r1 .callout-tip collapse="true" title="Hint R1"}
+[`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html) returns one
+summary per location after `group_by()`. Matching is a design property, not a
+coincidence of table positions.
+:::
+
+::: {#hint-r2 .callout-tip collapse="true" title="Hint R2"}
+Dividing mg/L by 1000 changes to g/L; multiplying mg/L by collected L gives mg.
+:::
+
+::: {#hint-r3 .callout-tip collapse="true" title="Hint R3"}
+Say what was observed, how many collected samples support it, and which place
+and time scope is actually given. Do not invent representativeness.
+:::
+
+::: {#hint-r4 .callout-tip collapse="true" title="Hint R4"}
+The `/1000` converts mL to L. Consider transfer loss, adsorption, reaction or
+analyte in the added solvent.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions B1–B5"}
+**B1.** $0.0750/0.02500=3.00$ mg/L. A location-wide mean also needs a sampling
+design defining the location/time population and how portions represent it;
+the amount calculation supplies neither that design nor measurement uncertainty.
+
+**B2.** $20.0\times0.250=5.00$ mg and $20.0\times0.500=10.0$ mg. Concentration
+is still 20.0 mg/L. Taking more solution changes collected amount, not the
+composition of a homogeneous solution.
+
+**B3.** Factor $50.00/10.00=5$; original $0.800\times5=4.00$ mg/L. The aliquot
+contains $4.00\times0.01000=0.0400$ mg, equal to $0.800\times0.05000$ mg in
+the final flask. “Add 50 mL solvent” would describe a different volume.
+
+**B4.** Inlet mean $(18+20+19+21)/4=19.5$ mg/L; outlet mean
+$(12+13+11+14)/4=12.5$ mg/L. Difference 7.0 mg/L. The sampled outlet waters have
+a lower observed mean. The data do not establish that a treatment caused this
+change, or that every outlet sample at another time would be lower.
+
+**B5.** A justified relation between conductivity and chloride in the proposed
+matrix is missing. Other ions can alter conductivity without the same chloride
+change. A reproducible wrong model remains wrong; R does not establish selectivity.
+:::
+
+::: {.callout-note collapse="true" title="Solutions E1–E4"}
+**E1.** Original 20 mg/L; original aliquot amount 5 mg; final concentration
+10 mg/L in 500 mL. Each statement names a different quantity or stage.
+
+**E2.** A 500 mL aliquot contains 10 mg and becomes 1000 mL at factor 2. Final
+concentration remains 10 mg/L because amount and final volume doubled together.
+
+**E3.** At 250 mL and factor 5 the final volume is 1250 mL, final concentration
+4 mg/L and amount still 5 mg. $4\times5=20$ mg/L returns to the original basis.
+At zero original chloride, amount and final concentration remain zero for every
+volume; missing evidence in a real sample would not justify entering zero.
+
+**E4.** `concentration_mg_l` and `volume_ml` change; `analyte_mg` is conserved.
+Each row satisfies $m=cV/1000$ when V is in mL. The ideal equality assumes no
+chemical or transfer change.
+:::
+
+::: {.callout-note collapse="true" title="Solutions R1–R4"}
+**R1.** Both locations have four collected samples; means match B4. Their sample
+SDs are about 1.291 mg/L. No matching variable or paired design is supplied;
+row order cannot create pairs.
+
+**R2.** W2 is 20 mg/L, equivalent to 0.020 g/L. Its 0.250 L portion contains
+5.00 mg. The first is concentration with a changed mass unit; the second is
+amount in a specified portion.
+
+**R3.** One suitable paragraph is: “The four sampled inlet waters averaged
+19.5 mg chloride/L and the four outlet waters 12.5 mg/L, an observed difference
+of 7.0 mg/L. Individual observations retain within-location spread. The supplied
+design does not establish causation or a broader time/location population mean.”
+
+**R4.** The exported values reproduce the conservation equation up to floating-
+point rounding. Adsorption to a vessel, incomplete transfer or chemical loss
+could break it; contaminated solvent could add analyte. A small computational
+rounding tolerance is not an analytical acceptance criterion.
+:::
+
+## Where this leads
+
+[Sampling and preparation](../sampling-preparation/exercise.qmd) asks whether
+the aliquot represents the intended material and whether analyte recovery is
+complete. Keep sample identity, material scope and units through every later
+calibration and instrument result.

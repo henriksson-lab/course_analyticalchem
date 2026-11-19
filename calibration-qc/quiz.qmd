@@ -1,0 +1,126 @@
+---
+title: "Quiz: calibration and quality control"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint or answer. These practice questions
+check chemical reasoning and small calculations; they are not a graded question bank.
+
+[]{#q1}
+
+**Q1.** Standards set concentration and the instrument measures response. Which model direction matches this design: response ~ concentration or concentration ~ response?
+
+::: {.callout-tip collapse="true" title="Hint Q1"}
+Place the observed error-bearing response on the left.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q1"}
+Use response ~ concentration for the stated calibration model, then invert that fitted relation for an unknown. Reversing the least-squares regression is a different model, not an equivalent algebraic rearrangement.
+:::
+
+---
+
+[]{#q2}
+
+**Q2.** For $y=0.020+0.100c$ and unknown response 0.520, find c. Its preparation factor is four; what is the original concentration?
+
+::: {.callout-tip collapse="true" title="Hint Q2"}
+Subtract intercept, divide by slope, then undo the preparation dilution.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q2"}
+$c_f=(0.520-0.020)/0.100=5.00$ mg/L final; original is **20.0 mg/L** if factor four and the chemical preparation model are valid.
+:::
+
+---
+
+[]{#q3}
+
+**Q3.** At a known standard, observed response is 0.310 and fitted response 0.330. What is its residual? Does that sign identify the cause?
+
+::: {.callout-tip collapse="true" title="Hint Q3"}
+Residual is observed minus fitted.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q3"}
+Residual is −0.020 response units: the observation lies below the fitted line. The sign alone does not distinguish preparation error, noise, instrument behaviour or another cause.
+:::
+
+---
+
+[]{#q4}
+
+**Q4.** R² is 0.999 but residuals show a clear curved pattern. Does the high R² justify the straight line over that range?
+
+::: {.callout-tip collapse="true" title="Hint Q4"}
+A summary of association is not a check of every model assumption.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q4"}
+No. Systematic residual structure is evidence that the line misses part of the response relation. Investigate a justified range or alternative validated model rather than deleting inconvenient observations to improve appearance.
+:::
+
+---
+
+[]{#q5}
+
+**Q5.** An independently sourced 5.00 mg/L check is estimated as 4.00 mg/L. The supplied acceptance window is 95–105%. What should happen?
+
+::: {.callout-tip collapse="true" title="Hint Q5"}
+Calculate recovery, then apply the preselected rule.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q5"}
+Recovery is 80%, so the affected measurement block fails this exercise rule. Withhold affected sample results, investigate, restore satisfactory calibration/checks and remeasure. Do not automatically divide all samples by 0.80 without establishing the cause.
+:::
+
+---
+
+[]{#q6}
+
+**Q6.** An unknown signal is above the largest calibrated response. Can changing its recorded dilution factor without a new measurement establish its concentration?
+
+::: {.callout-tip collapse="true" title="Hint Q6"}
+What new evidence has been acquired?
+:::
+
+::: {.callout-note collapse="true" title="Answer Q6"}
+No. A justified new dilution must actually be prepared and measured within the supported range. Editing metadata on an old reading does not supply a new response and cannot validate extrapolation.
+:::
+
+---
+
+[]{#q7}
+
+**Q7.** A blank SD is 0.002 response units and sensitivity 0.250 response units per mg/L. What is the indicative 3-SD concentration increment?
+
+::: {.callout-tip collapse="true" title="Hint Q7"}
+Use $3s/b$, and keep the heuristic’s scope explicit.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q7"}
+$3(0.002)/0.250=0.024$ mg/L. It is an illustrative blank-relative increment, not universal detection-method validation. Procedure, matrix, decision probabilities and noise assumptions still matter; below limit is not exactly zero analyte.
+:::
+
+---
+
+[]{#q8}
+
+**Q8.** Why does uncertainty in an inferred concentration include more than the SD of its repeated responses?
+
+::: {.callout-tip collapse="true" title="Hint Q8"}
+The inverse uses fitted slope and intercept as well as the new mean response.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q8"}
+Slope and intercept are estimated and correlated. Their covariance propagates through the inverse relation, along with new response variability. Preparation volumes, stock concentrations, recovery and sampling may add further contributions. A forward-response interval alone is not a concentration interval.
+:::
+
+---
+
+[Return to the exercise](exercise.qmd) · [Lecture](lec.qmd)

@@ -1,0 +1,108 @@
+---
+title: "Quiz: analytical evidence and reporting decisions"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Each answer should connect a number to its unit, sample basis and supporting evidence. A calculable candidate is not automatically a reportable chemical result.
+
+**Q1.** A drink assay reports a peak area. State a suitable intended measurand for caffeine quantification.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Include analyte, material and quantity/unit rather than merely naming an instrument.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+For example: caffeine mass concentration in the supplied drink, expressed in mg caffeine/L, under the defined preparation and sampling scope. Peak area is the response used to infer that quantity, not the measurand itself.
+:::
+
+---
+
+**Q2.** The calibration is area$=4+40c$, valid over 0–30 mg/L final. An old sample reading gives 40 mg/L final. May you validate it just by editing the dilution factor?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Would that create a new response from a new prepared solution?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The measured solution was outside range. Prepare and measure an appropriate new dilution and record its actual aliquot and final volume. An edited factor does not add new measurement evidence.
+:::
+
+---
+
+**Q3.** A new accepted4.00 mL aliquot made to40.00 mL gives area 804. Calculate original concentration.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Invert the response model, then use40/4.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Final concentration is(804−4)/40=20 mg/L. The preparation factor is 10, giving200 mg/L original, conditional on the accepted identity, selectivity, QC and preparation evidence.
+:::
+
+---
+
+**Q4.** An unknown is within calibration range, but an independent check for its block recovers85% under a95–105% exercise rule. What should happen to the result?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Range and independent QC ask different questions.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Withhold the affected quantitative result and investigate/re-establish satisfactory calibration and checks before remeasurement. Being in range does not override failed QC. The failure alone does not prove a particular cause or justify dividing every value by 0.85.
+:::
+
+---
+
+**Q5.** The final estimate has standard uncertainty 0.20 mg/L and dilution factor 25. What is the dilution-scaled standard uncertainty on the original basis? Is it a 95% interval?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Propagate the supplied final estimate through the fixed scale factor; identify omitted inputs.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+It is 0.20×25=5.0 mg/L under a fixed-factor model. It is a standard uncertainty, not automatically a 95% half-width. Actual dilution-volume, sampling, recovery and other omitted uncertainties would need evaluation for a full budget.
+:::
+
+---
+
+**Q6.** An ideal rounded calibration fits exactly. Does that establish zero uncertainty in real sample concentrations?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Which sources are absent from those ideal teaching points?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. Real reading, standard preparation, volume, recovery and matrix effects can remain. Zero residual in deliberately idealised points is not a full uncertainty study; the final case supplies separate uncertainty inputs explicitly.
+:::
+
+---
+
+**Q7.** Two methods correlate extremely well, but one has increasing positive differences from a suitable reference. Are they interchangeable?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Association and agreement are different questions.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Not on correlation alone. Examine differences with reference uncertainty, sampling scope and the required analytical performance. A biased method can preserve rank and correlation while giving unsuitable amounts. The pattern motivates investigation rather than proving a chemical mechanism.
+:::
+
+---
+
+**Q8.** An ion near m/z195 is observed. Does that alone uniquely establish caffeine identity or its concentration?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Consider charge, protonation, fragments and calibration separately.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. Singly protonated caffeine can appear near 195 even though its neutral nominal mass is 194, but other ions can share nominal mass. Suitable retention, standards, ion/fragment information and blanks can strengthen identity. Quantification separately requires an appropriate calibrated response and sample-preparation model.
+:::
+
+
+[Lecture](lec.qmd) · [Exercise and embedded exploration](exercise.qmd#explore)

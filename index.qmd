@@ -1,44 +1,32 @@
 ---
 title: "Analytical Chemistry"
-subtitle: "From a sample to a defensible chemical result"
 ---
 
-Use chemistry, measurement evidence and reproducible R calculations to answer
-what is present, how much there is, and whether the result is fit for its
-intended question. These materials cover the planned 7.5-credit course.
+Use the lecture, quiz, exercise and embedded experiment together. Start with the chemical question, predict what a measurement should show, then use R to test and explain it.
 
-[Download the complete student project](downloads/analyticalchem-project.zip)
-and open `analyticalchem.Rproj`. Start with the
-[R reference](reference/r.qmd) if you need to retrieve the introductory workflow.
-Student reports use R Markdown; you do not need to author Quarto pages.
+[Download the student project](downloads/analyticalchem-project.zip), extract it and open `analyticalchem.Rproj`. Work from that project root. The [R reference](reference/r.qmd) retrieves the CSV, plotting and regression workflow from introductory computing. Student reports use R Markdown.
 
-[Browse the interactive experiments](demos/index.qmd) to predict, change conditions, and explain a result before returning to R.
+## Topics {#topics}
 
-## Topics and illustrated slides
+| Topic | Analytical question | Materials |
+| --- | --- | --- |
+| From sample to answer | Define the chemical quantity before calculating it | [Lecture](sample-answer/lec.qmd) · [Quiz](sample-answer/quiz.qmd) · [Exercise](sample-answer/exercise.qmd) · [Demo](sample-answer/exercise.qmd#explore) |
+| Sampling and preparation | Follow the material through sampling, extraction and dilution | [Lecture](sampling-preparation/lec.qmd) · [Quiz](sampling-preparation/quiz.qmd) · [Exercise](sampling-preparation/exercise.qmd) · [Demo](sampling-preparation/exercise.qmd#explore) |
+| Error and uncertainty | Separate spread, bias and uncertainty in a result | [Lecture](error-uncertainty/lec.qmd) · [Quiz](error-uncertainty/quiz.qmd) · [Exercise](error-uncertainty/exercise.qmd) · [Demo](error-uncertainty/exercise.qmd#explore) |
+| Calibration and quality control | Decide whether a signal can support a concentration | [Lecture](calibration-qc/lec.qmd) · [Quiz](calibration-qc/quiz.qmd) · [Exercise](calibration-qc/exercise.qmd) · [Demo](calibration-qc/exercise.qmd#explore) |
+| Equilibrium and titration | Use reaction stoichiometry and a justified endpoint | [Lecture](titration/lec.qmd) · [Quiz](titration/quiz.qmd) · [Exercise](titration/exercise.qmd) · [Demo](titration/exercise.qmd#explore) |
+| Electrodes and potentiometry | Read a logarithmic response without losing the chemistry | [Lecture](potentiometry/lec.qmd) · [Quiz](potentiometry/quiz.qmd) · [Exercise](potentiometry/exercise.qmd) · [Demo](potentiometry/exercise.qmd#explore) |
+| UV and visible absorption | Measure iron through a specified coloured complex | [Lecture](uv-visible/lec.qmd) · [Quiz](uv-visible/quiz.qmd) · [Exercise](uv-visible/exercise.qmd) · [Demo](uv-visible/exercise.qmd#explore) |
+| Matrix effects and recovery | Find why a good calibration can still give a biased sample result | [Lecture](matrix-recovery/lec.qmd) · [Quiz](matrix-recovery/quiz.qmd) · [Exercise](matrix-recovery/exercise.qmd) · [Demo](matrix-recovery/exercise.qmd#explore) |
+| Atomic measurements | Report an element amount through atomisation and detection | [Lecture](atomic-methods/lec.qmd) · [Quiz](atomic-methods/quiz.qmd) · [Exercise](atomic-methods/exercise.qmd) · [Demo](atomic-methods/exercise.qmd#explore) |
+| Separation principles | Connect phase exchange to retention, width and resolution | [Lecture](separations/lec.qmd) · [Quiz](separations/quiz.qmd) · [Exercise](separations/exercise.qmd) · [Demo](separations/exercise.qmd#explore) |
+| GC and HPLC | Choose an introduction and separation, then calibrate peak area | [Lecture](gc-hplc/lec.qmd) · [Quiz](gc-hplc/quiz.qmd) · [Exercise](gc-hplc/exercise.qmd) · [Demo](gc-hplc/exercise.qmd#explore) |
+| Choosing and defending a result | Build and defend the complete analytical argument | [Lecture](defending-results/lec.qmd) · [Quiz](defending-results/quiz.qmd) · [Exercise](defending-results/exercise.qmd) · [Demo](defending-results/exercise.qmd#explore) |
 
-| Topic | What you will work out | Slides | Demo |
-| --- | --- | --- | --- |
-| [From sample to answer](lessons/sample-answer.qmd) | Define the chemical quantity before calculating it | [Open](slides/sample-answer.qmd) | [Try](demos/sample-answer.html) |
-| [Sampling and preparation](lessons/sampling-preparation.qmd) | Follow the material through sampling, extraction and dilution | [Open](slides/sampling-preparation.qmd) | [Try](demos/sampling-preparation.html) |
-| [Error and uncertainty](lessons/error-uncertainty.qmd) | Separate spread, bias and uncertainty in a result | [Open](slides/error-uncertainty.qmd) | [Try](demos/error-uncertainty.html) |
-| [Calibration and quality control](lessons/calibration-qc.qmd) | Decide whether a signal can support a concentration | [Open](slides/calibration-qc.qmd) | [Try](demos/calibration-qc.html) |
-| [Equilibrium and titration](lessons/titration.qmd) | Use reaction stoichiometry and a justified endpoint | [Open](slides/titration.qmd) | [Try](demos/titration.html) |
-| [Electrodes and potentiometry](lessons/potentiometry.qmd) | Read a logarithmic response without losing the chemistry | [Open](slides/potentiometry.qmd) | [Try](demos/potentiometry.html) |
-| [UV and visible absorption](lessons/uv-visible.qmd) | Measure iron through a specified coloured complex | [Open](slides/uv-visible.qmd) | [Try](demos/uv-visible.html) |
-| [Matrix effects and recovery](lessons/matrix-recovery.qmd) | Find why a good calibration can still give a biased sample result | [Open](slides/matrix-recovery.qmd) | [Try](demos/matrix-recovery.html) |
-| [Atomic measurements](lessons/atomic-methods.qmd) | Report an element amount through atomisation and detection | [Open](slides/atomic-methods.qmd) | [Try](demos/atomic-methods.html) |
-| [Separation principles](lessons/separations.qmd) | Connect phase exchange to retention, width and resolution | [Open](slides/separations.qmd) | [Try](demos/separations.html) |
-| [GC and HPLC](lessons/gc-hplc.qmd) | Choose an introduction and separation, then calibrate peak area | [Open](slides/gc-hplc.qmd) | [Try](demos/gc-hplc.html) |
-| [Choosing and defending a result](lessons/defending-results.qmd) | Build and defend the complete analytical argument | [Open](slides/defending-results.qmd) | [Try](demos/defending-results.html) |
+## Follow a result back to its origin
 
-## Follow one result all the way back
+![A result links the analytical question, sampled material, preparation and measured signal.](assets/course/measurement-chain.svg){fig-alt="A result links the question, sampled material, preparation and measured signal."}{fig-alt="The analytical question, material, preparation and measured signal form a traceable measurement chain."}
 
-![A measurement claim connects its question, collected sample, preparation and recorded signal.](assets/course/measurement-chain.svg){fig-alt="A measurement claim connects its question, collected sample, preparation and recorded signal."}
+The examples use simulated data. Keep the original inputs, preparation records, R code, derived tables and report together. Read the [data dictionary](reference/data.qmd) before interpreting a file. Use the [glossary](dictionary.qmd) to distinguish terms such as precision, recovery and uncertainty.
 
-Keep the original inputs, preparation records, R code, derived tables and
-rendered report together. The worked examples use **simulated teaching data**,
-with explicit range, QC and separation problems to diagnose.
-[Read the data dictionary](reference/data.qmd) before interpreting them.
-
-The analytical examples explain data and chemistry. Actual practical work uses
-an approved laboratory protocol for the instrument and preparation.
+Selected reading follows Harris and Lucy, *Quantitative Chemical Analysis*, by topic: sampling and preparation; error and calibration; equilibrium and titration; electrochemistry; spectroscopy; chromatography. Chapter numbering depends on the edition, which remains to be confirmed for the planned course.

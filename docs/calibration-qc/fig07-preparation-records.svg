@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="title desc"><title id="title">dilution</title><desc id="desc">A ten millilitre aliquot is made up to a total of fifty millilitres including reagents. Multiply final concentration by five to recover original concentration.</desc><defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0,0 L0,8 L10,4 z" fill="#087b85"/></marker></defs><style>text{font-family:Arial,sans-serif;fill:#123e52} .title{font-size:36px;font-weight:bold}.label{font-size:27px}.small{font-size:23px}.box{fill:#edf6f8;stroke:#087b85;stroke-width:3}.flow{stroke:#087b85;stroke-width:5;marker-end:url(#arrow)}</style><rect width="1200" height="580" fill="#fff"/>
+<text x="55" y="70" class="title">Concentration in the cuvette is not concentration in the sample</text>
+<rect x="65" y="165" width="245" height="180" rx="20" class="box"/><text x="95" y="225" class="label">Original water</text><text x="95" y="280" class="label">c original</text>
+<path d="M330 250 L515 250" class="flow"/><text x="345" y="190" class="small">10.00 mL</text><text x="360" y="315" class="small">aliquot</text>
+<path d="M675 130 L735 130 L735 205 L835 370 Q840 400 810 405 L600 405 Q570 400 575 370 L675 205 Z" fill="#fde5d5" stroke="#c35420" stroke-width="4"/><line x1="650" y1="240" x2="760" y2="240" stroke="#123e52" stroke-width="3"/>
+<text x="870" y="235" class="label">50.00 mL</text><text x="870" y="280" class="small">final total volume</text><text x="620" y="355" class="label">c final</text>
+<text x="65" y="485" class="label">c original = c final × 50.00 / 10.00 = c final × 5</text>
+<text x="65" y="535" class="small">Reagents and water are included in 50.00 mL; do not add 50 mL of water.</text>
+</svg>

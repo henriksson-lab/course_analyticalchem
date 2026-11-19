@@ -1,0 +1,10 @@
+---
+title: "Editor sandbox — quiz"
+search: false
+---
+
+## Practice source editing
+
+This page is excluded from the public course.
+
+![](fig01-complex.svg){fig-alt="Editable illustration."}

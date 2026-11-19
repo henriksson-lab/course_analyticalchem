@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="title desc"><title id="title">complex</title><desc id="desc">One iron two plus ion reacts with three phenanthroline ligands to form the red-orange complex. This is a stoichiometric concept diagram, not a structure drawing.</desc><defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0,0 L0,8 L10,4 z" fill="#087b85"/></marker></defs><style>text{font-family:Arial,sans-serif;fill:#123e52} .title{font-size:36px;font-weight:bold}.label{font-size:27px}.small{font-size:23px}.box{fill:#edf6f8;stroke:#087b85;stroke-width:3}.flow{stroke:#087b85;stroke-width:5;marker-end:url(#arrow)}</style><rect width="1200" height="580" fill="#fff"/>
+<text x="55" y="70" class="title">The measured absorber is an iron complex</text>
+<circle cx="160" cy="260" r="67" fill="#edf6f8" stroke="#087b85" stroke-width="3"/><text x="115" y="272" class="label">Fe²⁺</text>
+<text x="270" y="275" class="title">+</text><rect x="345" y="190" width="215" height="140" rx="20" class="box"/><text x="365" y="250" class="label">3 phen</text><text x="365" y="292" class="small">ligands</text>
+<path d="M595 260 L755 260" class="flow"/>
+<rect x="790" y="160" width="350" height="205" rx="20" fill="#fde5d5" stroke="#c35420" stroke-width="3"/><text x="820" y="235" class="label">[Fe(phen)₃]²⁺</text><text x="820" y="290" class="small">red-orange complex</text>
+<text x="65" y="440" class="label">phen = 1,10-phenanthroline; three bidentate ligands</text>
+<text x="65" y="490" class="small">Reduction sets the iron oxidation state; excess ligand enables colour formation.</text><text x="65" y="535" class="small">Concept diagram: boxes show stoichiometry, not molecular geometry.</text>
+</svg>

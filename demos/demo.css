@@ -1,18 +1,81 @@
-:root {color-scheme:light;--ink:#173d50;--teal:#087b85;--orange:#bf501c;--line:#cbd9df;--muted:#485e69;--wash:#eef6f8;}
-* {box-sizing:border-box;} body {margin:0;font:17px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff;}
-a {color:#006876;text-underline-offset:.16em;} a:hover {color:#08475e;} :focus-visible {outline:3px solid #bf501c;outline-offset:3px;}
-.demo-nav {display:flex;flex-wrap:wrap;gap:1rem;padding:1rem max(1.2rem,calc((100vw - 1240px)/2));border-bottom:1px solid var(--line);background:#f6f8f9;}
-main {max-width:1240px;margin:auto;padding:1.5rem;} h1 {font-size:clamp(1.85rem,3.5vw,2.8rem);line-height:1.15;margin:.25rem 0 1rem;} h2 {font-size:1.2rem;line-height:1.3;margin:.3rem 0 .7rem;} h3 {font-size:1.1rem;} p {margin:.6rem 0 1rem;} .eyebrow {font-size:.85rem;color:var(--muted);letter-spacing:.035em;}
-.demo-intro {max-width:78ch;} .prediction {margin:1.4rem 0 1.8rem;padding:.4rem 0 .4rem 1rem;border-left:4px solid var(--teal);} .prediction p {margin:0;}
-.demo-layout {display:grid;grid-template-columns:minmax(230px,300px) minmax(0,1fr);gap:2rem;align-items:start;} .control-panel {min-width:0;} .demo-content {min-width:0;} form label {display:block;margin:.4rem 0 1rem;font-weight:550;} input,select,button {font:inherit;} input[type=range] {display:block;width:100%;accent-color:var(--teal);margin:.6rem 0;min-height:26px;} input[type=number],select {display:block;max-width:100%;width:100%;padding:.4rem .55rem;border:1px solid #91a9b5;border-radius:4px;background:white;color:var(--ink);margin:.35rem 0;} input[type=checkbox],input[type=radio] {accent-color:var(--teal);width:1.15rem;height:1.15rem;vertical-align:middle;} .actions {display:flex;flex-wrap:wrap;gap:.55rem;margin:1rem 0;} button {padding:.45rem .8rem;border:1px solid #087b85;border-radius:4px;color:#075964;background:#fff;cursor:pointer;} button:hover {background:var(--wash);} button:disabled {cursor:default;opacity:.6;} output {font-variant-numeric:tabular-nums;} .readout,.result,.results,.metrics,.summary,#readout {font-variant-numeric:tabular-nums;} #readout {padding:.4rem 0;} .metric,.stat {display:inline-block;margin:.25rem 1.2rem .25rem 0;} .metric strong,.stat strong {font-size:1.2rem;} .status {padding:.6rem .8rem;border-left:4px solid var(--teal);background:var(--wash);} .warning,.withheld,.status.warn,.status.fail {border-color:var(--orange);color:#833b16;} .model-notes {border-top:1px solid var(--line);padding-top:1rem;margin-top:2rem;max-width:96ch;} .r-transfer {max-width:95ch;border-left:3px solid var(--teal);padding-left:1rem;margin-top:1.4rem;}
-svg {display:block;width:100%;height:auto;overflow:visible;} .plot-y-label {font-size:.95rem;margin:.5rem 0 .1rem;font-weight:550;} .plot-x-label {font-size:.95rem;text-align:center;margin:.1rem 0 .5rem;} .plot-grid {stroke:#e0e7eb;stroke-width:1;} .plot-axis {stroke:#586d78;stroke-width:1.3;} .plot-tick {font-size:13px;fill:#364e5b;} .plot-legend {display:flex;gap:.35rem 1.2rem;flex-wrap:wrap;font-size:.9rem;margin:.4rem 0;} .plot-legend span {display:inline-flex;align-items:center;gap:.4rem;} .plot-legend i {width:1.3rem;height:0;border-top:3px solid var(--series-color);display:inline-block;} .plot-inspector {font-size:.85rem;color:var(--muted);min-height:2.8em;margin:.5rem 0 1rem;overflow-wrap:anywhere;} .plot-references {font-size:.85rem;color:var(--muted);}
-table {border-collapse:collapse;width:100%;margin:1rem 0;font-size:.94rem;} th,td {padding:.45rem .55rem;border-bottom:1px solid var(--line);text-align:left;overflow-wrap:anywhere;} th {font-weight:650;} .table-wrap {overflow:auto;} .small,.help {font-size:.9rem;color:var(--muted);} #interpretation {max-width:85ch;}
-@media(max-width:760px){main{padding:1.1rem;} .demo-layout{grid-template-columns:1fr;gap:1rem;} .control-panel form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 1rem;} .control-panel form .actions{grid-column:1/-1;} .plot-inspector{min-height:4em;}}
-@media(max-width:440px){.control-panel form{grid-template-columns:1fr;} .demo-nav{font-size:.95rem;gap:.4rem 1rem;} .plot-tick{font-size:12px;} }
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important;}}
-@media print{.demo-nav,.actions,.plot-inspector{display:none;} .demo-layout{display:block;} .control-panel{break-inside:avoid;} }
-.control-panel fieldset {min-width:0;grid-column:1/-1;border:0;padding:0;margin:.4rem 0;}
-.control-panel legend {font-weight:650;margin-bottom:.4rem;}
+/* Shared styling for the interactive demos (demos/src/). Colours are variables on
+   .qb-demo, so a dark theme only needs to override these. */
+.qb-demo {
+  --qb-fg: #222; --qb-muted: #777; --qb-grid: #e3e3e3; --qb-axis: #444;
+  --qb-bg: #fff; --qb-panel: #f6f7f9; --qb-accent: #1f77b4;
+  --qb-c1: #1f77b4; --qb-c2: #d62728; --qb-c3: #2ca02c; --qb-c4: #ff7f0e; --qb-c5: #9467bd;
+  display: flex; flex-wrap: wrap; gap: 1.2em; align-items: flex-start;
+  color: var(--qb-fg); font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px; line-height: 1.35; margin: 1em 0;
+}
+.qb-demo svg { display: block; user-select: none; -webkit-user-select: none; }
+.qb-demo svg text { fill: var(--qb-fg); font-family: inherit; }
+.qb-demo .qb-plot { flex: 1 1 320px; min-width: 0; max-width: 560px; }
+.qb-demo .qb-panel { flex: 0 1 300px; display: flex; flex-direction: column; gap: .55em; }
+.qb-demo .grid { stroke: var(--qb-grid); }
+.qb-demo .axis { stroke: var(--qb-axis); }
+.qb-demo .handle { fill: #fff; stroke-width: 3; cursor: grab; }
 
-.mobile-jump {display:none;}
-@media(max-width:760px){.mobile-jump {display:inline-block;margin:.4rem 0 1rem;}}
+.qb-demo .qb-slider { display: grid; grid-template-columns: auto 1fr 3.6em; gap: .5em; align-items: center; }
+.qb-demo .qb-slider-name { white-space: nowrap; }
+.qb-demo .qb-slider input[type=range] { width: 100%; min-width: 6em; accent-color: var(--qb-accent); }
+.qb-demo .qb-slider output { font-family: ui-monospace, monospace; text-align: right; }
+.qb-demo .qb-check { display: flex; align-items: center; gap: .3em; cursor: pointer; }
+.qb-demo .qb-presets { display: flex; flex-wrap: wrap; gap: .35em; }
+.qb-demo .qb-btn {
+  font: inherit; font-size: .85em; padding: .25em .7em; border-radius: 6px; cursor: pointer;
+  border: 1px solid #bbb; background: var(--qb-bg); color: var(--qb-fg);
+}
+.qb-demo .qb-btn:hover { border-color: var(--qb-accent); }
+.qb-demo .qb-btn.active { background: var(--qb-accent); border-color: var(--qb-accent); color: #fff; }
+.qb-demo .qb-readout {
+  font-family: ui-monospace, monospace; font-size: .9em; white-space: pre-wrap;
+  background: var(--qb-panel); border-radius: 6px; padding: .45em .6em;
+}
+.qb-demo .qb-note { font-size: .85em; color: var(--qb-muted); }
+.qb-demo .qb-big { font-size: 1.25em; font-weight: 600; }
+
+/* Inside a reveal.js slide: larger text, no outer margin, fit the content area. */
+.reveal .qb-demo { font-size: 22px; margin: .2em 0; text-align: left; }
+.reveal .qb-demo .qb-plot { max-width: none; }
+.reveal .qb-demo .qb-btn { font-size: .8em; }
+
+@media (max-width: 640px) {
+  .qb-demo { flex-direction: column; }
+  .qb-demo .qb-panel { flex-basis: auto; width: 100%; }
+}
+
+/* Chemistry plots use the shared qb-demo UI. Labels can wrap for scientific units. */
+.qb-demo .ac-plots {flex:1 1 420px;min-width:0;max-width:640px;}
+.qb-demo .ac-plots .qb-plot {width:100%;max-width:none;}
+.qb-demo .ac-chart {width:100%;min-width:0;margin-bottom:.8em;}
+.qb-demo .ac-axis-label {font-weight:600;margin:.25em 0;}
+.qb-demo .ac-x-label {text-align:center;margin:.1em 0 .4em;}
+.qb-demo .ac-controls {display:flex;flex-direction:column;gap:.7em;}
+.qb-demo .qb-slider {grid-template-columns:minmax(0,1fr) minmax(80px,1fr) 4.3em;}
+.qb-demo .qb-slider-name {white-space:normal;}
+.qb-demo .ac-select {display:flex;flex-direction:column;gap:.2em;}
+.qb-demo select {font:inherit;max-width:100%;padding:.2em;}
+.qb-demo .ac-legend {display:flex;flex-wrap:wrap;gap:.3em .9em;font-size:.9em;}
+.qb-demo .ac-legend span {display:inline-flex;align-items:center;gap:.4em;}
+.qb-demo .ac-legend i {display:inline-block;width:1.2em;border-top:3px solid;}
+.qb-demo .ac-inspect {min-height:2.6em;overflow-wrap:anywhere;}
+.qb-demo .qb-readout p {margin:.3em 0;}
+.qb-demo .qb-readout dl {margin:.3em 0;}
+.qb-demo .qb-readout dd {margin:0 0 .4em 1em;}
+.qb-demo [aria-invalid=true] {outline:2px solid #b22222;}
+.qb-demo :focus-visible {outline:2px solid #1f77b4;outline-offset:3px;}
+.qb-demo > * {min-width:0;}
+.qb-demo .qb-panel {max-width:100%;}
+.qb-demo .qb-readout {white-space:pre-line;overflow-wrap:anywhere;}
+.qb-demo table {width:100%;font-size:.85em;border-collapse:collapse;}
+.qb-demo th, .qb-demo td {padding:.35em;text-align:left;overflow-wrap:anywhere;}
+.qb-demo caption {font-size:.95em;}
+@media (max-width: 600px) {
+  .qb-demo .ac-plots {flex-basis:auto;width:100%;}
+}
+.qb-demo .ac-history {max-width:100%;overflow-x:auto;}
+.qb-demo .ac-history table {min-width:440px;}
+/* Keep history headings readable; the enclosing region supplies horizontal scroll. */
+.qb-demo .ac-history table {min-width:600px;}
+.qb-demo .ac-history th, .qb-demo .ac-history td {overflow-wrap:normal;word-break:normal;}

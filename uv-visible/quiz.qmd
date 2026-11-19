@@ -1,0 +1,123 @@
+---
+title: "Quiz: UV and visible absorption"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Answer before opening the hint or explanation.
+
+---
+
+**Q1.** What species absorbs, and what iron quantity is reported?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Separate the prepared complex from the original oxidation state.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+The prepared Fe(II)–phenanthroline complex absorbs. With quantitative reduction and complex formation, the result describes elemental iron in supplied filtered water, not its original Fe(II) fraction.
+:::
+
+---
+
+**Q2.** Why does doubling absorbance not halve transmitted light?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Invert the logarithm.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+$T=10^{-A}$. Doubling absorbance squares transmittance. At $A=0.30103$, $T=0.50$; at $A=0.60206$, $T=0.25$.
+:::
+
+---
+
+**Q3.** Should already reagent-blank-referenced absorbances be blank-corrected again?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Read the measurement basis.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+No. Another subtraction changes the stated basis. A whole-procedure method blank can investigate a different contamination question.
+:::
+
+---
+
+**Q4.** Why fit absorbance on prepared concentration?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Which variable is deliberately set?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+Concentration is the controlled input and absorbance the response. Invert that fitted response relationship for the unknown; reverse regression is a different error model.
+:::
+
+---
+
+**Q5.** P04 uses 5.00 mL made up to 50.00 mL. What factor restores the original basis?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Final total volume divided by aliquot.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+The factor is 10. The signal must belong to that newly measured preparation; editing a factor cannot rescue an old out-of-range reading.
+:::
+
+---
+
+**Q6.** A sample is in range but its block QC fails. Is it reportable?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Range and independent check answer different questions.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+Withhold it, investigate the failure, establish satisfactory calibration and QC and remeasure. The QC recovery alone does not identify a valid correction.
+:::
+
+---
+
+**Q7.** P01 and P02 are two preparations from the same supplied water W1. Do three readings from each give six independently collected water samples?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Track the hierarchy.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+No. They are repeated readings nested within two preparations of one supplied water. They share sample origin and calibration.
+:::
+
+---
+
+**Q8.** What does the stated uncertainty omit?
+
+::: {.callout-tip collapse="true" title="Hint"}
+
+Ask what the mathematical model includes.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+
+The example includes reading/calibration and supplied volume uncertainties under stated independence assumptions. Sampling, matrix bias, incomplete recovery and uncertain standard concentrations are excluded; it is not full method uncertainty.
+:::

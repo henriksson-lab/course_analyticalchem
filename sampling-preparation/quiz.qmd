@@ -1,0 +1,126 @@
+---
+title: "Quiz: sampling and preparation"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint or answer. These practice questions
+check chemical reasoning and small calculations; they are not a graded question bank.
+
+[]{#q1}
+
+**Q1.** A solid has equal-mass strata with means 5, 10 and 30 mg/kg. What is its bulk mean? What target does top-only sampling approach?
+
+::: {.callout-tip collapse="true" title="Hint Q1"}
+Use the material mass weights, then consider which stratum was actually collected.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q1"}
+The bulk mean is $(5+10+30)/3=15$ mg/kg. Top-only grabs approach the top mean of 5 mg/kg under this model. Smaller top-only scatter does not supply information about the rest of the solid.
+:::
+
+---
+
+[]{#q2}
+
+**Q2.** The same strata instead have mass fractions 0.20, 0.30 and 0.50. What is the bulk mean?
+
+::: {.callout-tip collapse="true" title="Hint Q2"}
+Multiply each concentration by its corresponding mass fraction.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q2"}
+$0.20(5)+0.30(10)+0.50(30)=19$ mg/kg. An equal-stratum average would target three equal masses and is no longer appropriate. The weights must refer to the defined material, not convenience.
+:::
+
+---
+
+[]{#q3}
+
+**Q3.** A 1.000 g material gives 50.00 mL extract. A 5.00 mL aliquot made to 25.00 mL reads 2.00 mg/L. Find extracted analyte in mg/g.
+
+::: {.callout-tip collapse="true" title="Hint Q3"}
+Undo the aliquot dilution, find total extracted mass, then divide by original mass.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q3"}
+The extract is $2.00(25/5)=10.0$ mg/L. It contains $10.0(0.05000)=0.500$ mg; divided by 1.000 g gives **0.500 mg/g extracted**. Complete native recovery still needs evidence.
+:::
+
+---
+
+[]{#q4}
+
+**Q4.** With D=4, 20 mL aqueous and 5 mL extracting phase, what is the ideal recovered fraction?
+
+::: {.callout-tip collapse="true" title="Hint Q4"}
+Use $DV_o/(V_a+DV_o)$.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q4"}
+$4(5)/(20+4(5))=0.50$, or **50%**. D is a concentration ratio; recovery also depends on phase volumes. This assumes equilibrium, immiscibility, unchanged volumes and no other loss.
+:::
+
+---
+
+[]{#q5}
+
+**Q5.** Why can two fresh solvent extractions recover more than one extraction using the same total solvent?
+
+::: {.callout-tip collapse="true" title="Hint Q5"}
+After removing each extracting phase, the next fresh portion repartitions the analyte left behind.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q5"}
+Each fresh portion establishes a new equilibrium with the remaining analyte. The fractions left after each step multiply. This can improve ideal recovery without adding more total solvent, but does not prove real recovery if equilibration or separation fails.
+:::
+
+---
+
+[]{#q6}
+
+**Q6.** A post-extraction spike recovers 100%. What claim about native extraction remains unsupported?
+
+::: {.callout-tip collapse="true" title="Hint Q6"}
+Identify the steps the added analyte skipped.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q6"}
+Complete recovery of native analyte before spike addition remains unsupported. The spike did not undergo that extraction, and even a pre-extraction freely dissolved spike may not represent native bound material.
+:::
+
+---
+
+[]{#q7}
+
+**Q7.** Does one composite made from ten increments count as ten independent samples for estimating spatial variation?
+
+::: {.callout-tip collapse="true" title="Hint Q7"}
+What happened to the original increment identities and separate measurements?
+:::
+
+::: {.callout-note collapse="true" title="Answer Q7"}
+No. The composite is one combined material under its specified weighting design. It can support a bulk quantity, but it does not preserve ten independent measured spatial results or their original variation.
+:::
+
+---
+
+[]{#q8}
+
+**Q8.** Why might a treatment useful for retaining an element in solution be unsuitable for preserving its original oxidation states?
+
+::: {.callout-tip collapse="true" title="Hint Q8"}
+Different measurands require different chemical information to survive.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q8"}
+A preservation treatment can prevent precipitation or surface loss while changing speciation. The result must match the intended elemental amount or species quantity and the specified preparation. There is no universally suitable preservation treatment for every measurand.
+:::
+
+---
+
+[Return to the exercise](exercise.qmd) · [Lecture](lec.qmd)

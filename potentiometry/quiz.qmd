@@ -1,0 +1,85 @@
+---
+title: "Quiz: electrodes and potentiometry"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint. Then explain the answer in chemical
+and measurement terms. [Lecture](lec.qmd) · [Exercise](exercise.qmd).
+
+---
+
+**Q1.** A combined pH electrode contains one body. Does its potential no longer depend on a reference electrode or junction?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Packaging does not eliminate a cell function.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The indicator and reference functions are packaged together. The observed cell potential can still depend on reference/junction conditions. A high-input-impedance meter reads potential with negligible net measurement current.
+:::
+
+---
+
+**Q2.** An idealised calibration is $E=200-60\log_{10}[c/(1\,\mathrm{mol/L})]$ mV. What concentration corresponds to 440 mV?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Solve for the log value, then undo the logarithm.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+The log concentration is $(440-200)/(-60)=-4$. Thus **$c=10^{-4}$ mol/L**. The value −4 itself is not a concentration.
+:::
+
+---
+
+**Q3.** pH rises by one unit. By what factor does hydrogen-ion activity change?
+
+::: {.callout-tip collapse="true" title="Hint"}
+pH already contains the negative base-ten logarithm.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+It decreases tenfold. pH is an activity quantity; interpreting it as ordinary mol/L concentration without an activity relation changes the claim.
+:::
+
+---
+
+**Q4.** An independent check error is +1.5 mV with acceptance ±2.0 mV. Is the calibration exact because the check passes?
+
+::: {.callout-tip collapse="true" title="Hint"}
+A tolerance allows nonzero error.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. It passes the stated exercise criterion, but the nonzero voltage error can still bias concentration. Its significance belongs in the performance/uncertainty evaluation; acceptance is not zero uncertainty.
+:::
+
+---
+
+**Q5.** A fluoride sample has half the calibration activity coefficient at the same concentration, with no drift. A check prepared under calibration conditions passes. What can happen to the sample inverse estimate?
+
+::: {.callout-tip collapse="true" title="Hint"}
+The check does not share the sample-specific activity relation.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+The sample has half the activity, so the old concentration calibration infers **half its true free-ion concentration** in this ideal model. A passing reference check does not establish sample-matrix transfer. A known mismatch needs investigation or appropriate matching/correction evidence.
+:::
+
+---
+
+**Q6.** Why do equal positive/negative voltage bounds generally become unequal concentration changes after inversion?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Invert each voltage limit separately.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Concentration depends exponentially on voltage. Equal voltage deviations give reciprocal multiplicative factors, not equal additive concentration differences. A voltage SD must not simply be relabelled as a concentration SD.
+:::
+

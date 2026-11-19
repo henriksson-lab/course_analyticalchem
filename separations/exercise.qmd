@@ -1,0 +1,247 @@
+---
+title: "Exercise: retention, resolution and peak area"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+By the end, you should be able to calculate retention factors and resolution,
+explain the separate roles of spacing and band width, and distinguish a
+calibratable analyte area from a combined response. Work by hand first, explore
+the model, then reproduce the reasoning in R.
+
+## Background
+
+Chromatography delays solutes through interaction with a stationary phase while
+a mobile phase carries them along. A chromatogram records detector response
+over time at the outlet, not position inside the column.
+
+| Quantity | Definition in this exercise |
+| --- | --- |
+| Unretained transit time | $t_0$ |
+| Retention factor | $k=(t_R-t_0)/t_0$ |
+| Relative selectivity, B later than A | $\alpha=k_B/k_A$ |
+| Resolution using **baseline** widths | $R_s=2(t_{RB}-t_{RA})/(w_A+w_B)$ |
+| Gaussian width in the demo | $w_b=4\sigma$ |
+| Area | Integrated response above the stated baseline; requires calibration for amount |
+
+[IUPAC retention factor](https://doi.org/10.1351/goldbook.R05359) and
+[peak resolution](https://doi.org/10.1351/goldbook.P04465) define the terminology.
+A numerical resolution is not proof of purity. Peak shape, relative amount,
+detector selectivity and the required accuracy also matter.
+
+## By hand
+
+**B1.** A has $t_R=3.00$ min and baseline width 0.40 min. B has $t_R=4.00$ min
+and width 0.50 min. The unretained marker is at 1.00 min. Calculate both retention
+factors, selectivity and resolution. [Hint](#hint-b1)
+
+**B2.** Keep retention times and full areas fixed, but double both widths.
+Calculate the new resolution. For ideal Gaussian peaks, what happens to height
+and full integrated area? [Hint](#hint-b2)
+
+**B3.** An integration window captures 95.45 response·min from A and 20.00 from B.
+A's full area is 100.00. Calculate the combined window area and B's fraction of
+it. Why is assigning the combined area to A unjustified? [Hint](#hint-b3)
+
+**B4.** For a new pair, $t_0=0.80$ min, retention times are 2.40 and 3.20 min,
+and baseline widths are 0.40 and 0.60 min. Calculate $k_A,k_B,\alpha,R_s$.
+Would the same formula accept half-height widths? [Hint](#hint-b1)
+
+## Explore {#explore}
+
+Predict each change before touching the controls. Curves are ideal Gaussian
+components with known simulation areas; the combined response is what a
+nonselective detector would see. The finite window around A spans ±2σ, so it
+captures about 95.45% of isolated A plus any B inside it.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="separations"></div>
+<script src="../demos/dist/separations.js"></script>
+```
+
+**E1.** Check B1 at the defaults. Set the width multiplier to 2 without changing
+spacing or B area. Which numbers change, and which remain fixed?
+
+**E2.** Reset, set the spacing to 0.25 min and compare B areas 150 and 500.
+Does resolution change? Does B's fraction of A's window change? Explain why a
+single resolution threshold cannot establish an acceptable quantitative result.
+
+**E3.** Hide the individual components. Could the combined curve alone tell you
+the true separate areas without a justified model or additional evidence?
+Export the CSV for R3, then explain what its component columns represent.
+
+::: {.callout-note collapse="true" title="Solutions — E1–E3"}
+**E1.** Default $k_A=2$, $k_B=3$, $\alpha=1.5$ and $R_s=2.222$. Doubling widths
+halves resolution to 1.111. The full areas remain 100 and 150; each Gaussian
+height halves. A's ±2σ window broadens, so a neighbour can contribute more to it.
+
+**E2.** At spacing 0.25 min the resolution is $2(0.25)/0.90=0.5556$ for both
+amounts. Increasing B's area increases its contamination of the A window without
+changing the retention times or widths. Therefore equal resolution can accompany
+different quantitative errors. A value alone is not a purity or acceptance test.
+
+**E3.** No. A combined response can be consistent with more than one allocation
+of component areas. The exported `component_a` and `component_b` columns reveal
+the simulation's construction; real data do not automatically supply them.
+A model-based deconvolution would need its own assumptions and validation.
+:::
+
+## In R
+
+Open the supplied R project and run from the project root. All inputs are
+simulated. Use the existing `readr`, `dplyr` and `ggplot2` vocabulary. The raw
+trace has baseline 5 response units; the demo export is already baseline-subtracted.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+peaks <- read_csv("data/course/peak-summary.csv", show_col_types = FALSE)
+chrom <- read_csv("data/course/chromatograms.csv", show_col_types = FALSE)
+```
+
+**R1.** Calculate retention factors and group-wise resolution for the three
+runs. Use the compound label to identify A and B, rather than row order. Save a
+table with run ID, $k_A,k_B,\alpha,R_s$. [Hint](#hint-r1)
+
+**R2.** Plot the resolved, overlap and broad traces. Explain which change causes
+lost separation in each comparison. Why are the hundreds of trace rows not
+hundreds of independently collected samples? [Hint](#hint-r2)
+
+**R3.** Integrate each supplied raw trace above baseline using the trapezoidal
+rule. Does total area stay constant? Optionally import the exported demo CSV
+and integrate `component_a` and `component_b` separately. Explain why being able
+to do this in a simulated export does not validate a real coeluting peak.
+[Hint](#hint-r3)
+
+## Hints
+
+::: {.callout-tip collapse="true" title="Hint — B1 and B4" #hint-b1}
+Subtract $t_0$ before dividing by it. Resolution uses the difference in retention
+times and the **sum of the stated baseline widths**. All time units cancel.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B2" #hint-b2}
+The numerator of resolution stays fixed while its denominator doubles. A
+Gaussian has area proportional to height times width.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B3" #hint-b3}
+The detector records both contributions. Divide B's contribution by the combined
+window area, not by A's full area, for the requested fraction.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R1" #hint-r1}
+Use [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html), then
+`group_by(run)` and `summarise()`. Expressions such as `k[compound == "A"]`
+identify a component within each supplied two-component run.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R2" #hint-r2}
+Plot `response` against `time_min`, mapping `colour = run`. A time position is
+part of a dependent within-run series, not another collected sample.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R3" #hint-r3}
+For ordered times, sum $\Delta t_i(y_i+y_{i+1})/2$ after subtracting the baseline.
+[`diff()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/diff.html)
+returns successive differences; `head(x,-1)` and `tail(x,-1)` pair neighbours.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions — B1–B4"}
+**B1.** $k_A=(3-1)/1=2$, $k_B=(4-1)/1=3$, $\alpha=3/2=1.5$,
+$R_s=2(4-3)/(0.40+0.50)=2.222$. Using $t_R/t_0$ alone would incorrectly include
+the unretained transit contribution in the retention factor.
+
+**B2.** $R_s=2/1.80=1.111$. At fixed Gaussian area, doubling width halves height.
+The full area is unchanged. A finite integration window is a different quantity:
+it can exclude some A and include some B.
+
+**B3.** Combined window area is 115.45 response·min. B contributes
+$20/115.45\times 100=17.32\%$. Assigning all 115.45 to A both includes B and misses
+part of A outside the window; it is not a selective measurement of A's amount.
+
+**B4.** $k_A=2$, $k_B=3$, $\alpha=1.5$, $R_s=2(0.80)/(0.40+0.60)=1.60$.
+Half-height widths require their corresponding formula/coefficient; they cannot
+be substituted into this baseline-width formula unchanged.
+:::
+
+::: {.callout-note collapse="true" title="Full worked R solutions — R1–R3"}
+**R1.** Preserve component and run identities:
+
+```r
+peaks <- peaks |> mutate(k = (t_r_min - t0_min) / t0_min)
+resolution <- peaks |>
+  group_by(run) |>
+  summarise(k_A = k[compound == "A"], k_B = k[compound == "B"],
+            alpha = k_B / k_A,
+            resolution = 2 * (t_r_min[compound == "B"] -
+                              t_r_min[compound == "A"]) /
+                          sum(baseline_width_min), .groups = "drop")
+resolution
+write_csv(resolution, "output/separation-resolution.csv")
+```
+
+Resolved, overlap and broad runs give resolution 2.2222, 0.6667 and 0.9091.
+The broad and resolved runs have the same $k_A=2,k_B=3,\alpha=1.5$; overlap
+changes $k_B$ to 2.3 and $\alpha$ to 1.15.
+
+**R2.**
+
+```r
+ggplot(chrom, aes(time_min, response, colour = run)) +
+  geom_line() +
+  labs(x = "Time (min)", y = "Detector response", colour = "Run") +
+  theme_minimal()
+```
+
+Overlap changes retention spacing. Broad changes widths at unchanged retention
+times. Each line is a within-run trace: time positions do not represent repeated
+independent sampling of the original material.
+
+**R3.** The data are already ordered by time within run:
+
+```r
+area_summary <- chrom |>
+  group_by(run) |>
+  summarise(total_area = sum(diff(time_min) *
+             (head(response - 5, -1) + tail(response - 5, -1)) / 2),
+            .groups = "drop")
+area_summary
+write_csv(area_summary, "output/separation-areas.csv")
+```
+
+Every total is about 250 response·min, because component areas remain 100+150.
+That conservation does not establish a unique allocation from the combined
+signal. For the optional saved demo file, put the download in `data/`:
+
+```r
+# Optional: only after saving this exported file in data/.
+if (file.exists("data/separation-experiment.csv")) {
+  demo <- read_csv("data/separation-experiment.csv", show_col_types = FALSE)
+  area_a <- sum(diff(demo$time_min) *
+    (head(demo$component_a, -1) + tail(demo$component_a, -1)) / 2)
+  area_b <- sum(diff(demo$time_min) *
+    (head(demo$component_b, -1) + tail(demo$component_b, -1)) / 2)
+  c(area_a = area_a, area_b = area_b)
+}
+```
+
+Those two columns are known model contributions. A real mixed trace does not
+supply them without additional modelling or selective evidence.
+:::
+
+## Where this leads
+
+GC and HPLC put these retention and width ideas into specific introduction,
+mobile-phase and detector systems. Keep calibration and chemical identity
+separate from the numerical integration of a peak.

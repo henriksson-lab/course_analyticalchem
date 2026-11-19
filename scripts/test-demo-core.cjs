@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const D = require('../demos/demo-core.js');
+const D = require('./load-model.cjs')('lib');
 assert.equal(D.mean([1,2,3]),2);
 assert.equal(D.sd([1,2,3]),1);
 assert.ok(Number.isNaN(D.sd([1])));

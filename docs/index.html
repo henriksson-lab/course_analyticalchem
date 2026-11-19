@@ -36,10 +36,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-662ae1889177880cb371f83234c0a158.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-30f6453bf8381073c8e2e10f679231dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d37fb74fd9c61f52627c5754f4dbd5bd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -91,16 +91,27 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Course topics</span></a>
+<span class="menu-text">Home</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./demos/index.html"> 
-<span class="menu-text">Interactive demos</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-info" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Course info</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-course-info">    
+        <li>
+    <a class="dropdown-item" href="./reference/r.html">
+ <span class="dropdown-text">R reference</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./reference/r.html"> 
-<span class="menu-text">R reference</span></a>
+        <li>
+    <a class="dropdown-item" href="./dictionary.html">
+ <span class="dropdown-text">Glossary</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./reference/data.html">
+ <span class="dropdown-text">Data dictionary</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -112,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Analytical Chemistry</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Home</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,10 +143,16 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Measurement foundations</span></a>
+ <span class="menu-text">Course info</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -143,26 +160,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/sample-answer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">From sample to answer</span></a>
+  <a href="./reference/r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R reference</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/sampling-preparation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sampling and preparation</span></a>
+  <a href="./dictionary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/error-uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Error and uncertainty</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lessons/calibration-qc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Calibration and quality control</span></a>
+  <a href="./reference/data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data dictionary</span></a>
   </div>
 </li>
       </ul>
@@ -170,71 +181,454 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Chemical methods</span></a>
+ <span class="menu-text">Measurement foundations</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">From sample to answer</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/titration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Equilibrium and titration</span></a>
+  <a href="./sample-answer/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/potentiometry.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Electrodes and potentiometry</span></a>
+  <a href="./sample-answer/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/uv-visible.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">UV and visible absorption</span></a>
+  <a href="./sample-answer/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/matrix-recovery.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Matrix effects and recovery</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lessons/atomic-methods.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Atomic measurements</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lessons/separations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Separation principles</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lessons/gc-hplc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">GC and HPLC</span></a>
+  <a href="./sample-answer/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
+          <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Integration</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Sampling and preparation</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lessons/defending-results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Choosing and defending a result</span></a>
+  <a href="./sampling-preparation/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-preparation/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-preparation/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-preparation/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Error and uncertainty</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./error-uncertainty/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./error-uncertainty/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./error-uncertainty/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./error-uncertainty/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Calibration and quality control</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calibration-qc/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calibration-qc/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calibration-qc/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calibration-qc/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Chemical measurement</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Equilibrium and titration</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./titration/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./titration/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./titration/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./titration/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Electrodes and potentiometry</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./potentiometry/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./potentiometry/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./potentiometry/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./potentiometry/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">UV and visible absorption</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./uv-visible/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./uv-visible/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./uv-visible/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./uv-visible/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Matrix effects and recovery</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matrix-recovery/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matrix-recovery/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matrix-recovery/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matrix-recovery/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Atomic measurements</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./atomic-methods/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./atomic-methods/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./atomic-methods/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./atomic-methods/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text">Separations and integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Separation principles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./separations/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./separations/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./separations/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./separations/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">GC and HPLC</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gc-hplc/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gc-hplc/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gc-hplc/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gc-hplc/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Choosing and defending a result</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./defending-results/lec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture (slides)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./defending-results/quiz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quiz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./defending-results/exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./defending-results/exercise.html#explore" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactive demo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -247,8 +641,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#topics-and-illustrated-slides" id="toc-topics-and-illustrated-slides" class="nav-link active" data-scroll-target="#topics-and-illustrated-slides">Topics and illustrated slides</a></li>
-  <li><a href="#follow-one-result-all-the-way-back" id="toc-follow-one-result-all-the-way-back" class="nav-link" data-scroll-target="#follow-one-result-all-the-way-back">Follow one result all the way back</a></li>
+  <li><a href="#topics" id="toc-topics" class="nav-link active" data-scroll-target="#topics">Topics</a></li>
+  <li><a href="#follow-a-result-back-to-its-origin" id="toc-follow-a-result-back-to-its-origin" class="nav-link" data-scroll-target="#follow-a-result-back-to-its-origin">Follow a result back to its origin</a></li>
   </ul>
 </nav>
     </div>
@@ -258,7 +652,6 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Analytical Chemistry</h1>
-<p class="subtitle lead">From a sample to a defensible chemical result</p>
 </div>
 
 
@@ -275,106 +668,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Use chemistry, measurement evidence and reproducible R calculations to answer what is present, how much there is, and whether the result is fit for its intended question. These materials cover the planned 7.5-credit course.</p>
-<p><a href="downloads/analyticalchem-project.zip">Download the complete student project</a> and open <code>analyticalchem.Rproj</code>. Start with the <a href="./reference/r.html">R reference</a> if you need to retrieve the introductory workflow. Student reports use R Markdown; you do not need to author Quarto pages.</p>
-<p><a href="./demos/index.html">Browse the interactive experiments</a> to predict, change conditions, and explain a result before returning to R.</p>
-<section id="topics-and-illustrated-slides" class="level2">
-<h2 class="anchored" data-anchor-id="topics-and-illustrated-slides">Topics and illustrated slides</h2>
+<p>Use the lecture, quiz, exercise and embedded experiment together. Start with the chemical question, predict what a measurement should show, then use R to test and explain it.</p>
+<p><a href="downloads/analyticalchem-project.zip">Download the student project</a>, extract it and open <code>analyticalchem.Rproj</code>. Work from that project root. The <a href="./reference/r.html">R reference</a> retrieves the CSV, plotting and regression workflow from introductory computing. Student reports use R Markdown.</p>
+<section id="topics" class="level2">
+<h2 class="anchored" data-anchor-id="topics">Topics</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Topic</th>
-<th>What you will work out</th>
-<th>Slides</th>
-<th>Demo</th>
+<th>Analytical question</th>
+<th>Materials</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="./lessons/sample-answer.html">From sample to answer</a></td>
+<td>From sample to answer</td>
 <td>Define the chemical quantity before calculating it</td>
-<td><a href="./slides/sample-answer.html">Open</a></td>
-<td><a href="demos/sample-answer.html">Try</a></td>
+<td><a href="./sample-answer/lec.html">Lecture</a> · <a href="./sample-answer/quiz.html">Quiz</a> · <a href="./sample-answer/exercise.html">Exercise</a> · <a href="./sample-answer/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="even">
-<td><a href="./lessons/sampling-preparation.html">Sampling and preparation</a></td>
+<td>Sampling and preparation</td>
 <td>Follow the material through sampling, extraction and dilution</td>
-<td><a href="./slides/sampling-preparation.html">Open</a></td>
-<td><a href="demos/sampling-preparation.html">Try</a></td>
+<td><a href="./sampling-preparation/lec.html">Lecture</a> · <a href="./sampling-preparation/quiz.html">Quiz</a> · <a href="./sampling-preparation/exercise.html">Exercise</a> · <a href="./sampling-preparation/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="odd">
-<td><a href="./lessons/error-uncertainty.html">Error and uncertainty</a></td>
+<td>Error and uncertainty</td>
 <td>Separate spread, bias and uncertainty in a result</td>
-<td><a href="./slides/error-uncertainty.html">Open</a></td>
-<td><a href="demos/error-uncertainty.html">Try</a></td>
+<td><a href="./error-uncertainty/lec.html">Lecture</a> · <a href="./error-uncertainty/quiz.html">Quiz</a> · <a href="./error-uncertainty/exercise.html">Exercise</a> · <a href="./error-uncertainty/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="even">
-<td><a href="./lessons/calibration-qc.html">Calibration and quality control</a></td>
+<td>Calibration and quality control</td>
 <td>Decide whether a signal can support a concentration</td>
-<td><a href="./slides/calibration-qc.html">Open</a></td>
-<td><a href="demos/calibration-qc.html">Try</a></td>
+<td><a href="./calibration-qc/lec.html">Lecture</a> · <a href="./calibration-qc/quiz.html">Quiz</a> · <a href="./calibration-qc/exercise.html">Exercise</a> · <a href="./calibration-qc/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="odd">
-<td><a href="./lessons/titration.html">Equilibrium and titration</a></td>
+<td>Equilibrium and titration</td>
 <td>Use reaction stoichiometry and a justified endpoint</td>
-<td><a href="./slides/titration.html">Open</a></td>
-<td><a href="demos/titration.html">Try</a></td>
+<td><a href="./titration/lec.html">Lecture</a> · <a href="./titration/quiz.html">Quiz</a> · <a href="./titration/exercise.html">Exercise</a> · <a href="./titration/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="even">
-<td><a href="./lessons/potentiometry.html">Electrodes and potentiometry</a></td>
+<td>Electrodes and potentiometry</td>
 <td>Read a logarithmic response without losing the chemistry</td>
-<td><a href="./slides/potentiometry.html">Open</a></td>
-<td><a href="demos/potentiometry.html">Try</a></td>
+<td><a href="./potentiometry/lec.html">Lecture</a> · <a href="./potentiometry/quiz.html">Quiz</a> · <a href="./potentiometry/exercise.html">Exercise</a> · <a href="./potentiometry/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="odd">
-<td><a href="./lessons/uv-visible.html">UV and visible absorption</a></td>
+<td>UV and visible absorption</td>
 <td>Measure iron through a specified coloured complex</td>
-<td><a href="./slides/uv-visible.html">Open</a></td>
-<td><a href="demos/uv-visible.html">Try</a></td>
+<td><a href="./uv-visible/lec.html">Lecture</a> · <a href="./uv-visible/quiz.html">Quiz</a> · <a href="./uv-visible/exercise.html">Exercise</a> · <a href="./uv-visible/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="even">
-<td><a href="./lessons/matrix-recovery.html">Matrix effects and recovery</a></td>
+<td>Matrix effects and recovery</td>
 <td>Find why a good calibration can still give a biased sample result</td>
-<td><a href="./slides/matrix-recovery.html">Open</a></td>
-<td><a href="demos/matrix-recovery.html">Try</a></td>
+<td><a href="./matrix-recovery/lec.html">Lecture</a> · <a href="./matrix-recovery/quiz.html">Quiz</a> · <a href="./matrix-recovery/exercise.html">Exercise</a> · <a href="./matrix-recovery/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="odd">
-<td><a href="./lessons/atomic-methods.html">Atomic measurements</a></td>
+<td>Atomic measurements</td>
 <td>Report an element amount through atomisation and detection</td>
-<td><a href="./slides/atomic-methods.html">Open</a></td>
-<td><a href="demos/atomic-methods.html">Try</a></td>
+<td><a href="./atomic-methods/lec.html">Lecture</a> · <a href="./atomic-methods/quiz.html">Quiz</a> · <a href="./atomic-methods/exercise.html">Exercise</a> · <a href="./atomic-methods/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="even">
-<td><a href="./lessons/separations.html">Separation principles</a></td>
+<td>Separation principles</td>
 <td>Connect phase exchange to retention, width and resolution</td>
-<td><a href="./slides/separations.html">Open</a></td>
-<td><a href="demos/separations.html">Try</a></td>
+<td><a href="./separations/lec.html">Lecture</a> · <a href="./separations/quiz.html">Quiz</a> · <a href="./separations/exercise.html">Exercise</a> · <a href="./separations/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="odd">
-<td><a href="./lessons/gc-hplc.html">GC and HPLC</a></td>
+<td>GC and HPLC</td>
 <td>Choose an introduction and separation, then calibrate peak area</td>
-<td><a href="./slides/gc-hplc.html">Open</a></td>
-<td><a href="demos/gc-hplc.html">Try</a></td>
+<td><a href="./gc-hplc/lec.html">Lecture</a> · <a href="./gc-hplc/quiz.html">Quiz</a> · <a href="./gc-hplc/exercise.html">Exercise</a> · <a href="./gc-hplc/exercise.html#explore">Demo</a></td>
 </tr>
 <tr class="even">
-<td><a href="./lessons/defending-results.html">Choosing and defending a result</a></td>
+<td>Choosing and defending a result</td>
 <td>Build and defend the complete analytical argument</td>
-<td><a href="./slides/defending-results.html">Open</a></td>
-<td><a href="demos/defending-results.html">Try</a></td>
+<td><a href="./defending-results/lec.html">Lecture</a> · <a href="./defending-results/quiz.html">Quiz</a> · <a href="./defending-results/exercise.html">Exercise</a> · <a href="./defending-results/exercise.html#explore">Demo</a></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="follow-one-result-all-the-way-back" class="level2">
-<h2 class="anchored" data-anchor-id="follow-one-result-all-the-way-back">Follow one result all the way back</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="assets/course/measurement-chain.svg" class="img-fluid figure-img" alt="A measurement claim connects its question, collected sample, preparation and recorded signal."></p>
-<figcaption>A measurement claim connects its question, collected sample, preparation and recorded signal.</figcaption>
-</figure>
-</div>
-<p>Keep the original inputs, preparation records, R code, derived tables and rendered report together. The worked examples use <strong>simulated teaching data</strong>, with explicit range, QC and separation problems to diagnose. <a href="./reference/data.html">Read the data dictionary</a> before interpreting them.</p>
-<p>The analytical examples explain data and chemistry. Actual practical work uses an approved laboratory protocol for the instrument and preparation.</p>
+<section id="follow-a-result-back-to-its-origin" class="level2">
+<h2 class="anchored" data-anchor-id="follow-a-result-back-to-its-origin">Follow a result back to its origin</h2>
+<p><img src="assets/course/measurement-chain.svg" class="img-fluid" alt="A result links the question, sampled material, preparation and measured signal.">{fig-alt=“The analytical question, material, preparation and measured signal form a traceable measurement chain.”}</p>
+<p>The examples use simulated data. Keep the original inputs, preparation records, R code, derived tables and report together. Read the <a href="./reference/data.html">data dictionary</a> before interpreting a file. Use the <a href="./dictionary.html">glossary</a> to distinguish terms such as precision, recovery and uncertainty.</p>
+<p>Selected reading follows Harris and Lucy, <em>Quantitative Chemical Analysis</em>, by topic: sampling and preparation; error and calibration; equilibrium and titration; electrochemistry; spectroscopy; chromatography. Chapter numbering depends on the edition, which remains to be confirmed for the planned course.</p>
 
 
 </section>

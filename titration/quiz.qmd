@@ -1,0 +1,85 @@
+---
+title: "Quiz: equilibrium and titration"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint. Then explain the answer in chemical
+and measurement terms. [Lecture](lec.qmd) · [Exercise](exercise.qmd).
+
+---
+
+**Q1.** Two monoprotic acids have the same initial amount, but one is weak. With the same standardised base, must the weaker acid have a smaller equivalence volume?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Keep the reaction coefficients separate from the equilibrium pH.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. Both require the same number of base moles for 1:1 neutralisation, so their equivalence volumes are equal at fixed titrant concentration. Their pH curves and suitable indicators can differ.
+:::
+
+---
+
+**Q2.** A 20.00 mL acid aliquot requires 15.00 mL of 0.08000 mol/L base at its estimated endpoint. Calculate the acid concentration under the 1:1 model.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Use base amount, then original sample volume.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+$n_b=0.08000\times0.01500=0.001200$ mol. Dividing by 0.02000 L gives **0.06000 mol/L** acid. Endpoint validity and standardisation uncertainty remain assumptions.
+:::
+
+---
+
+**Q3.** A 20.00 mL water sample uses 0.01000 mol/L EDTA. Initial/final burette readings are 0.20/4.25 mL and the matched blank consumes 0.05 mL. What is hardness as CaCO₃?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Delivered volume is final minus initial; then subtract the blank. Use 100.09 g/mol.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Corrected consumption is $4.25-0.20-0.05=4.00$ mL. This is $4.00\times10^{-5}$ mol, equivalent to 4.0036 mg CaCO₃ in 0.02000 L: **200.18 mg/L as CaCO₃**. It does not identify calcium and magnesium separately.
+:::
+
+---
+
+**Q4.** The next pH measurement is made after a 0.10 mL step rather than the previous 1.00 mL step. Is a raw pH change per row a comparable slope?
+
+::: {.callout-tip collapse="true" title="Hint"}
+What unit should a derivative have?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. Divide each pH difference by its actual volume difference to obtain pH per mL, and assign it to the interval midpoint. Different step sizes distort changes per row. Differencing also magnifies noise.
+:::
+
+---
+
+**Q5.** A program always stops a titration at pH 7. A weak-acid equivalence is above pH 7. What error direction is expected for the inferred acid amount in this ideal increasing curve?
+
+::: {.callout-tip collapse="true" title="Hint"}
+A lower trigger is reached before equivalence.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+It stops early, so titrant amount and inferred acid amount are biased low. Printing more endpoint digits does not correct an inappropriate endpoint rule.
+:::
+
+---
+
+**Q6.** An EDTA result is reported as 120 mg/L as CaCO₃. Has the analyst demonstrated dissolved carbonate at 120 mg/L?
+
+::: {.callout-tip collapse="true" title="Hint"}
+A reporting equivalent is not an identification result.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The result expresses the counted accessible metal equivalents on the CaCO₃ molar-mass basis under the assumed selective procedure. It neither establishes carbonate presence nor separates individual metal concentrations.
+:::
+

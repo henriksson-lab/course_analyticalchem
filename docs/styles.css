@@ -1,6 +1,85 @@
-:root { --bs-link-color: #006b78; }
-body { font-size: 1.06rem; }
-h1, h2, h3 { color: #123e52; }
-.quarto-figure img { max-height: 33rem; object-fit: contain; }
-figcaption { color: #394c58; }
-.callout { margin-block: 1.5rem; }
+/* Sidebar tweaks for the course website (HTML pages only — slides use theme.scss). */
+
+/* Bold the collapsible section headers in the docked sidebar
+   ("Course info", "Before you start", "Day 1 — ...", "Day 2 — ...", etc.)
+   so they stand out from the leaf-page entries below them. */
+.sidebar-item.sidebar-item-section > .sidebar-item-container,
+.sidebar-item.sidebar-item-section > .sidebar-item-container > a,
+.sidebar-item.sidebar-item-section > .sidebar-item-container > .sidebar-item-toggle,
+.sidebar-item.sidebar-item-section > .sidebar-item-container .sidebar-item-text {
+  font-weight: 700;
+}
+
+/* Colour sidebar leaf links by type so they're identifiable at a glance:
+   - Lectures (any file with "lec" in the name) → green
+   - Quizzes (any file with "quiz" in the name) → blue
+   The exercises and concepts pages keep the default (black/grey) colour. */
+.sidebar a.sidebar-item-text[href*="lec"],
+.sidebar-item .sidebar-item-text > a[href*="lec"] {
+  color: #1a7a3b;       /* lecture green */
+}
+.sidebar a.sidebar-item-text[href*="lec"]:hover,
+.sidebar-item .sidebar-item-text > a[href*="lec"]:hover {
+  color: #105025;
+}
+
+.sidebar a.sidebar-item-text[href*="quiz"],
+.sidebar-item .sidebar-item-text > a[href*="quiz"] {
+  color: #2a55c2;       /* quiz blue */
+}
+.sidebar a.sidebar-item-text[href*="quiz"]:hover,
+.sidebar-item .sidebar-item-text > a[href*="quiz"]:hover {
+  color: #1a3a8c;
+}
+
+/* Interactive demos (links to an exercise's #explore section) → orange */
+.sidebar a.sidebar-item-text[href*="#explore"],
+.sidebar-item .sidebar-item-text > a[href*="#explore"] {
+  color: #b35900;
+}
+.sidebar a.sidebar-item-text[href*="#explore"]:hover,
+.sidebar-item .sidebar-item-text > a[href*="#explore"]:hover {
+  color: #7a3d00;
+}
+
+/* Exercise links follow the topic/exercise paths used by this course. */
+.sidebar a.sidebar-item-text[href*="exercise"]:not([href*="#explore"]) {
+  font-style: italic;
+}
+
+/* Quantbio's stripes and tinted headers, applied to three chemistry groups.
+   Top-level entries: Home (1), Course info (2), Foundations (3),
+   Chemical measurement (4), Separations and integration (5). */
+.sidebar-menu-container > ul > li.sidebar-item-section:nth-child(n+3) {
+  border-left: 4px solid var(--week-color);
+  padding-left: 0.35rem;
+  margin: 0.4rem 0;
+}
+.sidebar-menu-container > ul > li.sidebar-item-section:nth-child(n+3) > .sidebar-item-container {
+  background: var(--week-tint);
+  border-radius: 0 4px 4px 0;
+  padding-left: 0.3rem;
+}
+.sidebar-menu-container > ul > li.sidebar-item-section:nth-child(n+3) > .sidebar-item-container .menu-text {
+  color: var(--week-color);
+}
+.sidebar-menu-container > ul > li:nth-child(3) { --week-color: #2a7f8f; --week-tint: #e6f3f5; } /* Foundations teal */
+.sidebar-menu-container > ul > li:nth-child(4) { --week-color: #6b4fa0; --week-tint: #efebf7; } /* Chemical measurement purple */
+.sidebar-menu-container > ul > li:nth-child(5) { --week-color: #a8324a; --week-tint: #f8e9ec; } /* Separations and integration crimson */
+
+/* Long equations scroll inside their line instead of shrinking the phone page. */
+.math.display {display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;}
+mjx-container[display="true"] {max-width:100%;overflow-x:auto;overflow-y:hidden;}
+:not(pre) > code {overflow-wrap:anywhere;white-space:normal;}
+
+/* Keep long scientific equations and inline R paths from widening a phone page.
+   Equations retain their size and scroll within their own display block. */
+main { min-width: 0; }
+main mjx-container[display="true"] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: .2em;
+}
+main :not(pre) > code { overflow-wrap: anywhere; }

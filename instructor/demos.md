@@ -1,15 +1,19 @@
 # Interactive demonstrations
 
-There is one browser experiment for each topic unit, linked from its student
-page and deck. This maps coverage to the agreed chemical sequence; it does not
-assume that a topic is one scheduled day. Use a demo when prediction, a controlled
-change and interpretation add more than another static example.
+Each topic exercise has an **Explore** section containing its relevant browser
+experiment. Open `<topic>/exercise.qmd#explore` in the source or
+`docs/<topic>/exercise.html#explore` in the built course; sidebar demo links lead
+to that section. The lecture links to the same experiment. Topics follow the
+chemical sequence and are not assumed to be individual scheduled days. Use a
+model when prediction, controlled change and interpretation add more than a
+static example.
 
-The demos run locally with native HTML controls and SVG plots. They need no R
-server, external chart library, account or network connection after the built
-pages are available. `docs/demos/index.html` is the entry point. Their numerical
-models are deliberately specified teaching cases, not instrument emulators or
-validated methods.
+The interface uses quantbio's `.qb-demo` components inside the exercise page.
+It has no separate application shell or primary standalone demo index. Models
+run in the browser with labelled native controls and responsive SVG plots, with
+no R server, account, external chart service or network request needed by the
+model. Their mathematical truths are specified teaching cases, not authentic
+instrument traces or validated laboratory methods.
 
 ## Teaching purpose and R transfer
 
@@ -47,27 +51,76 @@ infer perfect analytical precision, detection limits or complete uncertainty
 from those exact curves. Simulated gates use explicitly supplied exercise rules.
 Real matrix equivalence, recovery, selectivity and uncertainty require evidence.
 
-## Implementation and checks
+## Embedded interface and authoring
 
-- `demos/modules/*.js` owns each model and its interface; pure functions are
-  exported for numerical checks in Node.
-- `demos/demo-core.js` supplies a shared responsive plot, labelled controls,
-  deterministic sampling, simple line fitting and CSV generation.
-- `scripts/build-demo-pages.py` regenerates the twelve local HTML shells.
-- `scripts/test-demo-core.cjs` and the three `test-demos-*.cjs` groups check model
-  equations, boundaries, withholding and immutable preparation records.
-- `scripts/check-demo-browser.py` optionally exercises controls, reset, chart
-  keyboard inspection, CSV content and mobile layout. It requires local Chrome
-  and Python websocket-client; these are QA dependencies, not demo dependencies.
+- `demos/src/<topic>/math.ts` contains the typed numerical model where separate
+  mathematics is useful. Pure calculations remain independent of DOM state.
+- `demos/src/<topic>/main.ts` mounts through quantbio's `autoMount()` from
+  `demos/src/lib/ui.ts`. Each instance owns its controls, state and rendering;
+  changing one mounted instance must not change another.
+- `demos/src/lib/chemistry.ts` supplies course-specific layout, plot inspection
+  and CSV helpers built on the shared quantbio UI. The interface uses labelled
+  `.qb-slider`, `.qb-check`, `.qb-panel` and `.qb-readout` components rather
+  than the retired custom `ChemDemo` page runtime.
+- `demos/build.sh` bundles each `main.ts` into `demos/dist/<topic>.js` as an IIFE
+  and copies the shared `demo.css`. The exercise loads those local resources:
 
-Three parallel workers built the module groups. Independent read-only review
-of another group's models found a quadratic toy calibration could fold back at
-high concentration; it was replaced with a monotonic saturating model and a
-regression test. The review also corrected a recovered-concentration label and
-made invalid sampling counts explicit instead of silently clamping them.
+```html
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="titration"></div>
+<script src="../demos/dist/titration.js"></script>
+```
 
+The module selects its matching `data-demo` host. Every demo exposes a
+`data-action="reset"` control that restores both model state and visible control
+values for that host. `data-action="export"` downloads the current data or
+parameter sweep. The final reporting case additionally exposes
+`data-action="measure-new"`: changing its planned sample/aliquot or evidence
+conditions leaves existing preparation records unchanged until that action.
 
-Browser CSV exports can also be checked through the existing R packages with
-`Rscript scripts/check-demo-r-transfer.R <browser-artifact-directory>`. This
-imports every exported file, checks parsing, and independently reconstructs
-selected mass balances, model fits, integration and withheld-result handling.
+Inputs have `data-param` keys, scoped to their host. For example, the fluoride
+activity slider is `[data-demo="potentiometry"] [data-param="activity"]` and
+the UV cell path is `[data-demo="uv-visible"] [data-param="path"]`. Tests and
+teaching scripts should scope selectors to the intended host rather than depend
+on global element IDs. The visible label and value describe units; a parameter
+key is an implementation identifier, not an analytical quantity by itself.
+
+Plots expose their axes and model description to assistive technology. Focus a
+plot and use left/right arrows, Home or End to inspect numerical values; pointer
+and touch inspection use the same plotted data. Read the chemical interpretation
+alongside the plot rather than relying on colour or curve shape alone.
+
+## Build and verification
+
+Run named targets from the project root; quantbio's default `make` also stages
+files, so it is not the appropriate command for a verification pass without staging files.
+
+```sh
+make typecheck
+make demos
+make render
+python3 scripts/check-demos.py
+python3 scripts/check-demo-browser.py
+```
+
+`check-demos.py` runs strict TypeScript/model checks, verifies every exercise's
+Explore embed and checks that the published bundles match the built source.
+`check-demo-browser.py` serves the built site locally and exercises controls,
+reset, chart keyboard inspection, CSV content, mobile layout and independently
+mounted instances. It requires local Chrome and Python websocket-client as QA
+dependencies; students need neither. Run it after a current site render.
+
+The browser checker prints its temporary artifact directory. Reproduce the
+exported model calculations through the course's existing R packages with:
+
+```sh
+Rscript scripts/check-demo-r-transfer.R <browser-artifact-directory>
+```
+
+The R check imports all twelve CSVs and independently reconstructs selected
+mass balances, line fits, integration and withheld-value handling. It checks the
+recorded default scenarios; it does not validate every possible control setting
+or establish performance of a real analytical method. Retain focused boundary
+and scientific regression tests when changing a model. In particular, keep the
+monotonic saturation calibration, explicit sampling-count validation, native-loss
+versus late-spike distinction, and immutable preparation-history cases covered.

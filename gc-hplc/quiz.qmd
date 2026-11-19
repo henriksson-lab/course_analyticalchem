@@ -1,0 +1,96 @@
+---
+title: "Quiz: chromatographic choices and internal standards"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try the short calculations and method decisions before opening hints and explained answers. Assume all quantities refer to the stated final solution unless another basis is specified.
+
+**Q1.** Which is a plausible starting method for nonvolatile heat-sensitive solutes in water: conventional GC or HPLC?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Consider entry into the mobile phase and stability under the method conditions.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+HPLC is a plausible start because it transports dissolved solute without requiring ordinary GC vaporisation conditions. Solubility, stability, matrix compatibility and detector response still need evaluation; this is not a universal preference for LC.
+:::
+
+---
+
+**Q2.** The line is area$=3+50c$. A resolved accepted sample has area 1003 and preparation factor 10. Calculate original concentration.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Invert the response line before applying the preparation factor.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+$c_{final}=(1003-3)/50=20$ mg/L. Original concentration is 20×10=200 mg/L, conditional on range, accepted QC, identity and preparation assumptions.
+:::
+
+---
+
+**Q3.** The ratio model is $R=0.006+0.100c$. Areas are903 and 500, matched IS concentration, and preparation factor 5. What is the original caffeine estimate?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Compute903/500 first, then invert the ratio relationship.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+$R=1.806$, so $c=(1.806-0.006)/0.100=18.00$ mg/L final. Original estimate is 90.00 mg/L. This is a point estimate under the stated calibration and evidence.
+:::
+
+---
+
+**Q4.** The standards all contain10 mg/L internal standard, but the sample accidentally contains 20 mg/L. Can the original ratio-versus-analyte-concentration line be applied unchanged?
+
+::: {.callout-tip collapse="true" title="Hint"}
+What fixed design condition made that simple line appropriate?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The internal-standard concentration is part of the calibration relation. A different concentration changes the expected ratio. Use a justified concentration-ratio model or prepare matching samples; do not silently apply the old intercept and slope.
+:::
+
+---
+
+**Q5.** A standard is added after extraction. Both peaks share injection variation, but only native analyte suffered extraction loss. Does the ratio remove both effects?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Trace which steps the standard experienced.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+It can compensate a sufficiently shared injection factor, but not earlier native loss that the late standard never experienced. Early addition is helpful only with appropriate equivalent behaviour, which needs evidence.
+:::
+
+---
+
+**Q6.** A matrix component contributes to the integrated caffeine peak but not to the internal-standard peak. Will taking their ratio restore caffeine selectivity?
+
+::: {.callout-tip collapse="true" title="Hint"}
+The numerator contains which chemical contributions?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The ratio still includes the interfering contribution. Better separation or justified additional selective evidence is needed before the combined area supports caffeine quantification. A precise ratio can still be biased.
+:::
+
+---
+
+**Q7.** Two injections of one prepared drink agree closely. What replication claim do they support?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Distinguish collected sample, preparation and injection.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+They provide evidence about repeated injection/measurement under those conditions. They are not two independent preparations or two independently obtained drinks. Shared extraction and calibration effects remain shared.
+:::
+
+
+[Lecture](lec.qmd) · [Exercise and embedded exploration](exercise.qmd#explore)

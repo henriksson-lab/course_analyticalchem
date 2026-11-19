@@ -11,11 +11,11 @@ slides. Timetabling, staffing, examination arrangements, and programme
 organisation are outside its scope. Topic units below are content units, not
 scheduled lectures or teaching days.
 
-## Teaching draft implemented
+## Teaching draft in the quantbio scaffold
 
-All twelve topic units below now have student pages, illustrated slide decks,
+All twelve topic units below have topic-local lectures, practice quizzes, exercises, illustrated slide decks,
 worked calculations, transfer problems, and local interactive demos with CSV
-exports. [The demo index](demos/index.qmd) maps them to the chemical topics;
+exports. [The topic overview](index.qmd#topics) maps them to the chemical topics;
 [instructor guidance](instructor/demos.md) describes their use and model limits. Start at [the course index](index.qmd).
 The [course R project](downloads/analyticalchem-project.zip) contains the student
 report templates, raw simulated data and supplied uncertainty helper.

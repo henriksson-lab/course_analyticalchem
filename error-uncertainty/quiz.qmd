@@ -1,0 +1,126 @@
+---
+title: "Quiz: error and uncertainty"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint or answer. These practice questions
+check chemical reasoning and small calculations; they are not a graded question bank.
+
+[]{#q1}
+
+**Q1.** Method A gives repeated values near 10.0 mg/L with SD 0.30; B gives values near 10.5 with SD 0.02. The reference is 10.0. Which is more precise, and which shows a positive mean difference?
+
+::: {.callout-tip collapse="true" title="Hint Q1"}
+Treat spread and reference difference as separate properties.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q1"}
+B is more precise under these repeat conditions but has an observed positive difference of about 0.5 mg/L from the reference. Good repeatability is not the same as low bias. A rigorous bias assessment would also consider reference uncertainty and design.
+:::
+
+---
+
+[]{#q2}
+
+**Q2.** Nine independent stable readings have sample SD 0.30 mg/L. What is the reading contribution to uncertainty in their mean?
+
+::: {.callout-tip collapse="true" title="Hint Q2"}
+Use $s/\sqrt n$ for this specific contribution.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q2"}
+$0.30/\sqrt9=0.10$ mg/L. Individual readings still have spread about 0.30 mg/L. The smaller mean uncertainty does not include any shared stock, preparation or sampling component.
+:::
+
+---
+
+[]{#q3}
+
+**Q3.** A mean has an independent reading contribution 0.03 mg/L and a shared component 0.04 mg/L. Find combined standard uncertainty.
+
+::: {.callout-tip collapse="true" title="Hint Q3"}
+Add squared independent contributions, then take the square root.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q3"}
+$u=\sqrt{0.03^2+0.04^2}=0.05$ mg/L. This is a standard uncertainty, not automatically a 95% interval or a complete method budget.
+:::
+
+---
+
+[]{#q4}
+
+**Q4.** What happens to the previous combined uncertainty if indefinitely many independent readings drive the reading component towards zero?
+
+::: {.callout-tip collapse="true" title="Hint Q4"}
+Which component is shared by the readings?
+:::
+
+::: {.callout-note collapse="true" title="Answer Q4"}
+It approaches 0.04 mg/L, not zero. More readings of the same solution do not independently re-establish the shared component.
+:::
+
+---
+
+[]{#q5}
+
+**Q5.** Every reading has the same known +0.20 mg/L bias. Will increasing n remove it?
+
+::: {.callout-tip collapse="true" title="Hint Q5"}
+A fixed common displacement is not independent zero-mean noise.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q5"}
+No. The mean retains the fixed bias. Investigate or use an appropriately justified correction with its uncertainty. An arbitrary larger or smaller error bar does not itself correct the result.
+:::
+
+---
+
+[]{#q6}
+
+**Q6.** Two volume uncertainties arise partly from the same temperature error. Can they always be combined as independent squared terms?
+
+::: {.callout-tip collapse="true" title="Hint Q6"}
+Shared causes can induce covariance.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q6"}
+No. Covariance terms can matter. The independent-input square-sum formula is conditional on independence; the signs of model sensitivities and the correlations determine how shared effects propagate.
+:::
+
+---
+
+[]{#q7}
+
+**Q7.** A preparation has repeated identical displayed readings, so its observed SD is zero. Is the method uncertainty zero?
+
+::: {.callout-tip collapse="true" title="Hint Q7"}
+Which sources can move every reading together without changing their scatter?
+:::
+
+::: {.callout-note collapse="true" title="Answer Q7"}
+No. Common calibration, preparation, recovery, display resolution and sampling effects can remain. Repeating one prepared solution does not reveal every relevant source, and zero displayed scatter is not a validation of exactness.
+:::
+
+---
+
+[]{#q8}
+
+**Q8.** A result is reported with standard uncertainty 0.05 mg/L. Can the reader interpret ±0.05 as a 95% interval?
+
+::: {.callout-tip collapse="true" title="Hint Q8"}
+A coverage interpretation needs a construction and assumptions.
+:::
+
+::: {.callout-note collapse="true" title="Answer Q8"}
+Not from that statement alone. Standard uncertainty is on an SD-like scale. Expanded uncertainty needs a stated coverage factor and rationale; a confidence interval needs a sampling/model construction and level. State which quantity and components are included.
+:::
+
+---
+
+[Return to the exercise](exercise.qmd) · [Lecture](lec.qmd)

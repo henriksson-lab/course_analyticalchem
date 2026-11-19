@@ -1,0 +1,96 @@
+---
+title: "Quiz: retention, resolution and selective areas"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its independent hint or answer. Use the stated width definition and explain the chemical interpretation, not only the arithmetic.
+
+**Q1.** An unretained marker takes0.50 min and an analyte peak takes1.50 min. What is its retention factor?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Retention factor describes delay beyond unretained transit: $k=(t_R-t_0)/t_0$.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+$k=(1.50-0.50)/0.50=2.00$. Dividing1.50 by 0.50 without subtracting transit would give 3 and the wrong definition.
+:::
+
+---
+
+**Q2.** Peaks are at 4.00 and 4.60 min, with baseline widths 0.40 and 0.80 min. Calculate resolution.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Use $R_s=2\Delta t_R/(w_1+w_2)$, keeping all time units the same.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+$R_s=2(0.60)/(0.40+0.80)=1.00$. It is dimensionless. The value describes spacing relative to these baseline widths; it does not by itself prove purity or quantify the integration error.
+:::
+
+---
+
+**Q3.** The export contains half-height widths rather than baseline widths. Can you use the same coefficient2 in the preceding formula?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Width definitions are part of the formula, not interchangeable labels.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. A half-height-width resolution formula needs its appropriate coefficient. Substituting another width definition unchanged changes the numerical meaning of the result.
+:::
+
+---
+
+**Q4.** An ideal Gaussian peak doubles in width at fixed area and retention time. What happens to height? If both peaks double their widths, what happens to their resolution?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Area is proportional to Gaussian height times width; the resolution numerator remains fixed.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+The height halves and full area stays fixed. Doubling both widths doubles the resolution denominator and therefore halves resolution. Mean retention factors and relative selectivity stay unchanged.
+:::
+
+---
+
+**Q5.** Two separations have the same retention times and widths, but the second has a much larger neighbouring component. Must the integrated area assigned to A have the same relative contamination?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Does resolution include peak amount?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. Resolution depends on times and widths, not relative component area. A larger neighbouring contribution can create more contamination in A’s integration window at the same resolution. Adequacy depends on the quantitative task.
+:::
+
+---
+
+**Q6.** A peak occurs at an authentic standard’s expected retention time and has no visible shoulder. Does that uniquely identify it?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Could another component arrive at the same time?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. Matching retention under controlled conditions supports identity but does not exclude coelution. Appropriate standards, separation review or additional selective evidence can strengthen the assignment. An apparently single peak is not proof of a single compound.
+:::
+
+---
+
+**Q7.** A CSV has 1401 time positions for one run. Are there1401 independent samples?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Identify what one row represents.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. They are dependent measurement positions in a within-run time series. Independent sample, preparation and injection counts come from the experimental design and identifiers, not the number of trace rows.
+:::
+
+
+[Lecture](lec.qmd) · [Exercise and embedded exploration](exercise.qmd#explore)

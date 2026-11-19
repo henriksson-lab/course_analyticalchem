@@ -1,0 +1,276 @@
+---
+title: "Exercise: sampling and preparation"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Distinguish representative sampling from precise repeated measurement; reverse
+an extraction and dilution chain; calculate an ideal partition recovery; and
+state which losses an added spike can test. Work by hand before using the demo
+and R. All supplied datasets are simulated.
+
+## Background
+
+A heterogeneous solid has three equal-mass strata with mean iron concentrations
+8, 14 and 25 mg/kg. Its bulk mass mean weights the strata by **mass**, not by the
+number of convenient grabs. A composite can estimate a bulk quantity but no
+longer preserves every original spatial difference.
+
+For a caffeine extraction, the concentration in the measured flask must be
+returned through aliquot and extract volumes to the original mass:
+
+$$w_{extracted}=c_{final}\frac{V_{final}}{V_{aliquot}}
+\frac{V_{extract}}{m_{sample}}.$$
+
+Use litres for $V_{extract}$ when $c$ is mg/L. The result is **extracted caffeine**;
+complete native-analyte recovery is not established. For ideal immiscible phases,
+$D=c_o/c_a$ and the fraction remaining after n equal fresh extractions using total
+solvent $V_o$ is $[V_a/(V_a+D V_o/n)]^n$.
+
+## By hand
+
+**B1.** Find the bulk mean of the three equal-mass strata. What mean would many
+top-only grabs approach? Explain why a small SD would not fix this difference.
+[Hint](#hint-b1)
+
+**B2.** Instead suppose top, middle and bottom represent mass fractions 0.50,
+0.30 and 0.20. Calculate the bulk mean. Why is an equal-stratum average now wrong?
+[Hint](#hint-b2)
+
+**B3.** A 0.5000 g dry portion gives 25.00 mL extract. A 2.00 mL aliquot made to
+10.00 mL reads 1.92 mg caffeine/L. Calculate extract concentration, extracted
+amount, and extracted caffeine in mg/g. [Hint](#hint-b3)
+
+**B4.** At $D=9$ with 20 mL aqueous phase, compare recovery using one 10 mL
+extraction with two fresh 5 mL extractions. State the physical assumptions.
+[Hint](#hint-b4)
+
+**B5.** A spike added after extraction gives the expected incremental response.
+Does this establish complete recovery of native bound analyte? Explain which
+parts of the measurement it did and did not experience. [Hint](#hint-b5)
+
+## Explore {#explore}
+
+The first experiment separates sampling allocation from the mass-weighted
+quantity. The second isolates ideal equilibrium recovery at fixed total solvent.
+Predict before each change; the known target is visible only because this is a
+simulation.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="sampling-preparation"></div>
+<script src="../demos/dist/sampling-preparation.js"></script>
+```
+
+
+**E1.** Keep three grabs per stratum, then change top grabs to 20 while retaining
+three middle and three bottom grabs. Compare the naive all-grab mean and the
+mean of stratum means. Which weighting targets the equal-mass bulk quantity?
+[Hint](#hint-explore)
+
+**E2.** Set middle and bottom grabs to zero. What becomes unestimable? Repeat
+the sampling run, and explain why more top-only observations do not solve it.
+[Hint](#hint-explore)
+
+**E3.** Restore all three strata, then change the sampling run without changing
+the target. What varies randomly and what stays defined by the sampling question?
+[Hint](#hint-explore)
+
+**E4.** Select successive extraction. At $D=9$, 20 mL aqueous and 10 mL total
+solvent, compare one and two extractions. Then lower D. Why does dividing solvent
+not guarantee complete real extraction? [Hint](#hint-explore)
+
+## In R
+
+Run from the course project's root. The raw dictionaries define sample and
+preparation identities. In the grab table, rows are grabs within a specified
+position. T1a and T1b are independent preparations of the same supplied material,
+not independently collected materials.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+grabs <- read_csv("data/course/sampling.csv", show_col_types = FALSE)
+strata <- grabs |>
+  group_by(position) |>
+  summarise(n_grabs = n(), mean_mg_kg = mean(iron_mg_kg), .groups = "drop")
+strata
+mean(strata$mean_mg_kg)
+prep <- read_csv("data/course/extractions.csv", show_col_types = FALSE)
+stopifnot(!anyDuplicated(prep$preparation_id), all(prep$mass_g > 0))
+results <- prep |>
+  mutate(extract_mg_l = final_caffeine_mg_l * final_ml / aliquot_ml,
+         extracted_mg = extract_mg_l * extract_ml / 1000,
+         caffeine_mg_g = extracted_mg / mass_g)
+results
+fig <- ggplot(results, aes(preparation_id, caffeine_mg_g)) + geom_point() +
+  labs(x = "Independent preparation", y = "Extracted caffeine (mg/g)") +
+  theme_minimal()
+fig
+dir.create("output", showWarnings = FALSE)
+write_csv(results, "output/extracted-caffeine.csv")
+one_recovery <- 1 - 20 / (20 + 9 * 10)
+two_recovery <- 1 - (20 / (20 + 9 * 5))^2
+100 * c(one = one_recovery, two = two_recovery)
+```
+
+**R1.** Confirm B1, B3 and B4. Explain why `mean(grabs$iron_mg_kg)` happens to
+give the same bulk result for this particular balanced table but is not a
+universal sampling rule. [Hint](#hint-r1)
+
+**R2.** Explain the unit conversion `/1000` and name the material basis of each
+new results column. Which result would be wrong if you used measured final
+concentration directly as mg/g? [Hint](#hint-r2)
+
+**R3.** A new preparation uses 0.4000 g, 40.00 mL extract, and 1.00 mL made to
+10.00 mL giving 1.50 mg/L. Add a calculation to your report and explain why the
+result still needs a recovery qualification. [Hint](#hint-r3)
+
+**R4.** Export the sampling experiment and save `sampling-demo.csv` at the
+project root. Reproduce both averages when all strata are represented:
+
+```r
+if (file.exists("sampling-demo.csv")) {
+  demo <- read_csv("sampling-demo.csv", show_col_types = FALSE)
+  print(mean(demo$iron_mg_kg))
+  demo_strata <- demo |>
+    group_by(stratum) |>
+    summarise(mean_mg_kg = mean(iron_mg_kg), .groups = "drop")
+  if (nrow(demo_strata) == 3) print(mean(demo_strata$mean_mg_kg))
+}
+```
+
+Why does an absent stratum need to remain missing rather than being assigned
+0 mg/kg? [Hint](#hint-r4)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="Hint B1"}
+For equal masses, average stratum means. Repeating a biased selection changes
+random scatter but not the material left unsampled.
+:::
+
+::: {#hint-b2 .callout-tip collapse="true" title="Hint B2"}
+Multiply each concentration by its material mass fraction, then sum. Fractions
+must refer to the intended target and add to one.
+:::
+
+::: {#hint-b3 .callout-tip collapse="true" title="Hint B3"}
+Undo the final dilution first, multiply by the total extract in litres, then
+divide the extracted mg by original grams.
+:::
+
+::: {#hint-b4 .callout-tip collapse="true" title="Hint B4"}
+For one extraction, the fraction left is $20/(20+9\times10)$. For two, multiply
+the fraction left after each fresh 5 mL extraction.
+:::
+
+::: {#hint-b5 .callout-tip collapse="true" title="Hint B5"}
+A late spike does not pass through earlier losses. Even an early freely dissolved
+spike may not behave like native bound material.
+:::
+
+::: {#hint-explore .callout-tip collapse="true" title="Hints E1–E4"}
+Changing sample allocation changes the weighting of a pooled average. In the
+extraction experiment, keep total solvent fixed; every portion is fresh, phases
+equilibrate and are separated completely in this ideal model.
+:::
+
+::: {#hint-r1 .callout-tip collapse="true" title="Hint R1"}
+The raw table contains four grabs from each equal-mass stratum. Balanced counts
+make the arithmetic coincide. Unequal counts generally break that coincidence.
+:::
+
+::: {#hint-r2 .callout-tip collapse="true" title="Hint R2"}
+mg/L × L gives mg, then mg/g uses original sample grams. The final flask and
+original solid do not have interchangeable concentration units.
+:::
+
+::: {#hint-r3 .callout-tip collapse="true" title="Hint R3"}
+Use $(1.50\times10/1)\times0.04000/0.4000$ and identify which losses are assumed
+absent. The formula alone does not demonstrate them absent.
+:::
+
+::: {#hint-r4 .callout-tip collapse="true" title="Hint R4"}
+[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) separates
+stratum summaries. An unsampled stratum has unknown concentration, not a measured
+zero. A bulk estimate needs its evidence or a justified model.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions B1–B5"}
+**B1.** $(8+14+25)/3=15.667$ mg/kg. Top-only sampling approaches 8 mg/kg. A small
+repeat SD describes the top measurements, not the bias from excluding other
+material.
+
+**B2.** $0.50(8)+0.30(14)+0.20(25)=13.2$ mg/kg. Equal weights would represent
+three equal masses that no longer exist in this new target.
+
+**B3.** Final-to-extract factor $10/2=5$ gives 9.60 mg/L extract. Amount is
+$9.60\times0.02500=0.240$ mg; divided by 0.5000 g it gives 0.480 mg/g extracted.
+
+**B4.** One recovery $1-20/110=0.81818$; two recoveries together give
+$1-(20/65)^2=0.90533$. This assumes constant distribution ratio and phase volumes,
+equilibrium, complete separation and fresh solvent for each extraction, with no
+reaction or handling loss. It is not validation of real native extraction.
+
+**B5.** No. The late spike tests incremental behaviour after it was added, not
+native analyte lost before addition. A native bound analyte can differ from a
+freely dissolved spike, so equivalence also needs evidence.
+:::
+
+::: {.callout-note collapse="true" title="Solutions E1–E4"}
+**E1.** With equal grab counts, the two averages agree. Twenty top plus three
+middle and three bottom grabs make the naive average target
+$(20\times8+3\times14+3\times25)/26=10.654$ mg/kg in expectation. The average of
+the three stratum means remains near 15.667 mg/kg and uses the supplied mass
+weights. Exact simulated results vary with run.
+
+**E2.** The full bulk quantity cannot be estimated from all strata by this
+procedure because middle and bottom are absent. Top-only precision cannot
+supply their concentrations. The demo withholds the stratified estimate rather
+than inventing zeros.
+
+**E3.** The realised grabs and estimated means vary. The defined equal-mass target
+and the rule for weighting strata remain fixed. More independent grabs reduce
+random variation under this model but do not justify a different sampling target.
+
+**E4.** Recoveries are 81.8% and 90.5%. Lower D leaves more analyte in the aqueous
+phase. Several fresh extractions improve this ideal equilibrium recovery, but
+bound analyte, reaction, emulsion, incomplete equilibration or handling loss can
+invalidate the ideal assumptions.
+:::
+
+::: {.callout-note collapse="true" title="Solutions R1–R4"}
+**R1.** Supplied stratum means are 8, 14 and 25 mg/kg. Equal counts and equal
+stratum masses make the pooled mean equal the equal-stratum mean. The three
+caffeine results are 0.480, 0.490 and 0.750 mg/g. Recovery calculations match B4.
+
+**R2.** `/1000` converts extract mL into L. `extract_mg_l` refers to the extract;
+`extracted_mg` is amount in its total volume; `caffeine_mg_g` refers to original
+solid mass. Reporting 1.92 mg/L final as 1.92 mg/g confuses quantities and ignores
+the preparation chain.
+
+**R3.** $1.50\times10=15.0$ mg/L extract; $15.0\times0.04000=0.600$ mg;
+$0.600/0.4000=1.50$ mg/g extracted. This still assumes valid measured concentration
+and no transfer loss, and does not establish complete native recovery.
+
+**R4.** R reproduces the demo's all-grab mean and equal mean of stratum means
+when all three strata appear. Missing rows for a stratum mean it was not sampled.
+Replacing that missing evidence with zero would create a false bulk estimate.
+:::
+
+## Where this leads
+
+[Error and uncertainty](../error-uncertainty/exercise.qmd) separates variability
+from bias and asks which uncertainty sources a set of repeat readings can
+actually estimate. In later methods, keep the original material basis when
+undoing aliquot, extract and dilution steps.

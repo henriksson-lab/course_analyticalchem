@@ -1,0 +1,282 @@
+---
+title: "Exercise: calibration and quality control"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Fit and inspect a response calibration, invert it with its concentration basis
+intact, distinguish range from independent QC and residual review, and interpret
+a conditional inverse uncertainty interval. Use the chemistry and design to
+justify the report before exporting a number.
+
+## Background
+
+For a linear response $y=a+bc+e$, set known concentration c and measure y.
+An unknown point estimate is $(\bar y-a)/b$, not a reversed regression. Retain
+the intercept unless a justified measurement model specifies otherwise. A good
+$R^2$ cannot rule out curvature, matrix effects, drift or preparation loss.
+
+The supplied iron calibration uses mg elemental Fe/L in a final coloured solution
+and absorbance already referenced to a reagent blank. A method blank, independent
+check and sample spike answer different questions. All data are simulated.
+
+## By hand
+
+**B1.** A line is $y=0.010+0.200c$, with c in mg/L final. A mean unknown response
+0.510 follows a fivefold preparation dilution. Calculate final and original
+concentration. [Hint](#hint-b1)
+
+**B2.** Someone forces that line through zero while keeping slope 0.200. What
+estimate results from response 0.510? Why is concentration zero not sufficient
+reason to force a measured response through zero? [Hint](#hint-b2)
+
+**B3.** At c=2 mg/L, the line in B1 predicts 0.410. An observation is 0.440.
+Calculate the residual and explain its sign. Would one residual identify an
+instrumental cause? [Hint](#hint-b3)
+
+**B4.** An independently sourced 2.00 mg/L check is estimated as 1.70 mg/L.
+The preselected exercise window is 95–105% recovery. Calculate recovery and the
+action for affected unknowns. [Hint](#hint-b4)
+
+**B5.** In a separate ideal low-level model, blank SD is 0.004 signal units and
+sensitivity 0.500 signal units per mg/L. Calculate the rough 3-SD concentration
+increment. Is it a universally validated detection limit or proof of zero below
+that value? [Hint](#hint-b5)
+
+## Explore {#explore}
+
+The demo uses a monotonic toy response
+$y=0.010+0.200c/(1+qc)$ plus independent response noise, with q in L/mg.
+q=0 is linear; positive q gives a saturating curve. Standards, later sample and
+independent check are separate records. The known truth is visible only because
+this is a simulation; it does not appear in real unknown data.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="calibration-qc"></div>
+<script src="../demos/dist/calibration-qc.js"></script>
+```
+
+
+**E1.** Set q=0 and response noise to zero. Why is a sample result withheld while
+residual review is pending? Accept the line after inspecting it, and check the
+5 mg/L original unknown at dilution factor 2. [Hint](#hint-explore)
+
+**E2.** Set largest standard to 8 mg/L and q to 0.015 L/mg, retaining zero noise.
+Compare $R^2$ with residual structure. What would rejecting the line mean, and
+what evidence would a narrower proposed range still need? [Hint](#hint-explore)
+
+**E3.** Reset to a linear response, largest standard 4 mg/L and accepted review.
+Set original unknown to 20 mg/L and dilution factor 1. Then make a new simulated
+measurement at factor 10. Explain why this is different from editing the
+preparation factor on the old response. [Hint](#hint-explore)
+
+**E4.** With an in-range sample, change later sensitivity by −20%. Which check
+sees this failure? Can the old standards' residuals diagnose later drift?
+[Hint](#hint-explore)
+
+## In R
+
+Run from the supplied project root. These are the reviewed iron data, separate
+from the toy saturating-response demo. They cover 0–4 mg Fe/L in final solution.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+standards <- read_csv("data/standards.csv", show_col_types = FALSE)
+fit <- lm(absorbance ~ standard_mg_l, data = standards)
+a <- unname(coef(fit)[1])
+b <- unname(coef(fit)[2])
+standards <- standards |>
+  mutate(fitted = fitted(fit), residual = residuals(fit))
+ggplot(standards, aes(standard_mg_l, residual)) +
+  geom_hline(yintercept = 0, linetype = "dashed") + geom_point() +
+  labs(x = "Final iron concentration (mg Fe/L)", y = "Residual absorbance") +
+  theme_minimal()
+unknown <- c(.47922, .48041, .48223)
+limits <- predict(fit, newdata = data.frame(standard_mg_l = c(0, 4)))
+in_range <- all(unknown >= limits[1] & unknown <= limits[2])
+candidate_final <- if (in_range) (mean(unknown) - a) / b else NA_real_
+candidate_final
+source("R/inverse-calibration.R")
+conditional_interval <- inverse_calibration(fit, unknown)
+conditional_interval
+dir.create("output", showWarnings = FALSE)
+write_csv(conditional_interval, "output/calibration-unknown.csv")
+```
+
+**R1.** Interpret a and b with units, inspect the residuals, and state the final
+concentration estimate. Why is it not yet an original-water result?
+[Hint](#hint-r1)
+
+**R2.** Interpret the helper's standard uncertainty and approximate 95% interval.
+Name its assumptions and at least two omitted sources. Explain why a forward
+response interval is not itself a concentration interval. [Hint](#hint-r2)
+
+**R3.** Fit the deliberately curved dataset and plot its residuals. Explain what
+a model/range review would need, without deleting inconvenient standards merely
+to improve the graph. [Hint](#hint-r3)
+
+```r
+curved <- read_csv("data/course/nonlinear-calibration.csv", show_col_types = FALSE)
+curved_fit <- lm(response ~ c_mg_l, data = curved)
+curved <- curved |> mutate(residual = residuals(curved_fit))
+ggplot(curved, aes(c_mg_l, residual)) +
+  geom_hline(yintercept = 0, linetype = "dashed") + geom_point() +
+  labs(x = "Concentration (mg/L)", y = "Residual response") + theme_minimal()
+```
+
+**R4.** Export `calibration-range-and-qc.csv` and save it at the project root.
+Fit **only standard rows**, not unknown or check rows. Match the demo's
+coefficients and explain why the independent QC is not another point to include
+in the fit. [Hint](#hint-r4)
+
+```r
+if (file.exists("calibration-range-and-qc.csv")) {
+  demo <- read_csv("calibration-range-and-qc.csv", show_col_types = FALSE)
+  demo_standards <- demo |> filter(role == "standard")
+  demo_fit <- lm(response ~ known_final_mg_l, data = demo_standards)
+  print(coef(demo_fit))
+  print(demo |> filter(role == "independent_check"))
+}
+```
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="Hint B1"}
+Subtract the fitted intercept before dividing by slope. Then reverse the
+preparation dilution to return to the original basis.
+:::
+
+::: {#hint-b2 .callout-tip collapse="true" title="Hint B2"}
+Compare $0.510/0.200$ with $(0.510-0.010)/0.200$. A response can have a background
+offset even at nominal concentration zero.
+:::
+
+::: {#hint-b3 .callout-tip collapse="true" title="Hint B3"}
+Residual is observed minus fitted. The sign locates a point relative to a line;
+it does not identify a chemical or instrumental mechanism by itself.
+:::
+
+::: {#hint-b4 .callout-tip collapse="true" title="Hint B4"}
+Recovery is $100\times c_{estimated}/c_{reference}$. Apply the preselected rule
+before deciding on a reportable result.
+:::
+
+::: {#hint-b5 .callout-tip collapse="true" title="Hint B5"}
+Use $3s/b$. A complete detection procedure also needs its noise, blank, matrix
+and decision-probability conditions.
+:::
+
+::: {#hint-explore .callout-tip collapse="true" title="Hints E1–E4"}
+Range, independent QC and residual review are separate requirements. A simulator
+can expose the generating truth, but a real unknown cannot be validated merely
+by looking at a hidden correct answer.
+:::
+
+::: {#hint-r1 .callout-tip collapse="true" title="Hint R1"}
+[`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html)
+fits absorbance as response. Prepared concentration is the explanatory variable.
+Volume/preparation records connect final solution to original sample.
+:::
+
+::: {#hint-r2 .callout-tip collapse="true" title="Hint R2"}
+The helper propagates reading noise and the fitted intercept/slope covariance
+through an inverse relation. It excludes preparation and recovery effects.
+:::
+
+::: {#hint-r3 .callout-tip collapse="true" title="Hint R3"}
+[`residuals()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/residuals.html)
+can show curvature despite a high overall association. A justified range needs
+adequate standards and checks for the intended sample responses.
+:::
+
+::: {#hint-r4 .callout-tip collapse="true" title="Hint R4"}
+Including the check in calibration sacrifices its independent role. Filter by
+`role`, not by row position or whichever rows make the result look best.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions B1–B5"}
+**B1.** $(0.510-0.010)/0.200=2.50$ mg/L final; original concentration is
+$2.50\times5=12.5$ mg/L. Both units and material stage belong in the report.
+
+**B2.** A forced-zero calculation gives 2.55 mg/L final, 2% above 2.50 mg/L.
+A nominal zero concentration does not guarantee a precisely zero response. The
+intercept must follow the justified model and evidence, not convenience.
+
+**B3.** $0.440-0.410=+0.030$ signal units. The point lies above the fitted line.
+One residual alone does not establish its cause; a pattern across concentration
+may support investigation of model failure.
+
+**B4.** Recovery is $100(1.70/2.00)=85.0\%$, failing the supplied 95–105% rule.
+Withhold affected unknowns, investigate, restore satisfactory calibration/checks
+and remeasure as appropriate. Dividing all results by 0.85 would assume a cause
+not established by the failed check.
+
+**B5.** $3(0.004)/0.500=0.024$ mg/L is a rough blank-relative concentration
+increment. It is not universal validation, and a below-limit response is not
+proof of exactly zero analyte.
+:::
+
+::: {.callout-note collapse="true" title="Solutions E1–E4"}
+**E1.** A model review has not yet been made, so a numerical candidate is not
+automatically reportable. With q=0, noise=0, accepted review and satisfactory
+range/QC, a=0.010 and b=0.200 give 2.50 mg/L final and 5.00 mg/L original.
+
+**E2.** Positive q gives diminishing sensitivity and systematic residual
+structure despite high $R^2$. Rejecting the line withholds the simple estimate.
+A narrower range may reduce nonlinearity, but needs adequate standards,
+diagnostics, independent checks and suitable intended sample responses; it is
+not validated by removing inconvenient points.
+
+**E3.** At factor 1 the final concentration is 20 mg/L, beyond the four mg/L
+calibration. A new factor-10 measurement gives 2 mg/L final and returns to
+20 mg/L original. It supplies a new observed response; changing a number beside
+the old out-of-range response supplies no new measurement.
+
+**E4.** Under the linear zero-noise model a −20% sensitivity change gives an
+independent-check recovery of 80%, so affected samples are withheld. The old
+calibration residuals still look perfect because they predate the change.
+:::
+
+::: {.callout-note collapse="true" title="Solutions R1–R4"}
+**R1.** a≈0.003873883 absorbance units; b≈0.198799368 L/mg Fe. Final estimate
+is 2.3981269 mg Fe/L. The residuals lack obvious curvature in this selected range,
+though that does not prove sample recovery or selectivity. Original-water
+concentration also needs the actual aliquot and final-volume factor.
+
+**R2.** The supplied helper gives standard uncertainty about 0.0045090 mg Fe/L
+and approximate 95% interval 2.388568–2.407686 mg Fe/L **final**. It assumes a
+correct linear model, independent normal equal-variance response errors,
+negligible calibration-concentration uncertainty and a well-determined positive
+slope. Sampling, volume uncertainty, matrix bias and recovery are omitted. A
+forward interval has response units; inverse concentration limits require the
+uncertain inverse relation, including intercept/slope covariance. The helper
+uses a first-order approximation, not a general nonlinear inverse algorithm.
+
+**R3.** Curved-response residuals show a systematic concentration pattern. This
+is evidence against the single straight-line model over that full range, not
+permission to erase standards until $R^2$ looks satisfactory. A proposed range
+or model needs independent evidence and fit to the analytical purpose.
+
+**R4.** `filter(role == "standard")` reproduces the fitted coefficients within
+numerical rounding. The check material tests whether the selected calibration
+predicts an independently known quantity; fitting it into the same line would
+reduce its ability to reveal failure. Unknown rows do not supply known
+calibration concentrations in an actual analysis.
+:::
+
+## Where this leads
+
+[UV/visible absorption](../uv-visible/exercise.qmd) supplies the absorbing species,
+measurement path and preparation chemistry behind the iron response. All later
+methods revisit range, independent checks and honest uncertainty statements.

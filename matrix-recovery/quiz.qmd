@@ -1,0 +1,85 @@
+---
+title: "Quiz: matrix effects and standard addition"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint. Then explain the answer in chemical
+and measurement terms. [Lecture](lec.qmd) · [Exercise](exercise.qmd).
+
+---
+
+**Q1.** Why do the standard-addition flasks use equal sample aliquots and equal final volumes?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Track native concentration and matrix fraction.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Both remain constant across flasks, while added-analyte concentration varies. Changing final volume without correction would also change native concentration and matrix fraction, invalidating the simple fixed-volume intercept formula.
+:::
+
+---
+
+**Q2.** Matched unspiked/spiked final solutions give external estimates 2.00 and 2.80 mg/L after adding 1.00 mg/L. Calculate incremental recovery.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Use the change in the estimate, not the full spiked value.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Recovery is $100(2.80-2.00)/1.00=\mathbf{80\%}$. It tests incremental response from the point of addition under the matched design, not automatically total native recovery.
+:::
+
+---
+
+**Q3.** Equal 4.00 mL sample aliquots made to 20.00 mL give $y=0.360+0.120c_{added,final}$. What original concentration is inferred?
+
+::: {.callout-tip collapse="true" title="Hint"}
+First find the negative x-intercept; then undo sample dilution.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+$x_0=-0.360/0.120=-3.00$ mg/L final. Its magnitude multiplied by $20/4=5$ gives **15.0 mg/L original** under the stated additive model. Negative concentration was not physically prepared.
+:::
+
+---
+
+**Q4.** An unrelated constant signal remains in every flask. Can an exact straight standard-addition line prove the native analyte estimate is correct?
+
+::: {.callout-tip collapse="true" title="Hint"}
+What else contributes to the intercept?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. A constant additive interference increases the intercept and is misread as native analyte. Shared multiplicative sensitivity cancels in intercept/slope, but an uncorrected additive term does not. Independent background/selectivity evidence is needed.
+:::
+
+---
+
+**Q5.** A spike added after extraction recovers 100%. Can native analyte still have been lost during extraction?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Ask which steps the added material experienced.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Yes. The spike bypassed the earlier loss and tests only later behaviour. Even a pre-extraction freely dissolved spike may not mimic native bound analyte; the chemical equivalence assumption needs evidence.
+:::
+
+---
+
+**Q6.** Does an ordinary response confidence interval for the fitted intercept automatically give a confidence interval for original standard-addition concentration?
+
+::: {.callout-tip collapse="true" title="Hint"}
+The target quantity is a ratio of coefficients times a volume ratio.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The target depends on intercept, slope, their covariance and preparation volumes. A forward response interval has another target; a suitable inverse uncertainty calculation and its assumptions are needed.
+:::
+

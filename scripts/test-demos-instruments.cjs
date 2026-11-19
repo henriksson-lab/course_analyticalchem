@@ -1,9 +1,9 @@
 'use strict';
 const assert = require('node:assert/strict');
-const {atomicModel} = require('../demos/modules/atomic-methods.js');
-const {separationModel} = require('../demos/modules/separations.js');
-const {injectionModel} = require('../demos/modules/gc-hplc.js');
-const {assessRecord, measurePreparation} = require('../demos/modules/defending-results.js');
+const {atomicModel} = require('./load-model.cjs')('atomic-methods');
+const {separationModel} = require('./load-model.cjs')('separations');
+const {injectionModel} = require('./load-model.cjs')('gc-hplc');
+const {assessRecord, measurePreparation} = require('./load-model.cjs')('defending-results');
 const close = (actual, expected, tolerance = 1e-9) => assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} differs from ${expected}`);
 // The method blank is undiluted, while sample contamination is diluted along with the digest.
 const isolated = atomicModel({isolated: true, blank: 0.010});

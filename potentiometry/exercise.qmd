@@ -1,0 +1,222 @@
+---
+title: "Exercise: electrodes and logarithmic calibration"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Explain what an ion-selective cell measures, invert a logarithmic calibration,
+and use independent checks without confusing a passing reference with proof
+of sample-matrix compatibility. Keep activity and free-ion concentration distinct
+from total element amount.
+
+## Background
+
+A potentiometric cell measures an indicator/reference potential difference
+with negligible measurement current. Under a stated convention,
+$E=K+(2.303RT/zF)\log_{10}a_i$, where $a_i=\gamma_i c_i/c^\circ$ is dimensionless
+activity and $z$ is signed charge. The ideal 25 °C monovalent magnitude is about
+59.16 mV per decade; this fluoride convention has a negative slope.
+
+A calibration using concentration assumes an appropriate activity relationship
+between samples and standards. Its model is
+$E=a+b\log_{10}[c/(1\,\mathrm{mol/L})]$, hence
+$c=10^{(E-a)/b}$ mol/L. Matched ionic strength can help but does not remove every
+interference. These data and all model truths are simulated.
+
+## By hand
+
+**B1.** A model has $a=-97.42$ mV and $b=-59.16$ mV/decade. Calculate potential
+at $1.00\times10^{-4}$ mol/L and concentration at 121.20 mV. Explain both inverse
+steps. [Hint](#hint-b1)
+
+**B2.** Decrease a fluoride reading by 17.8 mV. Predict whether inferred
+concentration rises or falls and calculate its approximate factor.
+[Hint](#hint-b2)
+
+**B3.** Standards and a sample have identical free-ion concentration, but the
+sample's activity coefficient is half the calibration coefficient. With no
+drift, what concentration ratio will the old calibration infer? Could a
+separate matrix-matched check still pass? [Hint](#hint-b3)
+
+**B4.** An independent $10^{-4}$ mol/L check is expected at 138.98 mV. Readings
+are 139.10 early and 145.00 later. Apply the supplied ±2.00 mV error rule. Is a
+passing check evidence of exactly zero bias? [Hint](#hint-b4)
+
+## Explore {#explore}
+
+The model separates a sample-specific activity mismatch from a shared potential
+drift. Its known input is visible only because it is a simulation. It withholds
+a known mismatched sample even when reference and range checks pass.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="potentiometry"></div>
+<script src="../demos/dist/potentiometry.js"></script>
+```
+
+**E1.** Keep drift zero. Change the sample/standard activity ratio to 0.50 and
+compare true input, candidate estimate and check status. Explain the two
+concentration positions at the same voltage. [Hint](#hint-e1)
+
+**E2.** Restore matched conditions, set drift to +1 mV, then +6 mV. Compare
+acceptance with actual concentration bias. What should happen before reporting
+a result from the failed condition? [Hint](#hint-e2)
+
+**E3.** Use the ideal matching switch after changing the ratio. Explain what
+this switch assumes and name one chemical or instrumental error it does not
+simulate. Export one scenario for inspection in R. [Hint](#hint-e3)
+
+## In R
+
+Run this complete workflow from the project root. The `log10()` transformation
+is new only in chemical context; `lm()` and ID-based joins are familiar.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+standards <- read_csv("data/course/electrode-standards.csv",
+                      show_col_types = FALSE) |>
+  mutate(log_c = log10(fluoride_mol_l))
+fit <- lm(potential_mv ~ log_c, data = standards)
+a <- unname(coef(fit)[1]); b <- unname(coef(fit)[2])
+ggplot(standards, aes(log_c, potential_mv)) + geom_point() +
+  geom_abline(intercept = a, slope = b) +
+  labs(x = "log10[c/(1 mol/L)]", y = "Potential (mV)") + theme_minimal()
+checks <- read_csv("data/course/electrode-checks.csv", show_col_types = FALSE) |>
+  mutate(expected_mv = a + b * log10(check_fluoride_mol_l),
+         error_mv = potential_mv - expected_mv,
+         check_pass = abs(error_mv) <= allowed_abs_error_mv)
+unknowns <- data.frame(block = c("early", "late"), potential_mv = c(121.2, 127.2)) |>
+  left_join(select(checks, block, check_pass), by = "block") |>
+  mutate(candidate_mol_l = 10^((potential_mv - a) / b),
+         in_range = candidate_mol_l >= min(standards$fluoride_mol_l) &
+                    candidate_mol_l <= max(standards$fluoride_mol_l),
+         reported_mol_l = if_else(check_pass & in_range, candidate_mol_l, NA_real_))
+coef(fit)
+checks
+unknowns
+write_csv(unknowns, "output/potentiometry-exercise.csv", na = "NA")
+```
+
+**R1.** Interpret slope and intercept with their units and convention. Why does
+`log10(0)` not supply a usable ordinary standard? [Hint](#hint-r1)
+
+**R2.** Report the supported early value and the reason the late value is
+withheld. Distinguish an algebraic candidate from a reported concentration.
+[Hint](#hint-r2)
+
+**R3.** Use the fitted slope to calculate the concentration factor from a
+17.8 mV decrease. Explain why symmetric voltage limits become asymmetric
+concentration limits. [Hint](#hint-r3)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="B1: undo the logarithm"}
+At $10^{-4}$ mol/L, the explanatory value is −4. After solving for the log
+concentration, raise 10 to that power.
+:::
+::: {#hint-b2 .callout-tip collapse="true" title="B2: respect the negative slope"}
+The ratio is $10^{\Delta E/b}$, not $\Delta E/b$ itself.
+:::
+::: {#hint-b3 .callout-tip collapse="true" title="B3: activity ratio"}
+The sample has half the activity at the same concentration. The check need not
+share the sample-specific activity coefficient.
+:::
+::: {#hint-b4 .callout-tip collapse="true" title="B4: compare absolute errors"}
+Subtract expected potential, then compare absolute errors with 2.00 mV. A
+nonzero error can lie inside the acceptance interval.
+:::
+::: {#hint-e1 .callout-tip collapse="true" title="E1: the check has a different matrix"}
+The reference is under calibration conditions. The sample-specific ratio does
+not change its response in this model.
+:::
+::: {#hint-e2 .callout-tip collapse="true" title="E2: acceptance is not exactness"}
+Both drifts change concentration. Only one exceeds the selected check tolerance.
+:::
+::: {#hint-e3 .callout-tip collapse="true" title="E3: an ideal control is an assumption"}
+The switch sets the ratio exactly to one. Real adjustment does not prove the
+absence of interfering ions, complexes or junction changes.
+:::
+::: {#hint-r1 .callout-tip collapse="true" title="R1: finite explanatory values"}
+[`log10`](https://rdrr.io/r/base/Log.html) is undefined as a finite value at zero;
+changing the concentration unit changes the intercept convention.
+:::
+::: {#hint-r2 .callout-tip collapse="true" title="R2: preserve evidence with IDs"}
+Inspect both the check table and the joined unknown table. `NA` here is a
+withheld estimate, not zero fluoride.
+:::
+::: {#hint-r3 .callout-tip collapse="true" title="R3: exponentiate both limits"}
+The inverse is exponential. Equal positive/negative voltage deviations map to
+reciprocal concentration factors rather than equal additive concentration changes.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Full worked solutions"}
+**B1.** $E=-97.42+(-59.16)(-4)=139.22$ mV. For 121.20 mV,
+$\log_{10}[c/(1\,\mathrm{mol/L})]=(121.20+97.42)/(-59.16)\approx-3.6954$;
+$c\approx2.016\times10^{-4}$ mol/L. The log value itself is not concentration.
+These hand coefficients are the ideal demo model, not the fitted dataset below.
+
+**B2.** Factor $10^{-17.8/(-59.16)}\approx1.999$. A lower fluoride potential
+means higher inferred concentration in this signed convention.
+
+**B3.** The candidate is half the true free-ion concentration. A check under
+calibration matrix conditions still has ratio one and can pass. It therefore
+cannot establish this sample's calibration transfer. The known mismatch should
+prevent a justified sample result until corrected or evaluated appropriately.
+
+**B4.** Errors are +0.12 and +6.02 mV. The early check passes and later check
+fails. The early error is nevertheless nonzero: the rule permits a bounded
+error, not perfect accuracy.
+
+**E1.** At ratio 0.50 and drift zero, candidate concentration is half the input,
+while the check passes. The true-input point lies on the shifted sample line;
+the inverse point lies on the old calibration at the same potential. Only the
+simulation exposes the true concentration.
+
+**E2.** +1 mV passes but gives concentration factor $10^{1/(-59.16)}\approx0.962$;
++6 mV fails and gives factor about 0.792. Investigate the failure, establish
+satisfactory calibration/checks and remeasure affected samples. Do not assume
+the failed check identifies its cause or supplies a universal correction.
+
+**E3.** Ideal matching sets the sample/standard activity-coefficient ratio to
+one. It does not model or eliminate interfering-ion effects, speciation,
+reference-junction changes, temperature effects or recovery. These remain
+chemical assumptions to evaluate rather than automatic consequences of a switch.
+
+**R1.** Fitted intercept is **−97.42 mV**, slope **−59.10 mV per decade** for
+concentration in mol/L relative to 1 mol/L. Zero has no finite log value.
+Calibrating in another unit without altering the intercept gives the wrong
+inverse convention.
+
+**R2.** The accepted early estimate is **1.99915 × 10⁻⁴ mol/L**. The later
++6.02 mV check error fails; its reported concentration is `NA` even though code
+can compute a candidate. The fixed matrix assumptions remain necessary for the
+early result; passing the check does not prove them for arbitrary samples.
+
+**R3.** The fitted-data factor is $10^{-17.8/(-59.10)}\approx2.001$:
+
+```r
+factor_from_decrease <- 10^(-17.8 / b)
+factor_from_decrease
+```
+
+For a voltage uncertainty bound $\pm u_E$, multiplicative concentration factors
+are $10^{\pm u_E/b}$. Their differences from one are unequal, producing
+asymmetric concentration limits. A voltage SD must not be relabelled as a
+concentration SD.
+:::
+
+## Where this leads
+
+[Titration](../titration/lec.qmd) uses electrodes to locate endpoints; the next
+[UV/visible unit](../uv-visible/lec.qmd) uses another response model with the same
+need for calibration and checks. [Practice quiz](quiz.qmd).

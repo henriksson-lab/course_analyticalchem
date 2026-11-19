@@ -1,0 +1,85 @@
+---
+title: "Quiz: atomic measurements"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+Try each question before opening its hint. Then explain the answer in chemical
+and measurement terms. [Lecture](lec.qmd) · [Exercise](exercise.qmd).
+
+---
+
+**Q1.** Which optical signal distinguishes AAS from ICP-OES?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Ask whether the useful photons come from a source lamp or the excited sample.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+AAS measures attenuation of suitable source light by free atoms. ICP-OES measures light emitted after plasma excitation and separates its wavelengths. ICP-OES is not ICP-MS, which detects ions by mass-to-charge.
+:::
+
+---
+
+**Q2.** A 0.5000 g dry sample is made to 25.00 mL digest. A fourfold dilution measures 0.300 mg/L copper; the undiluted method blank is 0.020 mg/L. Calculate mg Cu/kg dry.
+
+::: {.callout-tip collapse="true" title="Hint"}
+Undo the sample dilution before subtracting the undiluted digest blank.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+Digest is $0.300\times4-0.020=1.180$ mg/L. Amount is $1.180\times0.02500=0.02950$ mg. Divide by 0.0005000 kg to obtain **59.0 mg Cu/kg dry mass**.
+:::
+
+---
+
+**Q3.** For the preceding sample, an analyst instead computes $(0.300-0.020)\times4$ as corrected digest concentration. Why is it wrong?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Was the method blank diluted fourfold?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+The blank was measured undiluted. Subtracting it before multiplying by four subtracts four times its digest contribution rather than once. This gives 1.120 instead of 1.180 mg/L and biases the dry-mass result low by 3.0 mg/kg.
+:::
+
+---
+
+**Q4.** Counts at a selected wavelength repeat very consistently, but another element has a nearby line. Does the small SD establish copper selectivity?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Repeatability and attribution of a signal are different questions.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. A reproducible overlapping contribution can give precise but biased copper estimates. Spectral/background evidence, appropriate alternative lines or justified corrections are needed; a method blank cannot automatically remove a sample-specific neighbour.
+:::
+
+---
+
+**Q5.** A dissolved copper check recovers 100%. Does it establish quantitative recovery from native plant material?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Which preparation steps did the dissolved check bypass?
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. It does not recreate release from the plant matrix or establish digestion completeness. A suitable reference material or relevant recovery evidence must challenge the native preparation, with its own assumptions.
+:::
+
+---
+
+**Q6.** Does a dry-mass copper concentration identify its original copper-containing molecule or oxidation state?
+
+::: {.callout-tip collapse="true" title="Hint"}
+Atomisation changes the material.
+:::
+
+::: {.callout-note collapse="true" title="Answer"}
+No. The elemental result does not preserve that chemical identity. A specific species claim needs a species-preserving preparation and suitable selective evidence. The concentration basis must still distinguish digest mg/L from original dry mg/kg.
+:::
+

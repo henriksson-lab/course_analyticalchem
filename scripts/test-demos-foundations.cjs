@@ -1,9 +1,9 @@
 'use strict';
 const assert = require('node:assert/strict');
-const {concentrationModel} = require('../demos/modules/sample-answer.js');
-const {samplingModel, extractionModel, validateGrabCounts} = require('../demos/modules/sampling-preparation.js');
-const {uncertaintyModel} = require('../demos/modules/error-uncertainty.js');
-const {calibrationModel} = require('../demos/modules/calibration-qc.js');
+const {concentrationModel} = require('./load-model.cjs')('sample-answer');
+const {samplingModel, extractionModel, validateGrabCounts} = require('./load-model.cjs')('sampling-preparation');
+const {uncertaintyModel} = require('./load-model.cjs')('error-uncertainty');
+const {calibrationModel} = require('./load-model.cjs')('calibration-qc');
 const near = (actual, expected, tolerance = 1e-10) => assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} differs from ${expected}`);
 
 // Amount must be conserved by an ideal dilution, while portion size and dilution

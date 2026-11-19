@@ -1,0 +1,228 @@
+---
+title: "Exercise: elemental measurements and dry-mass reporting"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Connect the atomic absorption/emission signal path to an elemental quantity,
+recognise spectral overlap, and calculate copper per original dry mass with
+correct dilution and method-blank bases. Explain why elemental detection does
+not establish original molecular identity or digestion recovery.
+
+## Background
+
+Atomic absorption measures attenuation of suitable source light by free atoms.
+Optical emission measures light produced by an excited population. Atomisation
+and excitation change the sample; a copper amount does not identify the original
+copper-binding molecule or oxidation state. Flame AAS, graphite-furnace AAS and
+ICP-OES differ in introduction and atomisation/excitation conditions.
+
+The supplied elemental case calibrates introduced-solution copper in mg/L from
+emission counts. A dry sample is digested to a known volume, then diluted again
+before measurement. The method blank is a separate digest measured without
+that further dilution. Undo the sample dilution **before** subtracting the blank
+on a common digest concentration basis. All data and spectra are simulated.
+
+## By hand
+
+**B1.** Write the signal path for AAS and for ICP optical emission. Which uses
+an element-specific light source, and which observes light emitted after plasma
+excitation? State one kind of chemical information atomisation does not retain.
+[Hint](#hint-b1)
+
+**B2.** A 0.2500 g dry sample is made to 50.00 mL digest. Its twofold dilution
+measures 0.40189 mg/L copper. The undiluted method blank is 0.001992 mg/L.
+Calculate corrected digest concentration, copper amount and mg/kg dry mass.
+[Hint](#hint-b2)
+
+**B3.** A second sample uses 0.2000 g dry material made to 25.00 mL. A fivefold
+dilution measures 0.0800 mg/L; undiluted method blank is 0.0100 mg/L. Calculate
+the result and explain why the blank is not multiplied by five. [Hint](#hint-b3)
+
+**B4.** A dissolved independent check recovers 100%. Does this establish complete
+plant digestion? Could a sample-specific neighbouring line still bias the
+sample while the simple check passes? [Hint](#hint-b4)
+
+## Explore {#explore}
+
+The spectral model uses Gaussian lines on an offset axis, not authentic copper
+identification spectra. The isolated comparison line is idealised to share the
+same calibrated sensitivity without interference. Its output is a **diagnostic
+apparent result**, not validated reporting permission.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="atomic-methods"></div>
+<script src="../demos/dist/atomic-methods.js"></script>
+```
+
+**E1.** Keep interferer height fixed and increase its distance from the target.
+Predict how the response at zero offset and apparent mg/kg result change.
+Explain why the total spectrum matters. [Hint](#hint-e1)
+
+**E2.** With visible overlap, switch blank subtraction off and on. Does blank
+correction remove the sample-specific overlap? Distinguish the two sources of
+excess response. [Hint](#hint-e2)
+
+**E3.** Select the ideal isolated line, vary the method blank and compare correct
+versus omitted blank subtraction. Export a scenario. Which evidence would be
+needed before treating a real alternative line as equally reliable?
+[Hint](#hint-e3)
+
+## In R
+
+Run the complete workflow at the project root in a fresh R session. A raw
+instrument offset represented by the calibration intercept is different from
+contamination measured by the whole-procedure method blank.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+standards <- read_csv("data/course/atomic-standards.csv", show_col_types = FALSE)
+fit <- lm(emission_counts ~ copper_mg_l, data = standards)
+a <- unname(coef(fit)[1]); b <- unname(coef(fit)[2])
+qc <- read_csv("data/course/atomic-qc.csv", show_col_types = FALSE) |>
+  mutate(estimated_mg_l = (emission_counts - a) / b,
+         recovery_percent = 100 * estimated_mg_l / reference_mg_l,
+         qc_pass = recovery_percent >= recovery_lower &
+                   recovery_percent <= recovery_upper)
+digests <- read_csv("data/course/atomic-digests.csv", show_col_types = FALSE)
+blank_digest_mg_l <- (digests$emission_counts[digests$sample_id == "method_blank"] - a) / b
+results <- digests |>
+  mutate(candidate_measured_mg_l = (emission_counts - a) / b,
+         in_range = candidate_measured_mg_l >= 0 & candidate_measured_mg_l <= 2,
+         corrected_digest_mg_l = candidate_measured_mg_l * further_dilution - blank_digest_mg_l,
+         copper_mg_kg = if_else(sample_id != "method_blank" & in_range & all(qc$qc_pass),
+           corrected_digest_mg_l * (digest_ml / 1000) / (dry_mass_g / 1000), NA_real_))
+ggplot(standards, aes(copper_mg_l, emission_counts)) + geom_point() +
+  geom_abline(intercept = a, slope = b) +
+  labs(x = "Copper in introduced solution (mg/L)", y = "Emission counts") +
+  theme_minimal()
+qc
+results
+write_csv(results, "output/atomic-methods-exercise.csv", na = "NA")
+```
+
+**R1.** Interpret the calibration basis and independent-check recoveries.
+Why are those checks not plant recovery validation? [Hint](#hint-r1)
+
+**R2.** Report A1 and A2 on the correct original dry-mass basis. Explain the
+method blank's missing sample mass and why it has no mg/kg sample result.
+[Hint](#hint-r2)
+
+**R3.** List the main uncertainty and recovery evidence missing from these point
+estimates. Distinguish elemental copper from original copper species, and explain
+why a stable response is not proof of selectivity. [Hint](#hint-r3)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="B1: follow the photons"}
+AAS transmits a source beam through free atoms. ICP-OES observes emitted light
+from an excited plasma population. Neither preserves molecular identity.
+:::
+::: {#hint-b2 .callout-tip collapse="true" title="B2: make the bases agree"}
+Multiply sample measured concentration by two, then subtract the undiluted blank.
+Use litres for digest volume and kilograms for original mass.
+:::
+::: {#hint-b3 .callout-tip collapse="true" title="B3: the blank has its own history"}
+The blank's concentration already refers to undiluted digest. It did not undergo
+the sample's later fivefold dilution.
+:::
+::: {#hint-b4 .callout-tip collapse="true" title="B4: trace the check material"}
+A dissolved reference bypasses the destruction and extraction of native plant
+material. It need not contain the sample's interfering element or matrix.
+:::
+::: {#hint-e1 .callout-tip collapse="true" title="E1: contribution at the selected wavelength"}
+An interferer's peak maximum is not the only place it contributes. Its tail can
+add signal at the target wavelength.
+:::
+::: {#hint-e2 .callout-tip collapse="true" title="E2: two different backgrounds"}
+The method blank models material introduced during preparation. The sample's
+spectral neighbour is a separate contribution absent from that blank.
+:::
+::: {#hint-e3 .callout-tip collapse="true" title="E3: an ideal alternative is not a free instrument correction"}
+Compare to the known model truth, but remember a real alternative line needs
+its own interference/background evaluation and appropriate calibration.
+:::
+::: {#hint-r1 .callout-tip collapse="true" title="R1: count the reference path"}
+[`lm`](https://rdrr.io/r/stats/lm.html) relates counts to copper in the introduced
+solution. The check does not recreate the original plant digestion.
+:::
+::: {#hint-r2 .callout-tip collapse="true" title="R2: convert the denominator"}
+One gram is $10^{-3}$ kg. The blank is not a plant sample with zero or unknown
+true sample mass; it has no meaningful dry-mass denominator.
+:::
+::: {#hint-r3 .callout-tip collapse="true" title="R3: distinguish a point estimate from validation"}
+Consider sampling, native recovery, weighing, volumes, calibration, blank
+variation and spectral/matrix effects.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Full worked solutions"}
+**B1.** AAS: element-specific source → free-atom population → wavelength
+selection → transmitted-light detector. ICP-OES: sample aerosol → plasma
+atomisation/excitation → emission-wavelength separation → detector. Original
+molecular identity and oxidation-state distribution are not established by the
+resulting total elemental signal.
+
+**B2.** Digest concentration is $0.40189\times2-0.001992=0.801788$ mg/L.
+Copper amount is $0.801788\times0.05000=0.0400894$ mg. Dividing by 0.0002500 kg
+gives **160.3576 mg/kg dry mass**. The result differs slightly from the later
+full-precision R value because the hand inputs were rounded.
+
+**B3.** Corrected digest is $0.0800\times5-0.0100=0.3900$ mg/L. Amount is
+0.009750 mg, and dividing by 0.0002000 kg gives **48.75 mg/kg dry mass**.
+Multiplying the undiluted blank by five would invent a dilution it never had.
+
+**B4.** No. A dissolved check can recover quantitatively while native plant
+copper remains incompletely recovered. A spectral neighbour present only in
+the sample can also bias a target signal while a simple check passes.
+
+**E1.** At fixed peak height, moving the interferer away reduces its Gaussian
+tail at zero offset. Apparent introduced concentration and apparent dry-mass
+result approach the true contribution. Looking only at the selected count
+hides why it changed; the neighbouring spectrum gives relevant interference
+evidence.
+
+**E2.** Blank subtraction removes the known digest blank on its own basis.
+It does not remove the sample-specific overlapping line. Both omitted blank
+correction and spectral overlap can bias high, but they require different
+chemical evidence and remedies.
+
+**E3.** With ideal isolation and correct blank subtraction, the model always
+returns **160.00 mg/kg**: native digest 0.800 mg/L × 0.05000 L / 0.0002500 kg.
+Omitting blank subtraction increases the result by blank mg/L × 200. The
+alternative line is assumed equal-sensitivity and interference-free here; real
+work requires appropriate calibration, background and spectral/matrix checks.
+
+**R1.** The line maps emission response to **mg Cu/L introduced solution** over
+0–2 mg/L. Checks recover about **100.37% and 100.77%**, within the supplied
+95–105% exercise rule. They do not establish native plant digestion, sample
+selectivity or a complete uncertainty budget.
+
+**R2.** Full-precision results are **160.3587** and **300.4236 mg Cu/kg dry
+mass**. The method blank has no original plant mass, so its mg/kg field is `NA`.
+It supplies a preparation background estimate rather than an elemental result
+for a hypothetical zero-mass plant.
+
+**R3.** The point estimates assume quantitative digestion/transfer, appropriate
+calibration and selected-signal specificity. A complete evaluation would need
+sampling/recovery evidence and relevant uncertainties in mass, volume,
+calibration and blank response, including correlations where relevant. Stable
+counts show repeatability, not necessarily chemical specificity. Copper amount
+does not identify the original molecule or oxidation state.
+:::
+
+## Where this leads
+
+[Separation principles](../separations/lec.qmd) show another way to distinguish
+components before detection. The [practice quiz](quiz.qmd) checks signal paths,
+blank bases and the limits of an elemental claim.

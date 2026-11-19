@@ -1,0 +1,274 @@
+---
+title: "Exercise: error and uncertainty"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Distinguish precision, bias, reading SD, uncertainty in a mean and uncertainty in
+a derived analytical result. Calculate a small independent-input budget and
+explain why shared effects do not disappear when readings are repeated.
+
+## Background
+
+Repeated readings of one stable preparation can reveal **reading repeatability**.
+They do not by themselves reveal sampling, extraction loss, stock uncertainty or
+shared volume effects. For independent normal readings, $s/\sqrt n$ estimates the
+reading contribution to uncertainty in their mean. Standard uncertainty is on
+an SD-like scale; it is not automatically a 95% half-width.
+
+For $c=c_sV_a/V_f$ and small independent input uncertainties,
+
+$$u(c)=c\sqrt{[u(c_s)/c_s]^2+[u(V_a)/V_a]^2+[u(V_f)/V_f]^2}.$$
+
+Correlated inputs require covariance terms. A known significant bias calls for
+investigation or a justified correction with its uncertainty, rather than an
+arbitrary extra error bar.
+
+## By hand
+
+**B1.** A reference is 10.00 mg/L. Method A has mean 10.00 and SD 0.02 mg/L;
+B has mean 10.50 and the same SD. Compare precision and estimated bias. Here
+reference uncertainty is neglected. [Hint](#hint-b1)
+
+**B2.** Five independent stable readings have mean 10.00 and SD 0.3162 mg/L.
+Calculate the reading uncertainty in the mean. Which quantity still has SD
+0.3162 mg/L? [Hint](#hint-b2)
+
+**B3.** A 100.0 mg/L stock has standard uncertainty 0.4 mg/L. A 5.000 mL aliquot
+has standard uncertainty 0.006 mL; final volume 50.00 mL has standard uncertainty
+0.03 mL. Calculate final concentration, each output-scale contribution and their
+combined standard uncertainty. [Hint](#hint-b3)
+
+**B4.** Reading noise contributes $0.20/\sqrt n$ mg/L and an independent shared
+component is 0.10 mg/L. Find combined uncertainty at $n=1$ and $n=100$, and its
+limit as n grows. [Hint](#hint-b4)
+
+**B5.** A report gives “10.00 ± 0.04 mg/L” without defining ±. Name two possible
+meanings and the information needed to distinguish them. [Hint](#hint-b5)
+
+## Explore {#explore}
+
+The first graph shows readings of one prepared reference solution. The second
+shows its model uncertainty in the mean. A new run gives a new common offset;
+adding readings in the same run preserves that offset and existing readings.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="error-uncertainty"></div>
+<script src="../demos/dist/error-uncertainty.js"></script>
+```
+
+
+**E1.** Keep reading SD 0.20, shared uncertainty 0.10 and bias 0.30 mg/L. Compare
+1, 10 and 100 readings without changing run. Which plotted uncertainty approaches
+zero, and which does not? [Hint](#hint-explore)
+
+**E2.** Set reading SD to zero but retain shared uncertainty and known bias.
+What does the observed SD imply about the full result? [Hint](#hint-explore)
+
+**E3.** Apply the supplied exact known-bias correction. Which offset disappears?
+Why can the mean still differ from the known reference in one run?
+[Hint](#hint-explore)
+
+**E4.** With many readings, change the preparation/run repeatedly. Explain why
+this probes something different from more readings of the same preparation.
+[Hint](#hint-explore)
+
+## In R
+
+Run from the supplied project root. The reference-material table contains
+repeat readings of one material by each method, not independent collected waters.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+measurements <- read_csv("data/course/precision.csv", show_col_types = FALSE)
+summary_precision <- measurements |>
+  group_by(method) |>
+  summarise(n = n(), mean_mg_l = mean(measured_mg_l),
+            sd_mg_l = sd(measured_mg_l),
+            u_mean_mg_l = sd_mg_l / sqrt(n),
+            bias_mg_l = mean_mg_l - first(reference_mg_l), .groups = "drop")
+summary_precision
+ggplot(measurements, aes(measured_mg_l, method)) +
+  geom_vline(xintercept = 10, linetype = "dashed") + geom_point() +
+  labs(x = "Measured concentration (mg/L)", y = "Method") + theme_minimal()
+c_final <- 100 * 5 / 50
+contributions <- c(stock = c_final * .4 / 100,
+                   aliquot = c_final * .006 / 5,
+                   final = c_final * .03 / 50)
+u_c <- sqrt(sum(contributions^2))
+c(concentration_mg_l = c_final, standard_uncertainty_mg_l = u_c)
+dir.create("output", showWarnings = FALSE)
+write_csv(summary_precision, "output/precision-summary.csv")
+write_csv(data.frame(source = names(contributions),
+                    u_mg_l = as.numeric(contributions)), "output/dilution-budget.csv")
+```
+
+**R1.** Identify the precise but displaced method. Compare A/B's reading SD
+with C's. Does C's mean matching the reference establish an unbiased method
+across matrices? [Hint](#hint-r1)
+
+**R2.** Confirm B3. Halve only the stock standard uncertainty to 0.2 mg/L and
+recompute. Why does combined uncertainty not halve exactly? [Hint](#hint-r2)
+
+**R3.** Draw B4's curve in R. Explain which source would remain after infinitely
+many readings. State whether this includes a deliberately uncorrected known
+bias. [Hint](#hint-r3)
+
+```r
+n <- 1:100
+u_reading <- .20 / sqrt(n)
+u_combined <- sqrt(u_reading^2 + .10^2)
+plot(n, u_combined, type = "l", xlab = "Readings of one preparation",
+     ylab = "Standard uncertainty of mean (mg/L)")
+lines(n, u_reading, lty = 2)
+abline(h = .10, lty = 3)
+```
+
+**R4.** Export `repeat-readings-and-uncertainty.csv`, save it at the project root,
+and compare its observed reading SD with its supplied model uncertainty:
+
+```r
+if (file.exists("repeat-readings-and-uncertainty.csv")) {
+  demo <- read_csv("repeat-readings-and-uncertainty.csv", show_col_types = FALSE)
+  print(mean(demo$reported_reading_mg_l))
+  if (nrow(demo) > 1) print(sd(demo$reported_reading_mg_l))
+  print(unique(demo$mean_standard_uncertainty_model_mg_l))
+}
+```
+
+Why are the last two numbers different quantities? [Hint](#hint-r4)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="Hint B1"}
+Precision concerns repeated values; estimated bias compares mean with a suitable
+reference. They answer different questions.
+:::
+
+::: {#hint-b2 .callout-tip collapse="true" title="Hint B2"}
+Divide SD by $\sqrt5$ for the reading contribution to the mean. The individual
+reading distribution retains its own spread.
+:::
+
+::: {#hint-b3 .callout-tip collapse="true" title="Hint B3"}
+Final concentration is 10 mg/L. Convert each relative input uncertainty to an
+output-scale contribution before adding its square.
+:::
+
+::: {#hint-b4 .callout-tip collapse="true" title="Hint B4"}
+Combine the squared reading and shared components. Only the independent reading
+term is divided by n.
+:::
+
+::: {#hint-b5 .callout-tip collapse="true" title="Hint B5"}
+It could denote a standard uncertainty, expanded uncertainty with a stated
+coverage factor, or a confidence-interval half-width under a sampling model.
+:::
+
+::: {#hint-explore .callout-tip collapse="true" title="Hints E1–E4"}
+Track reading noise, common random offset and deliberately known fixed bias
+separately. The bias correction is exact only by this toy model's assumption;
+real corrections can have their own uncertainty.
+:::
+
+::: {#hint-r1 .callout-tip collapse="true" title="Hint R1"}
+Compare both `bias_mg_l` and `sd_mg_l`. A single accidentally close mean is not
+full validation.
+:::
+
+::: {#hint-r2 .callout-tip collapse="true" title="Hint R2"}
+Change only the stock contribution from 0.040 to 0.020 mg/L. Keep the two volume
+contributions.
+:::
+
+::: {#hint-r3 .callout-tip collapse="true" title="Hint R3"}
+[`sqrt()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/MathFun.html)
+is applied to the sum of variances. A known uncorrected bias is not being treated
+as an extra random term in this illustrative curve.
+:::
+
+::: {#hint-r4 .callout-tip collapse="true" title="Hint R4"}
+[`sd()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/sd.html)
+describes spread among readings. The supplied uncertainty includes a component
+shared by those readings, which their scatter cannot estimate.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions B1–B5"}
+**B1.** A and B have equal repeat precision under the stated conditions. A has
+estimated bias zero in this series; B has +0.50 mg/L. Equal precision does not
+imply equal closeness to the reference, and this neglects reference uncertainty
+only for the example.
+
+**B2.** $u_{reading}(\bar x)=0.3162/\sqrt5\approx0.1414$ mg/L. Individual
+readings retain SD 0.3162 mg/L; the mean has a smaller reading component. Neither
+number establishes sampling, recovery or common-bias uncertainty.
+
+**B3.** $c=100(5/50)=10$ mg/L. Contributions are 0.040, 0.012 and 0.006 mg/L.
+Their squared sum is 0.001780 (mg/L)², so $u(c)=0.04219$ mg/L. The calculation
+assumes a valid model, small uncertainties and independent inputs.
+
+**B4.** At n=1, $u=\sqrt{0.20^2+0.10^2}=0.22361$ mg/L. At n=100,
+$u=\sqrt{0.20^2/100+0.10^2}=0.10198$ mg/L. It approaches 0.10 mg/L, because
+repeated readings do not create new information about the common effect.
+
+**B5.** If 0.04 is a standard uncertainty, no 95% coverage is implied by itself.
+If it is expanded uncertainty, give k and its coverage rationale. If it is a
+confidence-interval half-width, give the sampling/model construction and level.
+Without that information the reader cannot interpret the uncertainty claim.
+:::
+
+::: {.callout-note collapse="true" title="Solutions E1–E4"}
+**E1.** The reading-only component is 0.20, 0.06325 and 0.0200 mg/L at n=1,10,100;
+combined values are about 0.22361, 0.11832 and 0.10198 mg/L. The mean can remain
+displaced because bias and the common offset do not shrink within the run.
+
+**E2.** The readings coincide and their observed SD is zero for n≥2. The known
+bias and realised shared offset remain. Zero observed repeatability scatter
+therefore does not establish an exact analytical result.
+
+**E3.** Subtracting the specified known bias removes the fixed 0.30 mg/L effect.
+The common random offset remains, along with residual reading noise. The model
+assumes the correction exact; a real correction may add an uncertainty component.
+
+**E4.** A new run draws a new common offset. Many readings within one preparation
+retain the same offset. Studying independent preparations can reveal sources
+that within-solution repeatability cannot, provided the design actually varies
+the relevant steps.
+:::
+
+::: {.callout-note collapse="true" title="Solutions R1–R4"}
+**R1.** B is precise but displaced. A/B both have SD about 0.01581 mg/L; C has
+SD 0.31623 mg/L. C's mean is 10.00 in this small series, but that does not prove
+unbiased performance in different samples, matrices or conditions.
+
+**R2.** New combined uncertainty is $\sqrt{0.020^2+0.012^2+0.006^2}=0.02408$
+mg/L. The unchanged volume terms prevent a simple factor-of-two change.
+
+**R3.** The shared 0.10 mg/L component remains. The curve omits a known
+uncorrected bias rather than pretending it is random; that bias requires its
+own investigation or justified correction. The values are standard uncertainties,
+not 95% interval half-widths.
+
+**R4.** R's SD measures within-run reading spread and may differ from the supplied
+population reading SD in a finite sample. The model uncertainty concerns the
+mean and combines a shrinking independent reading contribution with a shared
+component. Changing a common offset moves all readings together without widening
+their scatter. At n=1, sample SD is undefined, not evidence of no variability.
+:::
+
+## Where this leads
+
+[Calibration and quality control](../calibration-qc/exercise.qmd) adds uncertain
+slope and intercept when a response is converted to concentration. Ask which
+uncertainty components and validity checks accompany every later reported result.

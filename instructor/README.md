@@ -14,18 +14,18 @@ results and original analytical plots. Completed HTML reports are in
 
 | Topic | Student source | Deck source | Analysis | Worked report source |
 | --- | --- | --- | --- | --- |
-| From sample to answer | [Lesson](../lessons/sample-answer.qmd) | [Slides](../slides/sample-answer.qmd) | [R](../R/analyse-sample-answer.R) | [Solution](reports/sample-answer.Rmd) |
-| Sampling and preparation | [Lesson](../lessons/sampling-preparation.qmd) | [Slides](../slides/sampling-preparation.qmd) | [R](../R/analyse-sampling-preparation.R) | [Solution](reports/sampling-preparation.Rmd) |
-| Error and uncertainty | [Lesson](../lessons/error-uncertainty.qmd) | [Slides](../slides/error-uncertainty.qmd) | [R](../R/analyse-error-uncertainty.R) | [Solution](reports/error-uncertainty.Rmd) |
-| Calibration and quality control | [Lesson](../lessons/calibration-qc.qmd) | [Slides](../slides/calibration-qc.qmd) | [R](../R/analyse-calibration-qc.R) | [Solution](reports/calibration-qc.Rmd) |
-| Equilibrium and titration | [Lesson](../lessons/titration.qmd) | [Slides](../slides/titration.qmd) | [R](../R/analyse-titration.R) | [Solution](reports/titration.Rmd) |
-| Electrodes and potentiometry | [Lesson](../lessons/potentiometry.qmd) | [Slides](../slides/potentiometry.qmd) | [R](../R/analyse-potentiometry.R) | [Solution](reports/potentiometry.Rmd) |
-| UV and visible absorption | [Lesson](../lessons/uv-visible.qmd) | [Slides](../slides/uv-visible.qmd) | [R](../R/analyse-uv-visible.R) | [Solution](../worked-example.Rmd) |
-| Matrix effects and recovery | [Lesson](../lessons/matrix-recovery.qmd) | [Slides](../slides/matrix-recovery.qmd) | [R](../R/analyse-matrix-recovery.R) | [Solution](reports/matrix-recovery.Rmd) |
-| Atomic measurements | [Lesson](../lessons/atomic-methods.qmd) | [Slides](../slides/atomic-methods.qmd) | [R](../R/analyse-atomic-methods.R) | [Solution](reports/atomic-methods.Rmd) |
-| Separation principles | [Lesson](../lessons/separations.qmd) | [Slides](../slides/separations.qmd) | [R](../R/analyse-separations.R) | [Solution](reports/separations.Rmd) |
-| GC and HPLC | [Lesson](../lessons/gc-hplc.qmd) | [Slides](../slides/gc-hplc.qmd) | [R](../R/analyse-gc-hplc.R) | [Solution](reports/gc-hplc.Rmd) |
-| Choosing and defending a result | [Lesson](../lessons/defending-results.qmd) | [Slides](../slides/defending-results.qmd) | [R](../R/analyse-defending-results.R) | [Solution](reports/defending-results.Rmd) |
+| From sample to answer | [Lesson](../sample-answer/exercise.qmd) | [Slides](../sample-answer/lec.qmd) | [R](../R/analyse-sample-answer.R) | [Solution](reports/sample-answer.Rmd) |
+| Sampling and preparation | [Lesson](../sampling-preparation/exercise.qmd) | [Slides](../sampling-preparation/lec.qmd) | [R](../R/analyse-sampling-preparation.R) | [Solution](reports/sampling-preparation.Rmd) |
+| Error and uncertainty | [Lesson](../error-uncertainty/exercise.qmd) | [Slides](../error-uncertainty/lec.qmd) | [R](../R/analyse-error-uncertainty.R) | [Solution](reports/error-uncertainty.Rmd) |
+| Calibration and quality control | [Lesson](../calibration-qc/exercise.qmd) | [Slides](../calibration-qc/lec.qmd) | [R](../R/analyse-calibration-qc.R) | [Solution](reports/calibration-qc.Rmd) |
+| Equilibrium and titration | [Lesson](../titration/exercise.qmd) | [Slides](../titration/lec.qmd) | [R](../R/analyse-titration.R) | [Solution](reports/titration.Rmd) |
+| Electrodes and potentiometry | [Lesson](../potentiometry/exercise.qmd) | [Slides](../potentiometry/lec.qmd) | [R](../R/analyse-potentiometry.R) | [Solution](reports/potentiometry.Rmd) |
+| UV and visible absorption | [Lesson](../uv-visible/exercise.qmd) | [Slides](../uv-visible/lec.qmd) | [R](../R/analyse-uv-visible.R) | [Solution](../worked-example.Rmd) |
+| Matrix effects and recovery | [Lesson](../matrix-recovery/exercise.qmd) | [Slides](../matrix-recovery/lec.qmd) | [R](../R/analyse-matrix-recovery.R) | [Solution](reports/matrix-recovery.Rmd) |
+| Atomic measurements | [Lesson](../atomic-methods/exercise.qmd) | [Slides](../atomic-methods/lec.qmd) | [R](../R/analyse-atomic-methods.R) | [Solution](reports/atomic-methods.Rmd) |
+| Separation principles | [Lesson](../separations/exercise.qmd) | [Slides](../separations/lec.qmd) | [R](../R/analyse-separations.R) | [Solution](reports/separations.Rmd) |
+| GC and HPLC | [Lesson](../gc-hplc/exercise.qmd) | [Slides](../gc-hplc/lec.qmd) | [R](../R/analyse-gc-hplc.R) | [Solution](reports/gc-hplc.Rmd) |
+| Choosing and defending a result | [Lesson](../defending-results/exercise.qmd) | [Slides](../defending-results/lec.qmd) | [R](../R/analyse-defending-results.R) | [Solution](reports/defending-results.Rmd) |
 
 ## R continuity
 

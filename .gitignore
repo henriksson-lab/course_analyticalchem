@@ -6,3 +6,16 @@
 .Rproj.user/
 
 /.quarto/
+
+/node_modules/
+/canvas-quiz/private/
+.DS_Store
+
+/editor-sandbox/*.html
+/editor-sandbox/.quarto/
+/output/*-exercise.csv
+/output/final-case-decisions.csv
+/output/hplc-decisions.csv
+/output/separation-areas.csv
+/output/separation-resolution.csv
+/output/water-observations.png

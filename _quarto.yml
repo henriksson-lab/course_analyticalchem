@@ -1,73 +1,201 @@
 project:
   type: website
   output-dir: docs
-  render:
-    - index.qmd
-    - demos/index.qmd
-    - reference/*.qmd
-    - lessons/*.qmd
-    - slides/*.qmd
   resources:
     - .nojekyll
-    - demos/*.html
-    - demos/*.js
-    - demos/*.css
-    - demos/modules/*.js
-    - downloads/*.zip
-    - data/**
+    - demos/dist/
+    - data/
+    - downloads/
     - course-report.Rmd
     - report.Rmd
     - analyticalchem.Rproj
+  render:
+    - index.qmd
+    - dictionary.qmd
+    - "reference/*.qmd"
+    - "sample-answer/*.qmd"
+    - "sampling-preparation/*.qmd"
+    - "error-uncertainty/*.qmd"
+    - "calibration-qc/*.qmd"
+    - "titration/*.qmd"
+    - "potentiometry/*.qmd"
+    - "uv-visible/*.qmd"
+    - "matrix-recovery/*.qmd"
+    - "atomic-methods/*.qmd"
+    - "separations/*.qmd"
+    - "gc-hplc/*.qmd"
+    - "defending-results/*.qmd"
+    - "!editor-sandbox/"
+    - "!tools/"
+    - "!canvas-quiz/"
+    - "!instructor/"
+    - "!lessons/"
+    - "!slides/"
+    - "!demos/"
 website:
   title: "Analytical Chemistry"
   navbar:
     left:
       - href: index.qmd
-        text: Course topics
-      - href: demos/index.qmd
-        text: Interactive demos
-      - href: reference/r.qmd
-        text: R reference
+        text: Home
+      - text: Course info
+        menu:
+          - href: reference/r.qmd
+            text: R reference
+          - href: dictionary.qmd
+            text: Glossary
+          - href: reference/data.qmd
+            text: Data dictionary
   sidebar:
     style: docked
     search: true
     contents:
+      - text: Home
+        href: index.qmd
+      - section: Course info
+        contents:
+          - href: reference/r.qmd
+            text: R reference
+          - href: dictionary.qmd
+            text: Glossary
+          - href: reference/data.qmd
+            text: Data dictionary
       - section: "Measurement foundations"
         contents:
-          - href: lessons/sample-answer.qmd
-            text: "From sample to answer"
-          - href: lessons/sampling-preparation.qmd
-            text: "Sampling and preparation"
-          - href: lessons/error-uncertainty.qmd
-            text: "Error and uncertainty"
-          - href: lessons/calibration-qc.qmd
-            text: "Calibration and quality control"
-      - section: "Chemical methods"
+          - section: "From sample to answer"
+            contents:
+              - text: Lecture (slides)
+                href: sample-answer/lec.qmd
+              - text: Quiz
+                href: sample-answer/quiz.qmd
+              - text: Exercise
+                href: sample-answer/exercise.qmd
+              - text: Interactive demo
+                href: sample-answer/exercise.qmd#explore
+          - section: "Sampling and preparation"
+            contents:
+              - text: Lecture (slides)
+                href: sampling-preparation/lec.qmd
+              - text: Quiz
+                href: sampling-preparation/quiz.qmd
+              - text: Exercise
+                href: sampling-preparation/exercise.qmd
+              - text: Interactive demo
+                href: sampling-preparation/exercise.qmd#explore
+          - section: "Error and uncertainty"
+            contents:
+              - text: Lecture (slides)
+                href: error-uncertainty/lec.qmd
+              - text: Quiz
+                href: error-uncertainty/quiz.qmd
+              - text: Exercise
+                href: error-uncertainty/exercise.qmd
+              - text: Interactive demo
+                href: error-uncertainty/exercise.qmd#explore
+          - section: "Calibration and quality control"
+            contents:
+              - text: Lecture (slides)
+                href: calibration-qc/lec.qmd
+              - text: Quiz
+                href: calibration-qc/quiz.qmd
+              - text: Exercise
+                href: calibration-qc/exercise.qmd
+              - text: Interactive demo
+                href: calibration-qc/exercise.qmd#explore
+      - section: "Chemical measurement"
         contents:
-          - href: lessons/titration.qmd
-            text: "Equilibrium and titration"
-          - href: lessons/potentiometry.qmd
-            text: "Electrodes and potentiometry"
-          - href: lessons/uv-visible.qmd
-            text: "UV and visible absorption"
-          - href: lessons/matrix-recovery.qmd
-            text: "Matrix effects and recovery"
-          - href: lessons/atomic-methods.qmd
-            text: "Atomic measurements"
-          - href: lessons/separations.qmd
-            text: "Separation principles"
-          - href: lessons/gc-hplc.qmd
-            text: "GC and HPLC"
-      - section: "Integration"
+          - section: "Equilibrium and titration"
+            contents:
+              - text: Lecture (slides)
+                href: titration/lec.qmd
+              - text: Quiz
+                href: titration/quiz.qmd
+              - text: Exercise
+                href: titration/exercise.qmd
+              - text: Interactive demo
+                href: titration/exercise.qmd#explore
+          - section: "Electrodes and potentiometry"
+            contents:
+              - text: Lecture (slides)
+                href: potentiometry/lec.qmd
+              - text: Quiz
+                href: potentiometry/quiz.qmd
+              - text: Exercise
+                href: potentiometry/exercise.qmd
+              - text: Interactive demo
+                href: potentiometry/exercise.qmd#explore
+          - section: "UV and visible absorption"
+            contents:
+              - text: Lecture (slides)
+                href: uv-visible/lec.qmd
+              - text: Quiz
+                href: uv-visible/quiz.qmd
+              - text: Exercise
+                href: uv-visible/exercise.qmd
+              - text: Interactive demo
+                href: uv-visible/exercise.qmd#explore
+          - section: "Matrix effects and recovery"
+            contents:
+              - text: Lecture (slides)
+                href: matrix-recovery/lec.qmd
+              - text: Quiz
+                href: matrix-recovery/quiz.qmd
+              - text: Exercise
+                href: matrix-recovery/exercise.qmd
+              - text: Interactive demo
+                href: matrix-recovery/exercise.qmd#explore
+          - section: "Atomic measurements"
+            contents:
+              - text: Lecture (slides)
+                href: atomic-methods/lec.qmd
+              - text: Quiz
+                href: atomic-methods/quiz.qmd
+              - text: Exercise
+                href: atomic-methods/exercise.qmd
+              - text: Interactive demo
+                href: atomic-methods/exercise.qmd#explore
+      - section: "Separations and integration"
         contents:
-          - href: lessons/defending-results.qmd
-            text: "Choosing and defending a result"
+          - section: "Separation principles"
+            contents:
+              - text: Lecture (slides)
+                href: separations/lec.qmd
+              - text: Quiz
+                href: separations/quiz.qmd
+              - text: Exercise
+                href: separations/exercise.qmd
+              - text: Interactive demo
+                href: separations/exercise.qmd#explore
+          - section: "GC and HPLC"
+            contents:
+              - text: Lecture (slides)
+                href: gc-hplc/lec.qmd
+              - text: Quiz
+                href: gc-hplc/quiz.qmd
+              - text: Exercise
+                href: gc-hplc/exercise.qmd
+              - text: Interactive demo
+                href: gc-hplc/exercise.qmd#explore
+          - section: "Choosing and defending a result"
+            contents:
+              - text: Lecture (slides)
+                href: defending-results/lec.qmd
+              - text: Quiz
+                href: defending-results/quiz.qmd
+              - text: Exercise
+                href: defending-results/exercise.qmd
+              - text: Interactive demo
+                href: defending-results/exercise.qmd#explore
 format:
   html:
-    theme: cosmo
-    css: styles.css
     toc: true
     code-copy: true
     code-overflow: wrap
+    highlight-style: github
+    theme: cosmo
+    css: styles.css
+controls: true
+controls-layout: edges
+controls-back-arrows: visible
 execute:
   eval: false

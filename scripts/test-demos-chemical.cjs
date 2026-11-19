@@ -1,9 +1,9 @@
 'use strict';
 const assert = require('node:assert/strict');
-const titration = require('../demos/modules/titration.js');
-const electrode = require('../demos/modules/potentiometry.js');
-const uv = require('../demos/modules/uv-visible.js');
-const matrix = require('../demos/modules/matrix-recovery.js');
+const titration = require('./load-model.cjs')('titration');
+const electrode = require('./load-model.cjs')('potentiometry');
+const uv = require('./load-model.cjs')('uv-visible');
+const matrix = require('./load-model.cjs')('matrix-recovery');
 function close(actual, expected, tolerance = 1e-9) { assert.ok(Math.abs(actual - expected) <= tolerance, `${actual} differs from ${expected}`); }
 // Strong-acid charge balance must stay finite on either side and at equivalence.
 close(titration.phAt(25), 7, 1e-8);

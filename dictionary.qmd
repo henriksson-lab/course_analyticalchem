@@ -1,0 +1,84 @@
+---
+title: "Analytical chemistry glossary"
+---
+
+## Measurand
+
+The quantity intended to be measured, including the analyte, material and concentration or amount basis.
+
+## Sample
+
+Material selected from a defined population or lot. Repeated readings of one preparation are not additional collected samples.
+
+## Aliquot
+
+A measured portion taken from a sample or solution.
+
+## Dilution factor
+
+Final total volume divided by aliquot volume, when dilution conserves analyte and volumes share units.
+
+## Calibration
+
+An established relationship between a measured response and known input quantities under specified conditions.
+
+## Residual
+
+Observed response minus the response predicted by the fitted model.
+
+## Precision
+
+Agreement among repeated measurements under specified conditions; it does not establish freedom from bias.
+
+## Bias
+
+An estimate of systematic departure from a reference quantity.
+
+## Standard uncertainty
+
+An uncertainty expressed as a standard deviation within a stated measurement model.
+
+## Recovery
+
+A measured quantity relative to a known added or reference quantity, with the preparation and concentration basis stated.
+
+## Matrix effect
+
+A change in analyte response caused by other sample components.
+
+## Quality control
+
+Checks, including method blanks and independent reference materials, used to assess whether the measurement process meets stated criteria. A passing check does not establish every aspect of method validity.
+
+## Activity
+
+A dimensionless effective concentration, for example $a=\gamma c/c^\circ$ in a specified concentration convention. An electrode responds to activity under the stated model; matching conditions may permit calibration in concentration.
+
+## Equivalence point
+
+The titrant amount satisfying the chosen reaction stoichiometry.
+
+## Endpoint
+
+The observed experimental criterion used to locate completion; it can differ from equivalence.
+
+## Absorbance
+
+The negative base-ten logarithm of transmittance, A = −log₁₀(I/I₀).
+
+## Retention time
+
+Elapsed time between injection and the defined peak location in a chromatogram.
+
+## Resolution
+
+A measure of separation relative to peak widths; state the width convention when calculating it.
+
+## Internal standard
+
+A deliberately added reference compound used to normalize response. It corrects only effects that it shares appropriately with the analyte.
+
+## Selectivity
+
+The extent to which the procedure measures the intended analyte in the presence of other components.
+

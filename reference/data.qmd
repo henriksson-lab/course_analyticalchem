@@ -2,7 +2,7 @@
 title: "Course data dictionary"
 ---
 
-All 27 CSV files are **simulated teaching data**, regenerated deterministically
+The 27 CSV files under `data/course/` are **simulated teaching data**, regenerated deterministically
 by `Rscript scripts/generate-course-data.R` with seed 202711. They are separate
 analytical scenarios, not different techniques measuring an identical sample.
 No natural-population claims, health thresholds or validated method performance
@@ -70,3 +70,8 @@ standard-retention evidence; it is not computed from the area alone. All accepte
 identity and quantity claims remain conditional on those scenario assumptions.
 The final uncertainties are scaled by dilution only. They do not imply full
 method validation or support regulatory/health decisions.
+
+
+## Detailed UV/visible example
+
+The five iron CSVs at `data/` are a separate simulated scenario: `standards.csv` (prepared final concentrations and absorbance), `spectra.csv` (wavelength positions by trace), `readings.csv` (repeated readings keyed by preparation), `preparations.csv` (sample/block IDs, aliquot and final volumes with standard uncertainties), and `qc.csv` (independent reference checks by block). See the [UV/visible exercise](../uv-visible/exercise.qmd) for the row hierarchy, units, range/QC rules and joins. A spectrum's wavelength positions are not replicate preparations.

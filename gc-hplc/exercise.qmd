@@ -1,0 +1,260 @@
+---
+title: "Exercise: GC, HPLC and internal-standard reasoning"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Choose a plausible chromatographic route for a chemical question, calibrate
+integrated peak areas, and explain which shared effects an internal standard
+can compensate. Calculate first by hand; use the embedded experiment to test
+the assumptions; then analyse the supplied caffeine data in R.
+
+## Background
+
+GC transports a vapour in a carrier gas; HPLC transports solute in a liquid.
+Introduction, stability, stationary-phase interactions and detector selectivity
+all belong to the method. A headspace GC method can sample volatiles above a
+nonvolatile matrix. A UV chromatogram still requires an absorbing analyte and
+adequate separation at the selected wavelength.
+
+For this simulated HPLC case, final caffeine standards span 0–40 mg/L. Every
+standard and sample has 10 mg/L internal standard. Supplied integrated areas
+give these retained-intercept relationships:
+
+$$A_{caffeine}=3+50c,\qquad R=A_{caffeine}/A_{IS}=0.006+0.100c.$$
+
+The fixed internal-standard concentration is part of this calibration design.
+An internal standard can track only effects it experiences appropriately. A
+late addition cannot establish earlier extraction recovery, and a ratio cannot
+repair coelution or analyte-only matrix changes.
+
+## By hand
+
+**B1.** Two injections of the same preparation give caffeine/IS areas 753/500
+and 603/400. Calculate final concentration using external area and area ratio.
+The original-to-final dilution factor is 10. Report both sets on the original
+basis. [Hint](#hint-b1)
+
+**B2.** A new accepted injection gives areas 903/600, still with 10 mg/L IS and
+dilution factor 5. Calculate the original caffeine concentration using the ratio
+model. [Hint](#hint-b1)
+
+**B3.** Compare a volatile solvent mixture with an aqueous mixture of
+nonvolatile heat-sensitive compounds. Give a plausible GC/LC starting choice,
+and one condition that could change your decision. [Hint](#hint-b3)
+
+**B4.** A standard is added after extraction. Both resolved peaks share the same
+injection-volume variation, but only native caffeine lost 40% during extraction.
+Which effect can the ratio compensate? What additional assumption is needed if
+the standard is instead added before extraction? [Hint](#hint-b4)
+
+## Explore {#explore}
+
+Predict before changing a control. The experiment varies injection, recovery,
+standard-addition timing and analyte-only matrix response while keeping a known
+simulation truth of 150 mg/L original caffeine. Constant offsets prevent perfect
+cancellation even in the otherwise matched model.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="gc-hplc"></div>
+<script src="../demos/dist/gc-hplc.js"></script>
+```
+
+**E1.** At default recovery and matrix response, change injection multiplier
+from 0.8 to 1.0 and 1.2. Compare external and ratio estimates. Explain the small
+remaining ratio change rather than claiming exact invariance.
+
+**E2.** Set injection multiplier to 1.0 and recovery to 60%. Compare IS added
+after and before extraction. Which condition is assumed when the early standard
+compensates? Does the constant offset disappear?
+
+**E3.** Reset. Change only analyte response to 0.8, then separately introduce a
+known coeluting area of 100. Explain why neither effect is removed by an
+unchanged IS response. Which candidate remains calculable but is withheld?
+
+::: {.callout-note collapse="true" title="Solutions — E1–E3"}
+**E1.** At injection 0.8, external original is 120 mg/L while ratio original is
+150.15 mg/L. At 1.0 both are150. At 1.2 external is 180 and ratio about 149.90.
+The common multiplicative injection factor mostly cancels in the ratio, but
+the constant caffeine-area offset3 does not scale with injection.
+
+**E2.** At unit injection and 60% recovery, a late IS gives ratio original 90 mg/L:
+it never experienced the earlier loss. The early IS is assumed to have exactly
+the same recovery; its ratio original is about 150.40 mg/L, near the150 truth.
+The residual0.40 comes from the nonmultiplicative offset. Native/spiked material
+may behave differently in a real extraction, so early timing alone is not proof
+of equivalent recovery.
+
+**E3.** With analyte-only response0.8 at the default injection 0.8, the ratio
+candidate is 120.15 mg/L, not150. With coeluting area 100 instead and all other
+settings reset, the candidate is 170.15 mg/L. Both selected model failures cause
+the original-concentration claim to be withheld: the ratio cannot supply missing
+chemical equivalence or selectivity. The candidate curves remain diagnostic.
+:::
+
+## In R
+
+Run from the extracted project root. The supplied flags represent separation
+and QC review for this scenario, not switches to set after viewing a desired
+answer. [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html)
+uses the familiar response-on-concentration direction.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+standards <- read_csv("data/course/hplc-standards.csv", show_col_types = FALSE)
+injections <- read_csv("data/course/hplc-injections.csv", show_col_types = FALSE)
+```
+
+**R1.** Add area ratio to both tables. Fit external-area and ratio calibrations
+and calculate each injection's final and original candidate concentration.
+Which two injections belong to the same preparation? [Hint](#hint-r1)
+
+**R2.** Require range, supplied resolution and QC to pass before exporting a
+reportable original result. Which two injections must be withheld, and why?
+Plot the repeated D1 estimates by calibration approach. [Hint](#hint-r2)
+
+**R3.** Export a demo curve and, if available, import it in R. Plot the external
+and ratio candidates against injection multiplier. Distinguish a curve position
+in a model sweep from an independent sample. [Hint](#hint-r3)
+
+## Hints
+
+::: {.callout-tip collapse="true" title="Hint — B1 and B2" #hint-b1}
+Invert each fitted relationship separately. Compute $R$ before subtracting its
+intercept. Multiply final concentration by the original-to-final preparation
+factor only once.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B3" #hint-b3}
+Ask how each analyte can enter the mobile phase and whether it survives the
+conditions. Matrix and detector requirements can change a plausible first choice.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B4" #hint-b4}
+Trace the analyte and standard through extraction and injection separately.
+Earlier timing helps only if their behaviour through the relevant step is
+appropriately equivalent.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R1" #hint-r1}
+Use `mutate(area_ratio = caffeine_area / internal_standard_area)`. Fit the
+ratios with final caffeine as explanatory variable, keeping the intercept.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R2" #hint-r2}
+Combine independent evidence with `&`. `if_else()` can assign `NA_real_` to
+unsupported concentrations; preserve the reason and preparation ID as well.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R3" #hint-r3}
+The CSV separates `candidate_...` columns from `reported_original_mg_l`.
+A blank reported value imports as missing, not zero caffeine.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions — B1–B4"}
+**B1.** External final concentrations are $(753-3)/50=15.00$ and
+$(603-3)/50=12.00$ mg/L. Ratios are1.506 and 1.5075, giving15.000 and 15.015 mg/L
+final. Original results are150 and 120 mg/L externally, and 150.000 and 150.150 by
+ratio. Their near agreement reflects compensation for a shared injection effect,
+not independent sample replication.
+
+**B2.** $R=903/600=1.505$; $c=(1.505-0.006)/0.100=14.99$ mg/L final;
+original is **74.95 mg/L**. This assumes accepted selectivity, range and QC.
+
+**B3.** GC is a plausible start for the volatile solvent mixture; LC for the
+nonvolatile heat-sensitive aqueous solutes. Solubility, thermal stability,
+headspace partitioning, matrix compatibility or detector response could refine
+that choice. Neither instrument is universally best.
+
+**B4.** The ratio can track shared injection variation but not caffeine loss
+before the late IS addition. An early IS would need sufficiently equivalent
+recovery and response; freely added standard and native bound analyte need not
+behave identically.
+:::
+
+::: {.callout-note collapse="true" title="Full worked R solutions — R1–R3"}
+**R1.**
+
+```r
+standards <- standards |>
+  mutate(area_ratio = caffeine_area / internal_standard_area)
+fit_external <- lm(caffeine_area ~ caffeine_mg_l, data = standards)
+fit_ratio <- lm(area_ratio ~ caffeine_mg_l, data = standards)
+injections <- injections |>
+  mutate(area_ratio = caffeine_area / internal_standard_area,
+         final_external_mg_l = (caffeine_area - coef(fit_external)[1]) /
+                                coef(fit_external)[2],
+         final_ratio_mg_l = (area_ratio - coef(fit_ratio)[1]) /
+                             coef(fit_ratio)[2],
+         candidate_external_original_mg_l = final_external_mg_l * dilution_factor,
+         candidate_ratio_original_mg_l = final_ratio_mg_l * dilution_factor)
+injections
+```
+
+The fits are area 3+50c and ratio 0.006+0.100c. I1 and I2 are repeated injections
+of D1. Their final ratio estimates 15.000 and 15.015 agree much better than their
+external estimates 15 and 12. They do not establish two independent original drinks.
+
+**R2.**
+
+```r
+results <- injections |>
+  mutate(in_range = final_ratio_mg_l >= 0 & final_ratio_mg_l <= 40,
+         reportable = in_range & resolved & qc_pass,
+         original_mg_l = if_else(reportable,
+                                candidate_ratio_original_mg_l, NA_real_),
+         decision = case_when(!qc_pass ~ "withhold: QC failed",
+                              !resolved ~ "withhold: coelution",
+                              !in_range ~ "remeasure: outside range",
+                              TRUE ~ "conditional result"))
+write_csv(results, "output/hplc-decisions.csv", na = "NA")
+comparison <- bind_rows(
+  filter(results, preparation_id == "D1") |>
+    transmute(injection_id, method = "External area", estimate = final_external_mg_l),
+  filter(results, preparation_id == "D1") |>
+    transmute(injection_id, method = "Area ratio", estimate = final_ratio_mg_l))
+ggplot(comparison, aes(injection_id, estimate, colour = method, group = method)) +
+  geom_point() + geom_line() +
+  labs(x = "Repeated injection of D1", y = "Estimated final caffeine (mg/L)") +
+  theme_minimal()
+```
+
+I3 is unresolved and I4 has failed QC. Both reportable concentration fields are
+missing even though an algebraic candidate can be calculated. No zero-caffeine
+claim follows from either failure.
+
+**R3.** This optional block runs only after saving the exported file in `data/`:
+
+```r
+if (file.exists("data/internal-standard-experiment.csv")) {
+  demo <- read_csv("data/internal-standard-experiment.csv", show_col_types = FALSE)
+  ggplot(demo, aes(injection_multiplier, candidate_ratio_original_mg_l)) +
+    geom_line() +
+    geom_hline(yintercept = 150, linetype = "dashed") +
+    labs(x = "Injection amount multiplier", y = "Ratio candidate original caffeine (mg/L)") +
+    theme_minimal()
+}
+```
+
+Changing multiplier walks through a deterministic model sweep; its rows are not
+additional sampled drinks. The explanatory controls encode known simulation
+effects. A real instrument does not automatically know native recovery or a
+coeluting contribution from its area ratio alone.
+:::
+
+## Where this leads
+
+The integration case adds independent calibration, preparation and QC records.
+Defend an original-sample result with the complete evidence chain, not merely
+a well-behaved ratio or a familiar peak.

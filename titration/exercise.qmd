@@ -1,0 +1,236 @@
+---
+title: "Exercise: equilibrium and titration"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+By hand and in R, calculate analyte amount from standardised titrant, explain
+why an observed endpoint only estimates equivalence, and report an EDTA result
+on an explicit CaCO₃ equivalent basis. Use a pH curve to reason about endpoint
+choice rather than memorising “stop at pH 7”.
+
+## Background
+
+For the strong-acid reaction $\mathrm{H^++OH^-\rightarrow H_2O}$, equivalence
+means equal reacted amounts. With 1:1 stoichiometry,
+$c_a=c_bV_{eq}/V_a$. Read delivered burette volume as final minus initial, then
+subtract justified blank consumption on the same volume basis. A measured
+endpoint estimates $V_{eq}$ under a stated indicator or numerical rule.
+
+At 25 °C the ideal strong-acid/strong-base equivalence has pH 7. A weak acid's
+conjugate base changes equivalence pH without changing the number of moles that
+must be neutralised. The supplied weak-acid comparison uses pKa 4.76.
+
+For this simplified hardness procedure assume accessible Ca and Mg react
+selectively 1:1 with EDTA under the supplied conditions. Report the combined
+amount as CaCO₃ using 100.09 g/mol. This equivalent basis does not prove that
+carbonate was present or distinguish Ca from Mg. All course data are simulated.
+
+## By hand
+
+**B1.** A 25.00 mL strong-acid aliquot reaches its estimated endpoint after
+25.00 mL of standardised 0.1000 mol/L base. Calculate acid concentration and
+reacted amount. Show where litres are necessary. [Hint](#hint-b1)
+
+**B2.** The same initial amount is instead a weak monoprotic acid. Does its
+equivalence require less base? Must equivalence still occur at pH 7? Explain
+using stoichiometry and equilibrium separately. [Hint](#hint-b2)
+
+**B3.** A 50.00 mL water sample uses EDTA at 0.01000 mol/L. Burette readings
+are 0.10 and 6.30 mL; a matched blank consumes 0.05 mL. Calculate metal amount
+and hardness as mg/L CaCO₃. Predict the error direction if the blank is omitted.
+[Hint](#hint-b3)
+
+**B4.** An electrode reads pH 6.0 at 24.90 mL and 8.0 at 25.10 mL. Calculate
+the finite-difference pH slope and its assigned midpoint volume. Explain why
+using only the row difference is wrong if addition volumes vary. [Hint](#hint-b4)
+
+## Explore {#explore}
+
+The embedded model fixes 25.00 mL of 0.1000 mol/L acid and solves charge balance,
+including water. The chosen pH trigger represents an idealised endpoint rule,
+not a real indicator transition range or validated algorithm.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="titration"></div>
+<script src="../demos/dist/titration.js"></script>
+```
+
+**E1.** Predict what changes when switching strong to weak acid while holding
+base concentration fixed. Compare equivalence volume, equivalence pH and the
+volume found by the pH 7 trigger. [Hint](#hint-e1)
+
+**E2.** Change base from 0.100 to 0.050 mol/L. Predict the new equivalence
+volume before moving the control. Explain why “weaker acid means less volume”
+is the wrong reasoning for this comparison. [Hint](#hint-e2)
+
+**E3.** Keep weak acid, vary its pKa and choose a trigger pH away from its
+actual equivalence pH. Describe the endpoint bias and why extra decimal places
+would not fix it. Export one scenario and state what the model omits.
+[Hint](#hint-e3)
+
+## In R
+
+Open the supplied project at its root. The following workflow runs in a fresh
+R session and does not require a demo export. It uses your earlier `read_csv`,
+`mutate` and plotting skills, adding `diff()` for consecutive changes.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+curve <- read_csv("data/course/acid-titration.csv", show_col_types = FALSE)
+slopes <- data.frame(
+  midpoint_ml = (head(curve$volume_ml, -1) + tail(curve$volume_ml, -1)) / 2,
+  ph_per_ml = diff(curve$ph) / diff(curve$volume_ml))
+ggplot(curve, aes(volume_ml, ph)) + geom_line() +
+  labs(x = "0.1000 mol/L base added (mL)", y = "pH") + theme_minimal()
+ggplot(slopes, aes(midpoint_ml, ph_per_ml)) + geom_line() +
+  labs(x = "Addition midpoint (mL)", y = "Finite-difference pH per mL") +
+  theme_minimal()
+acid_mol_l <- 0.1000 * 25.00 / 25.00
+hardness <- read_csv("data/course/edta.csv", show_col_types = FALSE) |>
+  mutate(delivered_ml = final_burette_ml - initial_burette_ml,
+         corrected_ml = delivered_ml - blank_ml,
+         moles_metal = edta_mol_l * corrected_ml / 1000,
+         hardness_mg_l_CaCO3 = moles_metal * 100.09 * 1000 / (sample_ml / 1000))
+hardness
+write_csv(hardness, "output/titration-exercise.csv")
+```
+
+**R1.** Explain the units in each calculated column. Locate the steep region
+and explain why the slope maximum is an exploratory check rather than complete
+endpoint validation. [Hint](#hint-r1)
+
+**R2.** Compare H1a, H1b and H2a. Which are independent preparations of the
+same supplied sample, and which values may be described as separate waters?
+State one source of uncertainty not estimated by their difference.
+[Hint](#hint-r2)
+
+**R3.** Independently calculate a new result for 25.00 mL water: 4.10 mL delivered
+EDTA, 0.10 mL blank, 0.01000 mol/L titrant. Add the result and its correct unit
+to your report. [Hint](#hint-r3)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="B1: amount before concentration"}
+Use $n=cV$ with volume in litres, then divide by the original acid volume.
+Matching millilitre units may cancel only when you use a volume ratio.
+:::
+
+::: {#hint-b2 .callout-tip collapse="true" title="B2: two different questions"}
+Stoichiometry determines the amount of titrant; equilibrium determines species
+and pH. A conjugate base remains after neutralising a weak acid.
+:::
+
+::: {#hint-b3 .callout-tip collapse="true" title="B3: delivered volume and reporting basis"}
+First subtract initial from final, then the matched blank. EDTA mol equals
+accessible metal mol in this scenario. Convert to equivalent CaCO₃ mass and
+divide by the original sample volume.
+:::
+
+::: {#hint-b4 .callout-tip collapse="true" title="B4: use actual spacing"}
+Divide 2.0 pH units by the difference in millilitres. The midpoint is the mean
+of the two added volumes.
+:::
+
+::: {#hint-e1 .callout-tip collapse="true" title="E1: compare volume and pH separately"}
+Read both equivalence outputs before inspecting the chosen endpoint. The initial
+acid amount is held fixed by the model.
+:::
+
+::: {#hint-e2 .callout-tip collapse="true" title="E2: dilute titrant, fixed moles"}
+Halving titrant concentration requires twice its volume for the same moles.
+:::
+
+::: {#hint-e3 .callout-tip collapse="true" title="E3: endpoint bias is not reading precision"}
+Compare the amount inferred at the trigger with the known model amount. The
+simulation excludes noise, incomplete mixing and instrument/junction effects.
+:::
+
+::: {#hint-r1 .callout-tip collapse="true" title="R1: read diff"}
+[`diff`](https://rdrr.io/r/base/diff.html) gives consecutive differences.
+Unequal volume steps require their own denominators; differentiation amplifies noise.
+:::
+
+::: {#hint-r2 .callout-tip collapse="true" title="R2: inspect sample_id"}
+Preparation IDs are not the same as independent collection IDs. Titrant
+standardisation or endpoint bias can be common to several preparations.
+:::
+
+::: {#hint-r3 .callout-tip collapse="true" title="R3: reuse the model with a new denominator"}
+The corrected volume is 4.00 mL, but this aliquot is 25.00 mL rather than 50.00 mL.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Full worked solutions"}
+**B1.** Base amount is $0.1000\times0.02500=0.002500$ mol. The 1:1 reaction
+therefore consumed 0.002500 mol acid. Dividing by 0.02500 L acid gives
+**0.1000 mol/L**. Multiplying concentration by 25.00 without converting mL to L
+would be a thousand-fold amount error.
+
+**B2.** With the same monoprotic acid amount, the same base moles are required,
+so equivalence volume remains 25.00 mL at the same base concentration. A weak
+acid leaves its conjugate base at equivalence, and its pH can exceed 7. Acid
+strength changes the pH curve, not the supplied number of acid moles.
+
+**B3.** Delivered volume $6.30-0.10=6.20$ mL; corrected volume $6.20-0.05=6.15$
+mL. Metal amount is $0.01000\times0.00615=6.15\times10^{-5}$ mol. Equivalent
+CaCO₃ mass is $6.15\times10^{-5}\times100.09\times1000=6.155535$ mg. Divide by
+0.05000 L to obtain **123.1107 mg/L as CaCO₃**. Omitting positive blank
+consumption biases this estimate high. It is not a separate calcium result.
+
+**B4.** $(8.0-6.0)/(25.10-24.90)=10.0$ pH units per mL, assigned to 25.00 mL.
+The denominator represents actual added volume. A difference per row silently
+assumes equal step sizes and can distort the inferred steep region.
+
+**E1.** Equivalence volume stays fixed while weak-acid equivalence pH rises.
+The pH 7 trigger is reached before weak-acid equivalence and underestimates the
+acid amount in this model. No general rule sets every endpoint to pH 7.
+
+**E2.** Required base moles remain 2.500 mmol. At 0.0500 mol/L, equivalence
+volume is $0.002500/0.0500=0.05000$ L = **50.00 mL** for either acid model.
+The changed base concentration, not acid strength, caused the volume change.
+
+**E3.** A trigger below equivalence pH usually stops early and gives low inferred
+acid; one above it stops late and gives high inferred acid. The precise volume
+depends on pKa and trigger. This is a systematic endpoint-rule problem, not a
+lack of printed precision. If the selected trigger is already outside the
+displayed titration range, it is unavailable rather than evidence of zero
+acid. The ideal model does not supply real electrode,
+volume, mixing or recovery uncertainty.
+
+**R1.** Delivered/corrected volumes are mL, metal amount mol, hardness mg/L as
+CaCO₃. The slope plot locates a steep region near 25 mL; its value depends on
+step sizes and noise. A validated endpoint method must address these effects.
+
+**R2.** H1a/H1b are separate preparations of H1, giving **123.1107** and
+**124.1116 mg/L as CaCO₃**. H2a is another supplied sample at **191.1719 mg/L**.
+Two preparations of one water do not become two independently collected waters.
+Shared titrant concentration uncertainty or endpoint bias is not established
+from their difference.
+
+**R3.** The corrected consumption is 0.00400 L; amount is $4.00\times10^{-5}$
+mol, equivalent to 4.0036 mg CaCO₃ in 0.02500 L. Result is **160.144 mg/L as
+CaCO₃**:
+
+```r
+new_hardness <- 0.01000 * ((4.10 - 0.10) / 1000) *
+                  100.09 * 1000 / (25.00 / 1000)
+new_hardness
+```
+:::
+
+## Where this leads
+
+[Potentiometry](../potentiometry/lec.qmd) explains electrode signals and their
+calibration. The titration's concentration and volume uncertainties return in
+later reporting problems. [Practice quiz](quiz.qmd) checks the chemical reasoning.

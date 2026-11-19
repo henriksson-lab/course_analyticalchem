@@ -7,8 +7,8 @@ introcomputing. No hosting or publication is configured.
 
 ## Files and expected results
 
-- `lessons/uv-visible.qmd`: explanation, code, guided practical and transfer task.
-- `slides/uv-visible.qmd`: illustrated presentation with speaker notes.
+- `uv-visible/exercise.qmd`: explanation, code, guided practical and transfer task.
+- `uv-visible/lec.qmd`: illustrated presentation with speaker notes.
 - `report.Rmd`: runnable student template with interpretation prompts.
 - `worked-example.Rmd`: completed report, rendered into `reports/`.
 - `data/README.md`: concentration basis, simulated-data provenance and dictionary.

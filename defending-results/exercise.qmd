@@ -1,0 +1,273 @@
+---
+title: "Exercise: choose and defend an analytical result"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Compile an auditable caffeine result from independent calibration, QC and
+preparation records. Report only supported values, distinguish candidate numbers
+from chemical claims, and explain uncertainty omissions and the next analytical
+action. This is integration of familiar chemistry and R, not a new modelling
+package.
+
+## Background
+
+For the independent final case, area $=4+40c$ over 0–30 mg/L caffeine in the
+**final** solution. A separate check contains 15.00 mg/L and has area 608. The
+supplied check window is 95–105% recovery. Original concentration is final
+concentration times final/aliquot volume. The dataset supplies separation and
+sample-block QC decisions, and standard uncertainties of final concentration.
+
+Those uncertainties are separate inputs: the rounded ideal calibration points'
+zero residual does not imply zero real uncertainty. Scaling them by dilution
+excludes volume, sampling and recovery uncertainty. Molecular identity also
+requires suitable selective evidence; a matching retention time or nominal ion
+mass alone is not unique proof.
+
+## By hand
+
+**B1.** C1 has area 604 from5.00 mL made to50.00 mL. Separation and QC are accepted.
+Its supplied final standard uncertainty is 0.15 mg/L. Calculate final and original
+concentration and the dilution-scaled standard uncertainty. What does that
+uncertainty omit? [Hint](#hint-b1)
+
+**B2.** C2 of drink B has area 1604 from5.00 mL to50.00 mL. C3 is a newly prepared
+2.00 mL aliquot of the same drink to50.00 mL, giving area 644. Calculate both
+candidates, choose what can be reported, and explain why C3 does not make C2's
+old measurement valid. [Hint](#hint-b2)
+
+**B3.** C4's area 484 lies within range and QC passes, but its candidate peak is
+unresolved. Can you report its algebraic caffeine concentration? What action
+would provide relevant new evidence? [Hint](#hint-b3)
+
+**B4.** A different instrument method gives a very high correlation with
+reference concentrations but increasingly positive differences. Does that
+establish acceptable agreement? Name the additional quantity or evidence you
+would examine. [Hint](#hint-b4)
+
+## Explore {#explore}
+
+The embedded experiment keeps an old signal fixed while you plan a different
+aliquot or measurement condition. The new-measurement button creates a new
+record. Its model is intentionally idealised; the exploratory case uses the
+same final standard uncertainty 0.15 mg/L for each accepted new preparation,
+whereas the separate archived C3 dataset supplies0.16 mg/L.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="defending-results"></div>
+<script src="../demos/dist/defending-results.js"></script>
+```
+
+**E1.** The initial drink B record is outside range. Select a2.00 mL aliquot
+without measuring. What changes? Now click **Measure a new preparation** and
+compare old and new records. Connect the result to B2.
+
+**E2.** Plan drink A at 5.00 mL with failed independent QC, then measure. Its
+candidate may remain in range: which gate stops reporting? Next choose an
+unresolved separation and accepted QC for a new preparation. Explain why changing
+one evidence condition does not erase failures in earlier records.
+
+**E3.** Export the history. Which columns are diagnostic candidates, and which
+are actual reportable outputs? Why should a withheld concentration export as
+missing rather than zero? Reset and explain which teaching state resets.
+
+::: {.callout-note collapse="true" title="Solutions — E1–E3"}
+**E1.** Selecting a new plan alone changes no recorded area, volume or decision.
+The old B record remains area 1604, final candidate40 mg/L and withheld. The new
+2.00 mL measurement gives area 644, final 16 mg/L and original 400 mg/L. In this
+demo its limited standard uncertainty is 0.15×25=3.75 mg/L; archived C3 separately
+has 0.16×25=4.0 mg/L. They are two stated uncertainty-input scenarios, not a
+contradiction or a complete method budget.
+
+**E2.** The new failed-QC record is withheld even if its final candidate is in
+range. A later unresolved record is withheld for selectivity. Controls represent
+supplied new evidence under a new scenario; they are not a licence to relabel an
+old failed measurement. Record histories retain those distinctions.
+
+**E3.** `candidate_final_mg_l` and `candidate_original_mg_l` are algebraic values
+used diagnostically. `reported_original_mg_l` and its limited uncertainty are
+empty for withheld records. Empty means unsupported, not zero caffeine. Reset
+returns the teaching model to its initial plan and history; it does not model
+deleting a real laboratory audit trail.
+:::
+
+## In R
+
+Run from the supplied project root with familiar CSV, transformation, plotting
+and regression functions. Keep the raw records unchanged.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+standards <- read_csv("data/course/case-standards.csv", show_col_types = FALSE)
+qc <- read_csv("data/course/case-qc.csv", show_col_types = FALSE)
+samples <- read_csv("data/course/case-samples.csv", show_col_types = FALSE)
+```
+
+**R1.** Fit the response model, compute independent QC recovery, then calculate
+sample candidates. Require range, supplied separation and all relevant QC evidence
+before filling reportable concentration and uncertainty fields. Preserve reasons
+for withholding. [Hint](#hint-r1)
+
+**R2.** Plot candidate-method minus reference for the paired results in
+`method-comparison.csv`. Explain which discrepancy needs investigation and why
+correlation alone would miss the problem. [Hint](#hint-r2)
+
+**R3.** Render a short report with the measurand, preparation table, calibration,
+QC, results, uncertainty scope and specific next action for each unresolved
+case. Optionally import your demo history and check that withheld outputs are
+missing. Distinguish ion identity evidence from quantity calibration.
+[Hint](#hint-r3)
+
+## Hints
+
+::: {.callout-tip collapse="true" title="Hint — B1" #hint-b1}
+Invert area 4+40c, then multiply both concentration and the supplied final standard
+uncertainty by the dilution factor. Do not call a standard uncertainty a 95% half-width.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B2" #hint-b2}
+Apply the range to the **final measured solution**, before any original-sample
+back-calculation. A new aliquot requires its own measurement and record.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B3" #hint-b3}
+The response model assumes the integrated area belongs to caffeine. Known
+coelution challenges that interpretation even with a perfect calibration line.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — B4" #hint-b4}
+Correlation measures association. Differences on the concentration scale expose
+bias relative to the comparison reference, with its uncertainty and scope.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R1" #hint-r1}
+Use [`lm()`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html)
+with area as response. `case_when()` can attach a decision while `if_else()`
+protects concentration fields from being exported as unsupported results.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R2" #hint-r2}
+The same `sample_id` has a reference and both method results. Subtract reference
+from each matched method result, then plot difference against reference concentration.
+:::
+
+::: {.callout-tip collapse="true" title="Hint — R3" #hint-r3}
+`NA` describes an absent estimate, not a concentration of zero. A singly protonated
+ion near m/z195 can support a caffeine investigation but is not by itself a unique
+identity or quantitative calibration.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Solutions — B1–B4"}
+**B1.** $(604-4)/40=15$ mg/L final; factor 50/5=10 gives 150 mg/L original.
+The scaled standard uncertainty is 0.15×10=1.5 mg/L. It excludes volume, sampling,
+preparation recovery and other sources not in the supplied final estimate. It
+is not a 95% interval.
+
+**B2.** C2 gives 40 mg/L final, outside the 0–30 mg/L working range. Its candidate
+original value 400 mg/L is not reportable. New C3 gives 16 mg/L final and factor 25,
+therefore400 mg/L original under accepted evidence. The equality of algebraic
+original values does not validate the old out-of-range signal.
+
+**B3.** No: area 484 algebraically suggests12 mg/L final and 120 original, but
+known unresolved response makes that caffeine attribution unsupported. Improve
+separation or obtain justified additional selective evidence, then measure again.
+
+**B4.** No. Plot method-minus-reference differences, evaluate reference uncertainty,
+sampling scope and the required performance. A systematic increasing discrepancy
+can coexist with extremely high correlation; the plot motivates investigation
+but does not prove the chemical cause.
+:::
+
+::: {.callout-note collapse="true" title="Full worked R solutions — R1–R3"}
+**R1.**
+
+```r
+fit <- lm(area ~ caffeine_mg_l, data = standards)
+a <- unname(coef(fit)[1])
+b <- unname(coef(fit)[2])
+qc <- qc |>
+  mutate(estimated_mg_l = (area - a) / b,
+         recovery_percent = 100 * estimated_mg_l / reference_mg_l,
+         pass = recovery_percent >= acceptance_low &
+                recovery_percent <= acceptance_high)
+results <- samples |>
+  mutate(candidate_final_mg_l = (area - a) / b,
+         in_range = candidate_final_mg_l >= 0 & candidate_final_mg_l <= 30,
+         reportable = in_range & resolved & qc_pass & all(qc$pass),
+         dilution_factor = final_ml / aliquot_ml,
+         original_mg_l = if_else(reportable,
+                                candidate_final_mg_l * dilution_factor, NA_real_),
+         u_original_mg_l = if_else(reportable,
+           u_final_concentration_mg_l * dilution_factor, NA_real_),
+         decision = case_when(!qc_pass | !all(qc$pass) ~ "withhold: QC",
+                              !resolved ~ "withhold: coelution",
+                              !in_range ~ "remeasure: outside range",
+                              TRUE ~ "conditional result"))
+qc
+results |> select(preparation_id, sample_id, original_mg_l, u_original_mg_l, decision)
+write_csv(results, "output/final-case-decisions.csv", na = "NA")
+```
+
+QC is 15.1 mg/L, or100.667% recovery, and passes. C1 and C3 report150 and 400 mg/L
+with limited standard uncertainties 1.5 and 4.0. C2 is outside range; C4 coelutes.
+Their reported concentrations and uncertainty fields are `NA`. Candidate fields
+remain diagnostic and must not be mistaken for reported measurements.
+
+**R2.**
+
+```r
+comparison <- read_csv("data/course/method-comparison.csv", show_col_types = FALSE)
+differences <- bind_rows(
+  comparison |> transmute(sample_id, reference_mg_l,
+    difference_mg_l = hplc_mg_l - reference_mg_l, method = "HPLC"),
+  comparison |> transmute(sample_id, reference_mg_l,
+    difference_mg_l = nonspecific_uv_mg_l - reference_mg_l, method = "Unseparated UV"))
+ggplot(differences, aes(reference_mg_l, difference_mg_l, colour = method)) +
+  geom_hline(yintercept = 0, linetype = "dashed") + geom_point() +
+  labs(x = "Reference result (mg/L)", y = "Method minus reference (mg/L)") +
+  theme_minimal()
+```
+
+HPLC differs by 1–3 mg/L; unseparated UV differs by 13–45 mg/L with an increasing
+pattern. That suggests the latter method needs investigation for the intended
+use. The pattern does not itself identify a matrix mechanism or establish the
+reference as exact.
+
+**R3.** A suitable conclusion reports conditional150 mg/L for A and 400 mg/L for B,
+with the stated limited uncertainties. C3 supplies B's valid remeasurement;
+C2 remains outside range. C needs selective evidence and a new measurement.
+A peer should rebuild the report from saved inputs in a fresh R session.
+
+```r
+# Optional: only after saving the exported history in data/.
+if (file.exists("data/reporting-decisions.csv")) {
+  history <- read_csv("data/reporting-decisions.csv", show_col_types = FALSE)
+  history |> select(preparation_id, recorded_area, reportable,
+                     reported_original_mg_l, withheld_reason)
+  stopifnot(all(is.na(history$reported_original_mg_l[!history$reportable])))
+}
+```
+
+Identity and amount require related but distinct evidence. For example, a
+singly protonated caffeine ion near m/z195 differs from its nominal neutral
+mass 194. Adducts, charge states and fragments require interpretation; the course
+spectrum is illustrative, not an authentic library match. The MS signal would
+also need a suitable calibration for quantification.
+:::
+
+## Where this leads
+
+Carry the same traceability and withholding discipline into later laboratory
+reports. Choose a new measurement that resolves the actual uncertainty or
+selectivity problem rather than producing more digits from an unsupported model.

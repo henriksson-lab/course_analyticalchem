@@ -1,0 +1,9 @@
+{
+  "name": "analyticalchem-demos",
+  "private": true,
+  "description": "Quantbio scaffold interactive demos for Analytical Chemistry",
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

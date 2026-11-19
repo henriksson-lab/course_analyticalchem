@@ -1,0 +1,234 @@
+---
+title: "Exercise: matrix effects and standard addition"
+format:
+  html:
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+---
+
+## Goal
+
+Distinguish changed sensitivity, additive interference and native-analyte loss;
+calculate incremental spike recovery; and use a fixed-final-volume standard
+addition without confusing its negative intercept with an ordinary high-sample
+extrapolation. State which evidence a late spike can and cannot provide.
+
+## Background
+
+All signals in the supplied standard-addition data are already background
+corrected. Each flask contains the same 10.00 mL sample made to 25.00 mL total.
+Added-analyte concentration refers to this final volume. Under an additive
+linear model with shared native/spike sensitivity,
+
+$$y=b\left(c_s\frac{V_s}{V_f}+c_{added,final}\right)=a+b c_{added,final}.$$
+
+The negative x-intercept is $x_0=-a/b$; its magnitude estimates native analyte
+**in the diluted final flask**, so $c_s=-x_0V_f/V_s$. A constant unrelated signal
+also shifts the intercept unless independently corrected. A successful spike
+after extraction never passed through earlier native losses. The simulated
+course data are separate analytical scenarios, not a validation of a real assay.
+
+## By hand
+
+**B1.** Equal-final-volume unspiked/spiked solutions give external-calibration
+estimates 1.50 and 2.25 mg/L after adding 1.00 mg/L in the final flask. Calculate
+incremental recovery and state what those units refer to. [Hint](#hint-b1)
+
+**B2.** Equal 10.00 mL sample aliquots made to 25.00 mL give the fitted line
+$y=0.3004+0.1496c_{added,final}$. Calculate x-intercept and original concentration.
+Why is zero added analyte not a zero-analyte blank? [Hint](#hint-b2)
+
+**B3.** A second design uses 5.00 mL sample made to 20.00 mL and gives
+$y=0.240+0.120c_{added,final}$. Calculate the original concentration. Would the
+same formula work without adjustment if final volumes differed between flasks?
+[Hint](#hint-b3)
+
+**B4.** Native analyte loses half its amount before a freely dissolved spike
+is added. Native recovered and added material then give equal response. Can
+late-spike recovery be 100%? Would that establish native recovery?
+[Hint](#hint-b4)
+
+## Explore {#explore}
+
+Keep the original input visible as simulation truth. Change one mechanism at a
+time. The independent-background switch assumes a perfect independent estimate
+of the interfering term; standard addition itself does not supply it.
+
+```{=html}
+<link rel="stylesheet" href="../demos/dist/demo.css">
+<div data-demo="matrix-recovery"></div>
+<script src="../demos/dist/matrix-recovery.js"></script>
+```
+
+**E1.** With complete native recovery and no additive signal, set sensitivity
+ratio to 0.75. Compare external and standard-addition estimates. Explain which
+quantity changes with suppression. [Hint](#hint-e1)
+
+**E2.** Restore sensitivity ratio one, reduce native recovery to 50%, and keep
+additive signal zero. Explain why a perfect late-spike recovery can coexist
+with a wrong original amount. [Hint](#hint-e2)
+
+**E3.** Set sensitivity ratio back to 0.75, restore native recovery, add an
+interference of 0.120 signal units,
+and examine the exact straight line. Then apply the ideal independent
+correction. Explain what changed and what extra evidence was assumed.
+Export one scenario. [Hint](#hint-e3)
+
+## In R
+
+Run this workflow at the project root in a fresh R session. Use standard-addition
+and external standards in their correct separate tables.
+
+```r
+library(readr)
+library(dplyr)
+library(ggplot2)
+additions <- read_csv("data/course/standard-addition.csv", show_col_types = FALSE)
+external <- read_csv("data/course/external-matrix.csv", show_col_types = FALSE)
+fit_sa <- lm(blank_corrected_signal ~ spike_mg_l_final, data = additions)
+fit_ext <- lm(blank_corrected_signal ~ c_mg_l, data = external)
+a_sa <- unname(coef(fit_sa)[1]); b_sa <- unname(coef(fit_sa)[2])
+x_intercept <- -a_sa / b_sa
+original_sa_mg_l <- -x_intercept * 25.00 / 10.00
+original_external_mg_l <- unname(
+  (additions$blank_corrected_signal[1] - coef(fit_ext)[1]) / coef(fit_ext)[2]) * 25 / 10
+line <- data.frame(spike_mg_l_final = seq(-2.3, 2.2, length.out = 100)) |>
+  mutate(blank_corrected_signal = a_sa + b_sa * spike_mg_l_final)
+ggplot(additions, aes(spike_mg_l_final, blank_corrected_signal)) +
+  geom_point() + geom_line(data = line) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = "Added analyte in final flask (mg/L)", y = "Background-corrected signal") +
+  theme_minimal()
+spikes <- read_csv("data/course/spike-recovery.csv", show_col_types = FALSE)
+spike_recovery_percent <- 100 * diff(spikes$externally_estimated_mg_l_final) /
+                               diff(spikes$added_mg_l_final)
+answers <- data.frame(standard_addition_mg_l = original_sa_mg_l,
+                      external_mg_l = original_external_mg_l,
+                      incremental_recovery_percent = spike_recovery_percent)
+answers
+write_csv(answers, "output/matrix-recovery-exercise.csv")
+```
+
+**R1.** Read the x-intercept and volume correction with units. Explain why
+negative analyte is not physically prepared. [Hint](#hint-r1)
+
+**R2.** Compare the two fitted slopes and original concentration estimates.
+Explain why an external standard can be precisely prepared yet inappropriate
+for this sample. [Hint](#hint-r2)
+
+**R3.** Does the fitted intercept's ordinary response interval automatically
+give an interval for original concentration? Identify the uncertain inputs and
+one assumption that could invalidate a straight-line standard-addition answer.
+[Hint](#hint-r3)
+
+## Hints
+
+::: {#hint-b1 .callout-tip collapse="true" title="B1: use the increment, not the full spiked result"}
+Subtract the unspiked estimate from the spiked estimate, then divide by the
+known added concentration on the same final-volume basis.
+:::
+::: {#hint-b2 .callout-tip collapse="true" title="B2: first find the diluted native concentration"}
+Solve $0=a+b x_0$ and multiply its magnitude by $25/10$. The unspiked sample
+already contains native analyte.
+:::
+::: {#hint-b3 .callout-tip collapse="true" title="B3: the sample fraction is part of the model"}
+Use $V_f/V_s=4$. Different final volumes change both native concentration and
+matrix fraction across the series.
+:::
+::: {#hint-b4 .callout-tip collapse="true" title="B4: trace the spike path"}
+The added analyte was not present during the loss. It can test later response
+without testing earlier recovery.
+:::
+::: {#hint-e1 .callout-tip collapse="true" title="E1: the shared slope cancels"}
+The intercept and slope both scale under the same multiplicative effect;
+their ratio does not. An unrelated additive term behaves differently.
+:::
+::: {#hint-e2 .callout-tip collapse="true" title="E2: recovered is not original"}
+At five mg/L original and half native recovery, the later prepared material
+represents only 2.5 mg/L on the original-sample basis.
+:::
+::: {#hint-e3 .callout-tip collapse="true" title="E3: a line does not identify its intercept components"}
+The intercept contains native response plus the additive term. Removing the
+latter requires evidence beyond merely fitting additions.
+:::
+::: {#hint-r1 .callout-tip collapse="true" title="R1: model-based extrapolation"}
+The negative x-axis position is inferred from the additive response model.
+It is not an ordinary unknown measured beyond its external calibration.
+:::
+::: {#hint-r2 .callout-tip collapse="true" title="R2: compare sensitivities"}
+Read [`coef`](https://rdrr.io/r/stats/coef.html) for each model. A slope difference
+changes the response per concentration even with an apparently excellent fit.
+:::
+::: {#hint-r3 .callout-tip collapse="true" title="R3: propagate through the ratio"}
+Original concentration uses intercept divided by slope and a volume ratio.
+Their covariance and volume uncertainties matter; a forward response interval
+has a different target.
+:::
+
+## Solutions
+
+::: {.callout-note collapse="true" title="Full worked solutions"}
+**B1.** Increment is $2.25-1.50=0.75$ mg/L. Divide by the added 1.00 mg/L and
+multiply by 100 to obtain **75%**. Both concentrations refer to final solutions
+with equal total volume and sample fraction, so the difference isolates an
+increment under the stated matched design.
+
+**B2.** $x_0=-0.3004/0.1496=-2.0080214$ mg/L final. Original concentration is
+$2.0080214\times25/10=\mathbf{5.0200535}$ mg/L. An aliquot with no added
+standard still contains the sample's native analyte, so it is not a zero-analyte
+blank.
+
+**B3.** $x_0=-2.00$ mg/L final; multiply by four to get **8.00 mg/L original**.
+Different final volumes require an appropriate volume-corrected model. The
+fixed-volume intercept formula cannot be reused as though the matrix fraction
+and native concentration were constant.
+
+**B4.** Yes: added material can respond quantitatively after the loss, giving
+100% incremental recovery. It did not experience the loss and cannot establish
+native recovery. A successful post-extraction spike is not a mass balance for
+the original material.
+
+**E1.** At default five mg/L original, standard addition returns **5.000 mg/L**
+while external calibration returns **3.750 mg/L** in the exact demo model.
+The sensitivity is suppressed from 0.200 to 0.150. Shared scaling cancels in
+intercept/slope, but external calibration uses the wrong slope.
+
+**E2.** At ratio one and 50% native recovery, standard addition returns
+**2.500 mg/L**, yet late-spike recovery is **100%**. All later response is
+correct; the input already lost analyte. No calibration can reconstruct that
+loss without additional recovery evidence.
+
+**E3.** With ratio 0.75, complete recovery and additive signal 0.120, the
+intercept increases and the standard-addition estimate becomes **7.000 mg/L**
+although the native truth is 5.000. Perfect independent subtraction returns it
+to 5.000. This assumes the interferent was separately established under relevant
+conditions; a reagent blank need not reveal a sample-specific signal. Exact
+linearity did not distinguish the two intercept contributions.
+
+**R1.** The supplied noisy teaching data give **5.02005 mg/L original** via the
+negative final-flask intercept −2.00802 mg/L. Negative concentration is not
+prepared; its location follows from the specified additive response model with
+fixed sample fraction, not a licence to extrapolate every calibration.
+
+**R2.** External slope is **0.1998**, matrix slope **0.1496** signal units per
+mg/L. The external estimate is **3.76126 mg/L original**, lower than the
+standard-addition estimate. Standard preparation precision cannot establish
+sample matrix compatibility. The separate spike data give **75%** incremental
+recovery.
+
+**R3.** No. The inferred quantity depends on $a/b$ and $V_f/V_s$, so uncertainty
+in both coefficients (including covariance) and volumes must be propagated.
+A forward response interval for $a$ is not an inverse original-concentration
+interval. Nonlinear response, changing sample fraction, residual additive
+interference or different native/spike behaviour can invalidate the model.
+This exercise therefore reports a conditional point estimate, not a complete
+uncertainty interval.
+:::
+
+## Where this leads
+
+[Atomic measurements](../atomic-methods/lec.qmd) and chromatography encounter
+matrix effects despite selective signals. Use the [quiz](quiz.qmd) to separate
+what each QC design establishes before moving on.
