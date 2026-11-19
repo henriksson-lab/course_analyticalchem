@@ -9,6 +9,7 @@ series and derived-result uncertainty when the chemistry needs them.
 ## Open the material
 
 - Course home: `docs/index.html`.
+- Published course: https://henriksson-lab.github.io/course_analyticalchem/
 - Student lessons: `docs/lessons/`; illustrated decks: `docs/slides/`.
 - Interactive experiments: `docs/demos/index.html`, one per topic with CSV export.
 - Full student project: `downloads/analyticalchem-project.zip`.
@@ -51,7 +52,15 @@ If Quarto cannot write its normal cache in a restricted environment, use
 
 Generators replace only the simulated inputs or original figures they own.
 The checks execute the analyses and regenerate their CSV results and plots.
-Student archives exclude instructor solutions. No publishing is configured.
+Student archives exclude instructor solutions.
+
+## GitHub Pages
+
+GitHub Pages publishes the committed `docs/` directory from `main`. After
+changing the course, render with `quarto render`, commit the updated sources
+and `docs/`, and push to `main`. GitHub then publishes the updated site.
+The root `.nojekyll` file is copied into `docs/` by Quarto so GitHub serves
+the generated HTML and assets directly.
 
 The draft needs subject-teacher review against the planned syllabus, actual
 practical protocols and a student pilot. Simulated datasets, idealised diagrams
