@@ -1,0 +1,9 @@
+sample_id,location,collected_l,chloride_mg_l,chloride_g_l,chloride_mg
+W1,inlet,0.25,18,0.018,4.5
+W2,inlet,0.25,20,0.02,5
+W3,inlet,0.25,19,0.019,4.75
+W4,inlet,0.25,21,0.021,5.25
+W5,outlet,0.25,12,0.012,3
+W6,outlet,0.25,13,0.013,3.25
+W7,outlet,0.25,11,0.011,2.75
+W8,outlet,0.25,14,0.014,3.5

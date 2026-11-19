@@ -1,0 +1,7 @@
+sample_id,reference_mg_l,hplc_mg_l,nonspecific_uv_mg_l,hplc_difference,uv_difference
+M1,50,51,63,1,13
+M2,80,81,98,1,18
+M3,100,101,120,1,20
+M4,150,152,179,2,29
+M5,200,202,237,2,37
+M6,250,253,295,3,45

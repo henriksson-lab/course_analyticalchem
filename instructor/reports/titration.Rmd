@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Equilibrium and titration"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-titration.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. The supplied endpoint of 25.00 mL of 0.1000 mol/L base for 25.00 mL acid gives 0.1000 mol/L acid. A slope maximum is an exploratory endpoint check, not complete endpoint validation. The weak acid has the same equivalence amount but a different pH curve.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+Hardness results are 123.1107, 124.1116 and 191.1719 mg/L as CaCO3. The transfer is 160.144 mg/L as CaCO3. State blank subtraction and the conditional selective 1:1 Ca/Mg–EDTA model. Do not infer carbonate presence or separate calcium and magnesium concentrations.
+
+The complete executable solution is in `R/analyse-titration.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

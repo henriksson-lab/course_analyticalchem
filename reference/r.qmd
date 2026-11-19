@@ -1,0 +1,107 @@
+---
+title: "R reference for analytical measurements"
+---
+
+## Start in the supplied project
+
+Extract [the course project](../downloads/analyticalchem-project.zip), open
+`analyticalchem.Rproj`, and keep `course-report.Rmd` at the project root. Install
+missing packages once in the R console:
+
+```{r}
+install.packages(c("readr", "dplyr", "ggplot2", "knitr", "rmarkdown"))
+```
+
+Read a lesson's code from top to bottom in a fresh session. Run R in the R console,
+not a shell terminal. Keep raw CSV files unchanged. Units and row meanings are
+specified in the [course data dictionary](data.qmd).
+
+## Inspect before calculating
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+x <- read_csv("data/course/water.csv", show_col_types = FALSE)
+glimpse(x)
+names(x)
+head(x)
+sum(is.na(x$chloride_mg_l))
+stopifnot(!anyDuplicated(x$sample_id))
+```
+
+`stopifnot()` stops the script if its condition is false. Here it prevents
+mistaking duplicate IDs for independent collected samples. A failed check
+calls for inspection; it is not a command to delete rows automatically.
+
+## Calculate and summarise
+
+```{r}
+x <- x |> mutate(chloride_mg = chloride_mg_l * collected_l)
+x |> group_by(location) |>
+  summarise(n = n(), mean_mg_l = mean(chloride_mg_l),
+            sd_mg_l = sd(chloride_mg_l), .groups = "drop")
+```
+
+`|>` passes a result to the next function. `mutate()` adds derived columns.
+`group_by()` identifies groups for `summarise()`. Describe how missing values
+are handled and count them; `na.rm = TRUE` does not justify ignoring missingness.
+
+## Attach a preparation by ID
+
+```r
+stopifnot(!anyDuplicated(preparations$preparation_id),
+          all(readings$preparation_id %in% preparations$preparation_id))
+joined <- readings |>
+  left_join(preparations, by = "preparation_id")
+```
+
+This example assumes the two tables have been imported in the relevant lesson.
+`left_join()` uses matching IDs, not row position. Unique preparation keys avoid
+multiplying rows; checking matches avoids losing the volume or mass needed for
+a calculation. Inspect row count and missing values afterwards.
+
+## Fit a line and respect its direction
+
+```r
+fit <- lm(response ~ known_concentration, data = standards)
+coef(fit)
+residuals(fit)
+```
+
+The response is on the left. An inverse concentration estimate uses the fitted
+response relationship; fitting the variables in the opposite direction is a
+different regression. Inspect residuals, range and QC before exporting results.
+
+## Logarithms and differences
+
+```{r}
+log10(0.0001)
+10^(-4)
+diff(c(0, 1, 1.5, 2))
+```
+
+`log10()` gives a base-ten logarithm; `10^x` reverses it. The logarithm of a
+physical quantity is taken relative to a stated reference/unit convention.
+`diff()` gives consecutive differences. A titration derivative divides the pH
+differences by the corresponding volume differences, not by the number of rows.
+
+## Save the evidence
+
+```{r}
+fig <- ggplot(x, aes(location, chloride_mg_l)) + geom_point() +
+  labs(x = "Sampling location", y = "Chloride (mg/L)") + theme_minimal()
+ggsave("output/water-plot.png", plot = fig, width = 7, height = 4)
+write_csv(x, "output/water-results.csv")
+```
+
+Keep the source report at the root. Render from the console, outside the report:
+
+```r
+rmarkdown::render("course-report.Rmd", output_dir = "reports")
+```
+
+An object-not-found error can mean a misspelling or a missing earlier step.
+A file-not-found error usually calls for checking project, relative path and
+filename. If Knit fails while Console succeeds, check for hidden session state.
+Restart R and rebuild from saved inputs rather than manually repairing the HTML.

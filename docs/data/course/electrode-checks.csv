@@ -1,0 +1,3 @@
+"block","check_fluoride_mol_l","potential_mv","allowed_abs_error_mv"
+"early",1e-04,139.1,2
+"late",1e-04,145,2

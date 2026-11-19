@@ -1,0 +1,5 @@
+"injection_id","preparation_id","caffeine_area","internal_standard_area","internal_standard_mg_l","resolved","qc_pass","dilution_factor"
+"I1","D1",753,500,10,TRUE,TRUE,10
+"I2","D1",603,400,10,TRUE,TRUE,10
+"I3","D2",1003,500,10,FALSE,TRUE,10
+"I4","D3",1503,500,10,TRUE,FALSE,10

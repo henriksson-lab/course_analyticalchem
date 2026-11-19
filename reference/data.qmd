@@ -1,0 +1,72 @@
+---
+title: "Course data dictionary"
+---
+
+All 27 CSV files are **simulated teaching data**, regenerated deterministically
+by `Rscript scripts/generate-course-data.R` with seed 202711. They are separate
+analytical scenarios, not different techniques measuring an identical sample.
+No natural-population claims, health thresholds or validated method performance
+are implied. No actual laboratory procedure is supplied. Use a department-approved
+protocol for bench work. Identifiers are text; quantities are numeric; boolean
+flags are supplied decisions under the scenario, not results to choose freely.
+
+## Foundations
+
+| File | Row meaning | Fields and units |
+| --- | --- | --- |
+| `water.csv` | One independently collected water sample | `sample_id`; `location` inlet/outlet; `collected_l` solution volume in L; `chloride_mg_l` mg chloride/L. Locations are not matched before/after pairs. |
+| `sampling.csv` | One grab from one position in a heterogeneous solid | `position` top/middle/bottom; `grab` local identifier; `iron_mg_kg` mg Fe/kg material. The three strata have **equal masses**. |
+| `extractions.csv` | One independent caffeine extraction/preparation | `preparation_id`; `sample_id` T1/T2; `mass_g` original dry mass in g; `extract_ml` total extract volume in mL; `aliquot_ml` extract portion in mL; `final_ml` measured total volume in mL; `final_caffeine_mg_l` calibrated final solution in mg caffeine/L. No recovery correction is supplied. |
+| `precision.csv` | One repeat measurement of a single reference material by a method | `method` A/B/C; `repeat_id`; `reference_mg_l` and `measured_mg_l` in mg/L. Reference uncertainty is neglected in the exercise; readings are not independent sampled materials. |
+| `blank-signals.csv` | One independently prepared method blank in a separate low-level model | `blank_id`; `signal` arbitrary response units. Indicative sensitivity 0.200 response units per mg/L is supplied in the lesson. No connection to the iron blank reference is implied. |
+| `nonlinear-calibration.csv` | One prepared standard in a deliberately curved response model | `c_mg_l` mg/L; `response` arbitrary units. Two preparations at each level. |
+
+## Titration and electrodes
+
+| File | Row meaning | Fields and units |
+| --- | --- | --- |
+| `acid-titration.csv` | One ideal calculated point in a strong-acid/base titration | `volume_ml` cumulative added 0.1000 mol/L base in mL; `ph` dimensionless. Initial acid is 25.00 mL of 0.1000 mol/L; water autoionisation Kw=10⁻¹⁴ at 25 °C, ideal activities. Rows are dependent positions in one titration. |
+| `edta.csv` | One independent hardness preparation/titration | `preparation_id`; `sample_id`; `sample_ml`, `initial_burette_ml`, `final_burette_ml`, `blank_ml` in mL; `edta_mol_l` mol/L. Delivered volume is final minus initial; subtract the matched blank. Assume selective 1:1 accessible Ca/Mg–EDTA stoichiometry. Use 100.09 g/mol to report as CaCO₃. |
+| `electrode-standards.csv` | One fluoride calibration standard | `standard_id`; `fluoride_mol_l` mol F⁻/L; `potential_mv` mV with a stated anion-response convention. Assume 25 °C, matched activity/concentration relation and valid range 10⁻⁵–10⁻³ mol/L. |
+| `electrode-checks.csv` | One independent check reading per time block | `block` early/late; `check_fluoride_mol_l` mol/L; `potential_mv` mV; `allowed_abs_error_mv` supplied absolute-error tolerance in mV. Unknowns supplied in the lesson are early 121.2 mV and late 127.2 mV. |
+
+The additional weak-acid illustration in the titration analysis solves charge
+balance with pKa 4.76 and the same initial amount and titrant. It is not an
+experimental curve or a proposed universal endpoint method.
+
+## Matrix effects and elemental analysis
+
+| File | Row meaning | Fields and units |
+| --- | --- | --- |
+| `standard-addition.csv` | One separately prepared fixed-final-volume flask | `flask_id`; `sample_ml`=10 mL; `final_ml`=25 mL; `spike_mg_l_final` added-analyte concentration in mg/L **of final solution**; `blank_corrected_signal` arbitrary units, already corrected. Assume linear additive response, no residual additive interference, same sensitivity for native and added analyte, fixed matrix fraction. |
+| `external-matrix.csv` | One external standard in simple solvent | `c_mg_l` mg/L; `blank_corrected_signal` arbitrary units. Matrix sensitivity differs from the standard-addition case. |
+| `spike-recovery.csv` | One matched unspiked/spiked preparation | `preparation_id` specifies role; `final_volume_ml`, `sample_volume_ml` in mL; `added_mg_l_final` and `externally_estimated_mg_l_final` in mg/L of final solution. The spike tests incremental response after its stated addition, not complete native extraction. |
+| `atomic-standards.csv` | One final introduced-solution copper standard | `copper_mg_l` mg Cu/L; `emission_counts` arbitrary detector counts. Working range 0–2 mg/L. |
+| `atomic-digests.csv` | One plant digest or method blank | `preparation_id`; `sample_id`; `dry_mass_g` original dry mass in g, missing for blank; `digest_ml` final digest volume in mL; `further_dilution` dimensionless factor after digest; `emission_counts`. The blank is measured undiluted, so subtract on the digest basis after undoing the sample's further dilution. |
+| `atomic-qc.csv` | One independently sourced dissolved copper check | `check_id`; `reference_mg_l` mg Cu/L final; `emission_counts`; `recovery_lower`, `recovery_upper` in %. These checks do not validate digestion recovery. |
+| `atomic-lines.csv` | One wavelength position in a conceptual spectrum | `wavelength_nm` nm; `trace` target_only/target_plus_interferent; `counts` arbitrary units. Gaussian line positions and shapes are illustrative, not a reference library. |
+
+The atomic result is conditional on quantitative recovery/transfer and the
+supplied sample definition. It is mg Cu/kg original dry mass, not copper species,
+mg/L digest or a validated total-element result for every plant matrix.
+
+## Chromatography and final case
+
+| File | Row meaning | Fields and units |
+| --- | --- | --- |
+| `peak-summary.csv` | One simulated Gaussian component in a run | `run` resolved/overlap/broad; `compound` A/B; `t0_min` unretained transit time; `t_r_min` retention time; `baseline_width_min` Gaussian **baseline width**, defined as 4 sigma; `area` baseline-subtracted integrated response in arbitrary response·min units. |
+| `chromatograms.csv` | One time position within a run | `run`; `time_min` min; `response` arbitrary units with constant baseline 5. A and B retain areas 100 and 150 in every run. Rows are not independent samples. |
+| `hplc-standards.csv` | One final-solution caffeine standard | `caffeine_mg_l` mg/L; `caffeine_area`, `internal_standard_area` arbitrary integrated response units; `internal_standard_mg_l` fixed at 10 mg/L. Areas already supplied from integration. |
+| `hplc-injections.csv` | One injection of a prepared solution | `injection_id`; `preparation_id`; both area fields; `internal_standard_mg_l`=10; `resolved` and `qc_pass` supplied logical decisions; `dilution_factor` original-to-final factor. I1/I2 are repeated injections of D1, not independent samples. I3 is deliberately coeluting; I4 has failed QC. |
+| `hplc-gradient.csv` | One programmed composition point | `time_min` min; `organic_percent` mobile-phase organic modifier %. Lines between points are linear program segments; this is not a validated instrumental method. |
+| `case-standards.csv` | One final-case standard | `caffeine_mg_l` mg/L final; `area` arbitrary integrated units. This new idealised calibration is separate from the earlier HPLC case, valid over 0–30 mg/L. |
+| `case-samples.csv` | One independent preparation of a supplied drink | `preparation_id`; `sample_id`; `aliquot_ml`, `final_ml` mL; `area`; `resolved` and `qc_pass` supplied logical decisions; `u_final_concentration_mg_l` supplied **standard uncertainty** in mg/L for the final concentration, independent of the ideal calibration residuals. It excludes volumes, sampling and recovery. C3 is a new smaller aliquot of the same drink as out-of-range C2. |
+| `case-qc.csv` | One independent final-case check | `reference_mg_l` mg/L; `area`; `acceptance_low`, `acceptance_high` recovery %. |
+| `method-comparison.csv` | One independently obtained reference sample measured by both candidate methods | `sample_id`; `reference_mg_l`, `hplc_mg_l`, `nonspecific_uv_mg_l` mg/L. Reference uncertainty is not evaluated; association alone is not agreement. |
+| `mass-spectrum.csv` | One illustrative ion | `mz` conventional mass-to-charge scale; `relative_intensity` %. The pattern is not an authentic caffeine library spectrum. A singly protonated caffeine ion near 195 illustrates the difference from nominal neutral mass 194. |
+
+The final-case `resolved` flag summarises supplied separation review and matching
+standard-retention evidence; it is not computed from the area alone. All accepted
+identity and quantity claims remain conditional on those scenario assumptions.
+The final uncertainties are scaled by dilution only. They do not imply full
+method validation or support regulatory/health decisions.

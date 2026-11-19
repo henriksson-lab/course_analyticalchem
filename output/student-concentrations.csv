@@ -1,0 +1,6 @@
+preparation_id,m,mean_absorbance,sample_id,block,aliquot_ml,final_ml,u_aliquot_ml,u_final_ml,note,in_range,qc_pass,reportable,final_mg_l,original_mg_l
+P01,3,0.48062,W1,A,10,50,0.012,0.03,first preparation,TRUE,TRUE,TRUE,2.398126919343761,11.990634596718806
+P02,3,0.48491666666666666,W1,A,10,50,0.012,0.03,independent preparation of W1,TRUE,TRUE,TRUE,2.4197399994093196,12.098699997046598
+P03,3,1.07507,W2,A,10,50,0.012,0.03,initial out-of-range preparation,FALSE,TRUE,FALSE,NA,NA
+P04,3,0.54061,W2,A,5,50,0.008,0.03,new preparation of W2,TRUE,TRUE,TRUE,2.6998884414072646,26.99888441407265
+P05,3,0.30973,W3,B,10,50,0.012,0.03,later measurement block,TRUE,FALSE,FALSE,NA,NA

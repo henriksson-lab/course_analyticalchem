@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "sample-answer",
+    "title": "From sample to answer",
+    "question": "Define the chemical quantity before calculating it",
+    "reading": "0\u20132"
+  },
+  {
+    "slug": "sampling-preparation",
+    "title": "Sampling and preparation",
+    "question": "Follow the material through sampling, extraction and dilution",
+    "reading": "1\u20132 and sampling/preparation"
+  },
+  {
+    "slug": "error-uncertainty",
+    "title": "Error and uncertainty",
+    "question": "Separate spread, bias and uncertainty in a result",
+    "reading": "3\u20134"
+  },
+  {
+    "slug": "calibration-qc",
+    "title": "Calibration and quality control",
+    "question": "Decide whether a signal can support a concentration",
+    "reading": "5"
+  },
+  {
+    "slug": "titration",
+    "title": "Equilibrium and titration",
+    "question": "Use reaction stoichiometry and a justified endpoint",
+    "reading": "selected equilibrium and titration topics"
+  },
+  {
+    "slug": "potentiometry",
+    "title": "Electrodes and potentiometry",
+    "question": "Read a logarithmic response without losing the chemistry",
+    "reading": "selected electrochemistry and electrodes"
+  },
+  {
+    "slug": "uv-visible",
+    "title": "UV and visible absorption",
+    "question": "Measure iron through a specified coloured complex",
+    "reading": "selected molecular absorption"
+  },
+  {
+    "slug": "matrix-recovery",
+    "title": "Matrix effects and recovery",
+    "question": "Find why a good calibration can still give a biased sample result",
+    "reading": "calibration and spectrophotometric applications"
+  },
+  {
+    "slug": "atomic-methods",
+    "title": "Atomic measurements",
+    "question": "Report an element amount through atomisation and detection",
+    "reading": "atomic spectroscopy"
+  },
+  {
+    "slug": "separations",
+    "title": "Separation principles",
+    "question": "Connect phase exchange to retention, width and resolution",
+    "reading": "analytical separations"
+  },
+  {
+    "slug": "gc-hplc",
+    "title": "GC and HPLC",
+    "question": "Choose an introduction and separation, then calibrate peak area",
+    "reading": "gas and liquid chromatography"
+  },
+  {
+    "slug": "defending-results",
+    "title": "Choosing and defending a result",
+    "question": "Build and defend the complete analytical argument",
+    "reading": "integration and selected mass spectrometry"
+  }
+]

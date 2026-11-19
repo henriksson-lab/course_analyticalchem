@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Calibration and quality control"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-calibration-qc.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. The retained-intercept line gives 2.39813 mg Fe/L final for the supplied unknown. The approximate inverse interval is 2.38857–2.40769 mg Fe/L under the stated linear, independent, constant-variance response model with negligible calibration-concentration uncertainty. A forward-response interval is not itself a concentration interval.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+The separate indicative blank model gives 0.02023 and 0.06742 mg/L for the 3-SD and 10-SD increments, not universal validated limits. Transfer: 0.024 mg/L. Outside-range samples need appropriate new measurements; failed QC affects reportability; below-quantification results need an appropriately qualified report, not zero.
+
+The complete executable solution is in `R/analyse-calibration-qc.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

@@ -1,0 +1,3 @@
+"preparation_id","final_volume_ml","sample_volume_ml","added_mg_l_final","externally_estimated_mg_l_final"
+"unspiked",25,10,0,1.5
+"spiked",25,10,1,2.25

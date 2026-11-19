@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>UV and visible absorption – Analytical Chemistry</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-30f6453bf8381073c8e2e10f679231dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Analytical Chemistry</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Course topics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../demos/index.html"> 
+<span class="menu-text">Interactive demos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../reference/r.html"> 
+<span class="menu-text">R reference</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/titration.html">Chemical methods</a></li><li class="breadcrumb-item"><a href="../lessons/uv-visible.html">UV and visible absorption</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Measurement foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/sample-answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">From sample to answer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/sampling-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling and preparation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/error-uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Error and uncertainty</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/calibration-qc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calibration and quality control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Chemical methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/titration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Equilibrium and titration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/potentiometry.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Electrodes and potentiometry</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/uv-visible.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">UV and visible absorption</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/matrix-recovery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matrix effects and recovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/atomic-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Atomic measurements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/separations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Separation principles</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/gc-hplc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GC and HPLC</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lessons/defending-results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing and defending a result</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-analytical-question" id="toc-the-analytical-question" class="nav-link active" data-scroll-target="#the-analytical-question">The analytical question</a></li>
+  <li><a href="#make-an-absorber-we-can-measure" id="toc-make-an-absorber-we-can-measure" class="nav-link" data-scroll-target="#make-an-absorber-we-can-measure">Make an absorber we can measure</a></li>
+  <li><a href="#connect-the-apparatus-to-absorbance" id="toc-connect-the-apparatus-to-absorbance" class="nav-link" data-scroll-target="#connect-the-apparatus-to-absorbance">Connect the apparatus to absorbance</a></li>
+  <li><a href="#choose-the-wavelength-from-a-spectrum" id="toc-choose-the-wavelength-from-a-spectrum" class="nav-link" data-scroll-target="#choose-the-wavelength-from-a-spectrum">Choose the wavelength from a spectrum</a></li>
+  <li><a href="#fit-the-familiar-calibration" id="toc-fit-the-familiar-calibration" class="nav-link" data-scroll-target="#fit-the-familiar-calibration">Fit the familiar calibration</a></li>
+  <li><a href="#match-the-measurement-to-its-preparation" id="toc-match-the-measurement-to-its-preparation" class="nav-link" data-scroll-target="#match-the-measurement-to-its-preparation">Match the measurement to its preparation</a></li>
+  <li><a href="#return-to-the-original-water-concentration" id="toc-return-to-the-original-water-concentration" class="nav-link" data-scroll-target="#return-to-the-original-water-concentration">Return to the original water concentration</a></li>
+  <li><a href="#check-range-before-reporting-a-number" id="toc-check-range-before-reporting-a-number" class="nav-link" data-scroll-target="#check-range-before-reporting-a-number">Check range before reporting a number</a></li>
+  <li><a href="#use-an-independent-quality-control-check" id="toc-use-an-independent-quality-control-check" class="nav-link" data-scroll-target="#use-an-independent-quality-control-check">Use an independent quality-control check</a></li>
+  <li><a href="#extend-the-earlier-course-with-uncertainty" id="toc-extend-the-earlier-course-with-uncertainty" class="nav-link" data-scroll-target="#extend-the-earlier-course-with-uncertainty">Extend the earlier course with uncertainty</a></li>
+  <li><a href="#your-report-and-transfer-task" id="toc-your-report-and-transfer-task" class="nav-link" data-scroll-target="#your-report-and-transfer-task">Your report and transfer task</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../lessons/titration.html">Chemical methods</a></li><li class="breadcrumb-item"><a href="../lessons/uv-visible.html">UV and visible absorption</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">UV and visible absorption</h1>
+<p class="subtitle lead">Measuring iron in a supplied water sample</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interactive experiment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="../demos/uv-visible.html">Explore the browser demo</a>: What happens to transmitted light and a concentration estimate when absorption or stray light changes? Predict first, change one condition, then explain the result. Export a CSV to reproduce one calculation or plot in R.</p>
+</div>
+</div>
+<section id="the-analytical-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-analytical-question">The analytical question</h2>
+<p>How much dissolved iron is in the supplied filtered water, and which results are supported by the measurements? We will make a coloured iron complex, use its light absorption to estimate concentration, then check the preparation factor, calibration, and independent quality-control result.</p>
+<p>Use your familiar R project, CSV, plotting, and straight-line skills. The new steps are <strong>matching preparation records by ID</strong> and <strong>accounting for uncertainty when converting a signal to concentration</strong>.</p>
+<p><a href="../downloads/uv-visible-project.zip">Download the complete project</a>, extract it, and open <code>analyticalchem.Rproj</code>. Keep <code>report.Rmd</code> at the project root. The project needs R packages <code>readr</code>, <code>dplyr</code>, <code>ggplot2</code>, <code>knitr</code>, and <code>rmarkdown</code>. If required, install them once in the R console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>All measurements here are <strong>simulated</strong>. This is an analysis exercise; use an approved practical protocol for any actual laboratory work.</p>
+</section>
+<section id="make-an-absorber-we-can-measure" class="level2">
+<h2 class="anchored" data-anchor-id="make-an-absorber-we-can-measure">Make an absorber we can measure</h2>
+<p>Iron(II) reacts with 1,10-phenanthroline, abbreviated <strong>phen</strong>, to form a red-orange complex:</p>
+<p><span class="math display">\[\mathrm{Fe^{2+} + 3\,phen \rightleftharpoons [Fe(phen)_3]^{2+}}\]</span></p>
+<p>Three bidentate ligands coordinate one iron ion. We measure the complex near 510 nm. Reduction maintains the iron(II) state; controlled acidity and excess ligand support colour formation. <a href="https://staff.buffalostate.edu/nazareay/che301/l9.pdf">University laboratory background</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/complex.svg" class="img-fluid figure-img" alt="One Fe²⁺ combines with three phen ligands. Boxes describe stoichiometry, not molecular geometry."></p>
+<figcaption>One Fe²⁺ combines with three phen ligands. Boxes describe stoichiometry, not molecular geometry.</figcaption>
+</figure>
+</div>
+<p>For this exercise, assume quantitative reduction and complex formation and no iron loss. The measurand is <strong>mg Fe/L in the supplied filtered water</strong>, including iron converted to Fe(II) in the assumed preparation. It is not the original Fe(II) concentration before treatment. No evidence about particulate iron or digestion recovery is supplied.</p>
+<p><strong>Predict:</strong> if reduction is incomplete, will the result be biased high or low? Explain using the species that absorbs the light.</p>
+</section>
+<section id="connect-the-apparatus-to-absorbance" class="level2">
+<h2 class="anchored" data-anchor-id="connect-the-apparatus-to-absorbance">Connect the apparatus to absorbance</h2>
+<p>At a selected wavelength, light passes through a cuvette. The detector measures transmitted intensity <span class="math inline">\(I\)</span> relative to reference intensity <span class="math inline">\(I_0\)</span>:</p>
+<p><span class="math display">\[T = I/I_0, \qquad A = -\log_{10}(T)\]</span></p>
+<p>A reagent blank contains the preparation reagents without the analyte and accounts for their background under matched conditions. Absorbance in these files is already referenced to a reagent blank. <strong>Do not blank-correct it again.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/light-path.svg" class="img-fluid figure-img" alt="Selected light crosses a 1.00 cm path; the detector measures transmitted light."></p>
+<figcaption>Selected light crosses a 1.00 cm path; the detector measures transmitted light.</figcaption>
+</figure>
+</div>
+<p>A transmittance of 0.50 corresponds to absorbance 0.301. If twice as much analyte doubles absorbance within the linear range, it does not halve transmittance: <span class="math inline">\(T=10^{-A}\)</span>.</p>
+<p>For an appropriate dilute solution at fixed wavelength and path length, Beer–Lambert behaviour is <span class="math inline">\(A=\varepsilon l c\)</span>, with <span class="math inline">\(c\)</span> in mol/L when using a molar absorptivity. Here our calibration uses <strong>mg of elemental Fe/L</strong>, so its slope has units L/mg Fe. Do not substitute that slope into a molar equation without converting the concentration basis.</p>
+</section>
+<section id="choose-the-wavelength-from-a-spectrum" class="level2">
+<h2 class="anchored" data-anchor-id="choose-the-wavelength-from-a-spectrum">Choose the wavelength from a spectrum</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>spectra <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/spectra.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(spectra, <span class="fu">aes</span>(wavelength_nm, absorbance, <span class="at">colour =</span> trace)) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Wavelength (nm)"</span>, <span class="at">y =</span> <span class="st">"Absorbance"</span>, <span class="at">colour =</span> <span class="st">"Solution"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/spectrum.svg" class="img-fluid figure-img" alt="The illustrative standard has a maximum near 510 nm; the reagent blank is small."></p>
+<figcaption>The illustrative standard has a maximum near 510 nm; the reagent blank is small.</figcaption>
+</figure>
+</div>
+<p>The spectral shape supports choosing 510 nm for a strong response. A maximum also makes a small wavelength-setting error less consequential than on a steep spectral flank. It does not prove that other sample components cannot absorb. This simulated envelope is not a reference spectrum for identifying a compound.</p>
+<p>Each row is a wavelength in one scan. These rows do not give hundreds of independently prepared standards.</p>
+</section>
+<section id="fit-the-familiar-calibration" class="level2">
+<h2 class="anchored" data-anchor-id="fit-the-familiar-calibration">Fit the familiar calibration</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>standards <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/standards.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(absorbance <span class="sc">~</span> standard_mg_l, <span class="at">data =</span> standards)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">coef</span>(fit)[<span class="dv">1</span>])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">unname</span>(<span class="fu">coef</span>(fit)[<span class="dv">2</span>])</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(standards, <span class="fu">aes</span>(standard_mg_l, absorbance)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> a, <span class="at">slope =</span> b) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Iron in final solution (mg Fe/L)"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Absorbance at 510 nm"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/calibration.svg" class="img-fluid figure-img" alt="Eighteen simulated calibration solutions cover 0–4 mg Fe/L."></p>
+<figcaption>Eighteen simulated calibration solutions cover 0–4 mg Fe/L.</figcaption>
+</figure>
+</div>
+<p>The fitted relationship is approximately <span class="math inline">\(A=0.003874+0.198799c\)</span>. The nonzero intercept is estimated, not forced to zero. Its existence alone does not identify the source of the offset.</p>
+<p>The concentration is deliberately set; absorbance is the response. Fitting <code>standard_mg_l ~ absorbance</code> describes a different regression. Estimate an unknown using the inverse of our fitted response model:</p>
+<p><span class="math display">\[\hat c_{final} = (\bar A_{unknown}-a)/b\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>standards <span class="ot">&lt;-</span> standards <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">residual =</span> <span class="fu">residuals</span>(fit))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(standards, <span class="fu">aes</span>(standard_mg_l, residual)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Iron in final solution (mg Fe/L)"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Observed minus fitted absorbance"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/residual.svg" class="img-fluid figure-img" alt="Residuals reveal departures from the line, not whether the sample matrix is compatible."></p>
+<figcaption>Residuals reveal departures from the line, not whether the sample matrix is compatible.</figcaption>
+</figure>
+</div>
+<p>Look for curvature, changing spread, and unusual observations. Small residuals on standards cannot establish recovery or selectivity in an unknown water. Do not remove a point simply to improve the fit.</p>
+</section>
+<section id="match-the-measurement-to-its-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="match-the-measurement-to-its-preparation">Match the measurement to its preparation</h2>
+<p>P01 and P02 are separate preparations of W1, each read three times. We will first analyse P01. P03 and P04 belong to W2; P04 is a newly measured preparation with a smaller aliquot. P05 belongs to a later measurement block.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/replicates.svg" class="img-fluid figure-img" alt="W1 is one supplied water sample with two preparations and three readings per preparation."></p>
+<figcaption>W1 is one supplied water sample with two preparations and three readings per preparation.</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>readings <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/readings.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>preparations <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/preparations.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyDuplicated</span>(preparations<span class="sc">$</span>preparation_id),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">all</span>(readings<span class="sc">$</span>preparation_id <span class="sc">%in%</span> preparations<span class="sc">$</span>preparation_id))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> readings <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(preparation_id) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">m =</span> <span class="fu">n</span>(), <span class="at">mean_absorbance =</span> <span class="fu">mean</span>(absorbance),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>joined <span class="ot">&lt;-</span> means <span class="sc">|&gt;</span> <span class="fu">left_join</span>(preparations, <span class="at">by =</span> <span class="st">"preparation_id"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>left_join()</code> attaches the matching preparation information to each measurement summary using the ID. It does not assume that the files have the same row order. The checks require one preparation record per key and a match for every measured preparation. Inspect IDs, row count, units, and missing values after joining.</p>
+<p>For P01, mean absorbance is 0.480620, corresponding to about <strong>2.398 mg Fe/L in the final coloured solution</strong>.</p>
+</section>
+<section id="return-to-the-original-water-concentration" class="level2">
+<h2 class="anchored" data-anchor-id="return-to-the-original-water-concentration">Return to the original water concentration</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/dilution.svg" class="img-fluid figure-img" alt="A 10.00 mL aliquot is made up to 50.00 mL total, including all reagents and solvent."></p>
+<figcaption>A 10.00 mL aliquot is made up to 50.00 mL total, including all reagents and solvent.</figcaption>
+</figure>
+</div>
+<p><span class="math display">\[\hat c_{original}=\hat c_{final}\frac{V_{final}}{V_{aliquot}}\]</span></p>
+<p>For P01, <span class="math inline">\(V_{final}=50.00\)</span> mL and <span class="math inline">\(V_{aliquot}=10.00\)</span> mL. Multiply by 5, giving about <strong>11.99 mg Fe/L in the supplied water</strong>. The final volume is the total volume, not the amount of water added.</p>
+<p><strong>Predict:</strong> P04 uses 5.00 mL made up to 50.00 mL. Should its final concentration be multiplied by 5 or 10? Which recorded field tells you?</p>
+</section>
+<section id="check-range-before-reporting-a-number" class="level2">
+<h2 class="anchored" data-anchor-id="check-range-before-reporting-a-number">Check range before reporting a number</h2>
+<p>For this exercise, require every repeated reading to lie between the fitted responses at the lowest and highest calibration concentrations. This is a supplied working-range rule, not a general validation of the method.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>response_limits <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">standard_mg_l =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>)))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>range_check <span class="ot">&lt;-</span> readings <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(preparation_id) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">in_range =</span> <span class="fu">all</span>(absorbance <span class="sc">&gt;=</span> response_limits[<span class="dv">1</span>] <span class="sc">&amp;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                          absorbance <span class="sc">&lt;=</span> response_limits[<span class="dv">2</span>]), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>range_check</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/range.svg" class="img-fluid figure-img" alt="P03 exceeds the calibrated response range; P04 is a newly measured dilution within range."></p>
+<figcaption>P03 exceeds the calibrated response range; P04 is a newly measured dilution within range.</figcaption>
+</figure>
+</div>
+<p>P03 is outside range. Its old signal cannot be rescued by changing a dilution factor in the table. P04 is a <strong>new measurement</strong> of a new aliquot: its mean absorbance is 0.540610 and its dilution factor is 10. This gives about <strong>27.00 mg Fe/L</strong> for W2 under the stated assumptions.</p>
+</section>
+<section id="use-an-independent-quality-control-check" class="level2">
+<h2 class="anchored" data-anchor-id="use-an-independent-quality-control-check">Use an independent quality-control check</h2>
+<p>An independently sourced check solution contains 2.00 mg Fe/L in the final solution. Our exercise acceptance window is 95–105% recovery. It checks the calibration in block A and again before the later block B.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>qc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/qc.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>qc_summary <span class="ot">&lt;-</span> qc <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(block) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_absorbance =</span> <span class="fu">mean</span>(absorbance),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">reference_mg_l =</span> <span class="fu">first</span>(reference_mg_l), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimated_mg_l =</span> (mean_absorbance <span class="sc">-</span> a) <span class="sc">/</span> b,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">recovery_percent =</span> <span class="dv">100</span> <span class="sc">*</span> estimated_mg_l <span class="sc">/</span> reference_mg_l,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">qc_pass =</span> recovery_percent <span class="sc">&gt;=</span> <span class="dv">95</span> <span class="sc">&amp;</span> recovery_percent <span class="sc">&lt;=</span> <span class="dv">105</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>qc_summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/qc.svg" class="img-fluid figure-img" alt="Block A passes the exercise QC rule; the later block B fails."></p>
+<figcaption>Block A passes the exercise QC rule; the later block B fails.</figcaption>
+</figure>
+</div>
+<p>A recovers about <strong>99.6%</strong>. B recovers about <strong>85.2%</strong>. Withhold P05 from B, even though its signal is inside the calibration range. Investigate, correct the problem, establish satisfactory calibration and QC, and remeasure the sample. Do not automatically divide results by 0.852: the cause of the failure is not established. A passing simple check also does not prove that every sample matrix is free from interference.</p>
+<p>Now combine the two checks so unsupported estimates cannot appear as results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> joined <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(range_check, <span class="at">by =</span> <span class="st">"preparation_id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(qc_summary <span class="sc">|&gt;</span> <span class="fu">select</span>(block, qc_pass), <span class="at">by =</span> <span class="st">"block"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reportable =</span> in_range <span class="sc">&amp;</span> qc_pass,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">final_mg_l =</span> <span class="fu">if_else</span>(reportable,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                              (mean_absorbance <span class="sc">-</span> a) <span class="sc">/</span> b, <span class="cn">NA_real_</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">original_mg_l =</span> final_mg_l <span class="sc">*</span> final_ml <span class="sc">/</span> aliquot_ml)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>results <span class="sc">|&gt;</span> <span class="fu">select</span>(preparation_id, sample_id, original_mg_l, reportable)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(results, <span class="st">"output/student-concentrations.csv"</span>, <span class="at">na =</span> <span class="st">"NA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Missing values here mean <strong>withheld analytical estimates</strong>, not zero iron. Include the reason for withholding in your report.</p>
+</section>
+<section id="extend-the-earlier-course-with-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="extend-the-earlier-course-with-uncertainty">Extend the earlier course with uncertainty</h2>
+<p>Repeated readings do not remove uncertainty in the calibration or in the preparation volumes. A simple concentration estimate also needs uncertainty from the fitted slope and intercept. <a href="https://www.itl.nist.gov/div898/handbook/pmd/section5/pmd521.htm">NIST calibration guidance</a></p>
+<p>Run the supplied helper for P01; you do not need to write a function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/inverse-calibration.R"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p01_readings <span class="ot">&lt;-</span> readings <span class="sc">|&gt;</span> <span class="fu">filter</span>(preparation_id <span class="sc">==</span> <span class="st">"P01"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>u_p01 <span class="ot">&lt;-</span> <span class="fu">inverse_calibration</span>(fit, p01_readings<span class="sc">$</span>absorbance)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>u_p01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It returns the point estimate, an approximate <strong>standard uncertainty</strong> from response and calibration, and an approximate 95% interval for final concentration. For P01, these are about 2.3981 mg Fe/L, 0.00451 mg Fe/L, and 2.3886–2.4077 mg Fe/L respectively. These are different summaries: standard uncertainty is not a 95% half-width.</p>
+<p>The helper assumes a correct linear model, independent normal response errors with constant variance, negligible calibration-concentration uncertainty, and the same reading variance for standards and unknowns. It uses a first-order approximation appropriate for this well-determined slope. It does not validate those assumptions for another dataset. Forward <code>predict()</code> intervals alone are not concentration intervals; the helper propagates through the inverse relation.</p>
+<p>Add independent supplied volume uncertainties using the relation below. Here <span class="math inline">\(u\)</span> denotes standard uncertainty:</p>
+<p><span class="math display">\[u(c_{original})=\sqrt{(D u(c_{final}))^2+
+\left(c_{original}\frac{u(V_{final})}{V_{final}}\right)^2+
+\left(c_{original}\frac{u(V_{aliquot})}{V_{aliquot}}\right)^2}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>p01 <span class="ot">&lt;-</span> results <span class="sc">|&gt;</span> <span class="fu">filter</span>(preparation_id <span class="sc">==</span> <span class="st">"P01"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> p01<span class="sc">$</span>final_ml <span class="sc">/</span> p01<span class="sc">$</span>aliquot_ml</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>u_original <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  (D <span class="sc">*</span> u_p01<span class="sc">$</span>u_cal_mg_l)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  (p01<span class="sc">$</span>original_mg_l <span class="sc">*</span> p01<span class="sc">$</span>u_final_ml <span class="sc">/</span> p01<span class="sc">$</span>final_ml)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  (p01<span class="sc">$</span>original_mg_l <span class="sc">*</span> p01<span class="sc">$</span>u_aliquot_ml <span class="sc">/</span> p01<span class="sc">$</span>aliquot_ml)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>u_original</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/uncertainty.svg" class="img-fluid figure-img" alt="Response and calibration dominate this illustrative uncertainty budget for P01."></p>
+<figcaption>Response and calibration dominate this illustrative uncertainty budget for P01.</figcaption>
+</figure>
+</div>
+<p>One suitable statement is: <strong>P01 gave 11.991 mg Fe/L with a standard uncertainty of 0.028 mg Fe/L from the stated calibration, reading, and volume model.</strong> This is not a full method uncertainty or a 95% interval. The budget excludes sampling, matrix bias, incomplete recovery, and uncertain standard concentrations. Keep full precision for calculations and round only reported values.</p>
+<p>P01 and P02 share a calibration and come from the same collected sample. Do not average their uncertainty estimates as though they were independent calibrations, or describe six readings as six water samples.</p>
+</section>
+<section id="your-report-and-transfer-task" class="level2">
+<h2 class="anchored" data-anchor-id="your-report-and-transfer-task">Your report and transfer task</h2>
+<ol type="1">
+<li>Render the supplied <code>report.Rmd</code> unchanged, then save an edited copy at the project root. Explain the absorber, wavelength, concentration basis, and assumed preparation chemistry.</li>
+<li>Add the spectral, calibration, and residual plots with your interpretations.</li>
+<li>Complete the ID join, range checks, and QC checks. Report P01, P02, and P04 separately and explain why P03 and P05 do not have reportable concentrations.</li>
+<li>Add P01’s uncertainty calculation and state the omissions. Explain why the SD of its three absorbances alone is insufficient.</li>
+<li>For a <strong>new</strong> preparation, a 2.00 mL aliquot was made up to 50.00 mL. Its three readings are 0.399, 0.401, and 0.400 in accepted block A. Estimate the original concentration. Compare its preparation factor with P01’s.</li>
+<li>Restart R and render using <code>rmarkdown::render("report.Rmd", output_dir = "reports")</code> from the console. Keep the source, input data, CSV results, and HTML report together.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Numerical checks
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>P01 ≈ 11.99 mg Fe/L, P02 ≈ 12.10 mg Fe/L, P04 ≈ 27.00 mg Fe/L. P03 needs remeasurement; P05 is withheld after QC failure. For the new preparation, <span class="math inline">\(\bar A=0.400\)</span>, <span class="math inline">\(D=25\)</span>, and the original concentration is approximately <strong>49.81 mg Fe/L</strong>. This is a point estimate, not a complete uncertainty statement.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Check your reasoning
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Incomplete reduction?</strong> Less absorbing Fe(II) complex can give a low result.</li>
+<li><strong>Why not subtract the blank again?</strong> The supplied absorbances already use it as the reference. A further subtraction would change the measurement basis.</li>
+<li><strong>Why is a good line insufficient?</strong> Sample range, recovery, selectivity, preparation, and current QC still matter.</li>
+<li><strong>Does a QC failure identify its cause?</strong> No.&nbsp;It signals that results need to be withheld and the measurement process investigated.</li>
+<li><strong>Can more scans replace more samples?</strong> No.&nbsp;Wavelength positions and repeated readings are not independently collected waters.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Selected textbook reading: Harris and Lucy, topics on molecular absorption, spectrophotometers, calibration, and experimental uncertainty. Read by topic; the edition for the planned course remains to be confirmed.</p>
+<p><a href="../lessons/potentiometry.html">Previous: Electrodes and potentiometry</a> · <a href="../lessons/matrix-recovery.html">Next: Matrix effects and recovery</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

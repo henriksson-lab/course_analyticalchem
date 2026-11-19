@@ -1,0 +1,6 @@
+preparation_id,m,mean_absorbance,sd_absorbance,all_readings_in_range,sample_id,block,aliquot_ml,final_ml,u_aliquot_ml,u_final_ml,note,qc_pass,final_mg_l,u_cal_mg_l,lower_95_mg_l,upper_95_mg_l,dilution_factor,status,reportable,original_mg_l,u_original_mg_l
+P01,3,0.48062,0.0015163442880823433,TRUE,W1,A,10,50,0.012,0.03,first preparation,TRUE,2.398126919343761,0.004509040466277863,2.3885681805648957,2.4076856581226265,5,reportable under stated assumptions,TRUE,11.990634596718806,0.027696240189255584
+P02,3,0.48491666666666666,7.858965156643374e-4,TRUE,W1,A,10,50,0.012,0.03,independent preparation of W1,TRUE,2.4197399994093196,0.004513536949940857,2.410171728510909,2.4293082703077302,5,reportable under stated assumptions,TRUE,12.098699997046598,0.027798952675872506
+P03,3,1.07507,0.0015680880077342107,FALSE,W2,A,10,50,0.012,0.03,initial out-of-range preparation,TRUE,NA,NA,NA,NA,5,remeasure: outside range,FALSE,NA,NA
+P04,3,0.54061,0.0026779283037452694,TRUE,W2,A,5,50,0.008,0.03,new preparation of W2,TRUE,2.6998884414072646,0.0045845712210004575,2.6901695845812084,2.709607298233321,10,reportable under stated assumptions,TRUE,26.998884414072645,0.0650410134152872
+P05,3,0.30973,0.0012341393762456418,TRUE,W3,B,10,50,0.012,0.03,later measurement block,FALSE,NA,NA,NA,NA,5,withhold: QC failed,FALSE,NA,NA

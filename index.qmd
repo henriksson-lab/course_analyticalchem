@@ -1,0 +1,44 @@
+---
+title: "Analytical Chemistry"
+subtitle: "From a sample to a defensible chemical result"
+---
+
+Use chemistry, measurement evidence and reproducible R calculations to answer
+what is present, how much there is, and whether the result is fit for its
+intended question. These materials cover the planned 7.5-credit course.
+
+[Download the complete student project](downloads/analyticalchem-project.zip)
+and open `analyticalchem.Rproj`. Start with the
+[R reference](reference/r.qmd) if you need to retrieve the introductory workflow.
+Student reports use R Markdown; you do not need to author Quarto pages.
+
+[Browse the interactive experiments](demos/index.qmd) to predict, change conditions, and explain a result before returning to R.
+
+## Topics and illustrated slides
+
+| Topic | What you will work out | Slides | Demo |
+| --- | --- | --- | --- |
+| [From sample to answer](lessons/sample-answer.qmd) | Define the chemical quantity before calculating it | [Open](slides/sample-answer.qmd) | [Try](demos/sample-answer.html) |
+| [Sampling and preparation](lessons/sampling-preparation.qmd) | Follow the material through sampling, extraction and dilution | [Open](slides/sampling-preparation.qmd) | [Try](demos/sampling-preparation.html) |
+| [Error and uncertainty](lessons/error-uncertainty.qmd) | Separate spread, bias and uncertainty in a result | [Open](slides/error-uncertainty.qmd) | [Try](demos/error-uncertainty.html) |
+| [Calibration and quality control](lessons/calibration-qc.qmd) | Decide whether a signal can support a concentration | [Open](slides/calibration-qc.qmd) | [Try](demos/calibration-qc.html) |
+| [Equilibrium and titration](lessons/titration.qmd) | Use reaction stoichiometry and a justified endpoint | [Open](slides/titration.qmd) | [Try](demos/titration.html) |
+| [Electrodes and potentiometry](lessons/potentiometry.qmd) | Read a logarithmic response without losing the chemistry | [Open](slides/potentiometry.qmd) | [Try](demos/potentiometry.html) |
+| [UV and visible absorption](lessons/uv-visible.qmd) | Measure iron through a specified coloured complex | [Open](slides/uv-visible.qmd) | [Try](demos/uv-visible.html) |
+| [Matrix effects and recovery](lessons/matrix-recovery.qmd) | Find why a good calibration can still give a biased sample result | [Open](slides/matrix-recovery.qmd) | [Try](demos/matrix-recovery.html) |
+| [Atomic measurements](lessons/atomic-methods.qmd) | Report an element amount through atomisation and detection | [Open](slides/atomic-methods.qmd) | [Try](demos/atomic-methods.html) |
+| [Separation principles](lessons/separations.qmd) | Connect phase exchange to retention, width and resolution | [Open](slides/separations.qmd) | [Try](demos/separations.html) |
+| [GC and HPLC](lessons/gc-hplc.qmd) | Choose an introduction and separation, then calibrate peak area | [Open](slides/gc-hplc.qmd) | [Try](demos/gc-hplc.html) |
+| [Choosing and defending a result](lessons/defending-results.qmd) | Build and defend the complete analytical argument | [Open](slides/defending-results.qmd) | [Try](demos/defending-results.html) |
+
+## Follow one result all the way back
+
+![A measurement claim connects its question, collected sample, preparation and recorded signal.](assets/course/measurement-chain.svg){fig-alt="A measurement claim connects its question, collected sample, preparation and recorded signal."}
+
+Keep the original inputs, preparation records, R code, derived tables and
+rendered report together. The worked examples use **simulated teaching data**,
+with explicit range, QC and separation problems to diagnose.
+[Read the data dictionary](reference/data.qmd) before interpreting them.
+
+The analytical examples explain data and chemistry. Actual practical work uses
+an approved laboratory protocol for the instrument and preparation.

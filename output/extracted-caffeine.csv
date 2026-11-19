@@ -1,0 +1,4 @@
+preparation_id,sample_id,mass_g,extract_ml,aliquot_ml,final_ml,final_caffeine_mg_l,extract_mg_l,extracted_mg,caffeine_mg_g
+T1a,T1,0.5,25,2,10,1.92,9.6,0.24,0.48
+T1b,T1,0.5,25,2,10,1.96,9.8,0.24500000000000002,0.49000000000000005
+T2a,T2,0.4,25,2,10,2.4,12,0.3,0.7499999999999999

@@ -1,0 +1,6 @@
+flask_id,sample_ml,final_ml,spike_mg_l_final,blank_corrected_signal
+SA1,10,25,0,0.301
+SA2,10,25,0.5,0.374
+SA3,10,25,1,0.45
+SA4,10,25,1.5,0.526
+SA5,10,25,2,0.599

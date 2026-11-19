@@ -1,0 +1,3 @@
+block,potential_mv,check_pass,fluoride_mol_l
+early,121.2,TRUE,1.999152957165249e-4
+late,127.2,FALSE,NA

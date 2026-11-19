@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="title desc"><title id="title">replicates</title><desc id="desc">One water sample has two independent chemical preparations, each read three times. Six readings do not equal six independently collected water samples.</desc><defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0,0 L0,8 L10,4 z" fill="#087b85"/></marker></defs><style>text{font-family:Arial,sans-serif;fill:#123e52} .title{font-size:36px;font-weight:bold}.label{font-size:27px}.small{font-size:23px}.box{fill:#edf6f8;stroke:#087b85;stroke-width:3}.flow{stroke:#087b85;stroke-width:5;marker-end:url(#arrow)}</style><rect width="1200" height="580" fill="#fff"/>
+<text x="55" y="70" class="title">Count samples, preparations, and readings separately</text>
+<rect x="65" y="220" width="220" height="100" rx="16" class="box"/><text x="90" y="280" class="label">Water W1</text>
+<path d="M300 255 L485 170" class="flow"/><path d="M300 285 L485 395" class="flow"/>
+<rect x="510" y="115" width="240" height="100" rx="16" class="box"/><text x="540" y="175" class="label">Prep P01</text>
+<rect x="510" y="350" width="240" height="100" rx="16" class="box"/><text x="540" y="410" class="label">Prep P02</text>
+<path d="M770 165 L925 165" class="flow"/><path d="M770 400 L925 400" class="flow"/>
+<text x="950" y="145" class="label">3 readings</text><text x="950" y="190" class="small">same solution</text>
+<text x="950" y="380" class="label">3 readings</text><text x="950" y="425" class="small">same solution</text>
+<text x="65" y="535" class="label">One collected sample ≠ two preparations ≠ six independent waters</text>
+</svg>

@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Choosing and defending a result"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-defending-results.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. Final-case independent QC recovers 100.667%. C1 supports 150 mg/L in drink A. C2 is outside range and its reported concentration is withheld. C3 is a new smaller aliquot of drink B and supports 400 mg/L. C4 is unresolved and withheld. Reasons remain attached to IDs in the output.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+The supplied final standard uncertainties scale to 1.5 and 4.0 mg/L for C1/C3; they are not 95% intervals and exclude volumes, sampling and recovery. Transfer gives 200 mg/L if accepted. Concentration-dependent method differences motivate investigation but do not prove a chemical mechanism. A single nominal ion mass does not identify caffeine.
+
+The complete executable solution is in `R/analyse-defending-results.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

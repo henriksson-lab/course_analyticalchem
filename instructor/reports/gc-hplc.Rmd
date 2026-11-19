@@ -1,0 +1,40 @@
+---
+title: "Worked solution: GC and HPLC"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-gc-hplc.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. External estimates for repeated injections I1/I2 of D1 are 15 and 12 mg/L final, while area-ratio estimates are 15.000 and 15.015 mg/L. Multiplying by the tenfold preparation factor gives approximately 150 mg/L original. These are repeated injections of one preparation. I3 is unresolved and I4 has failed QC; their reportable concentration fields are missing.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+Transfer ratio 903/600 gives 14.99 mg/L final and 74.95 mg/L original. The fixed-IS-concentration calibration cannot simply transfer to samples with a different IS concentration. Internal standardisation cannot fix coelution, differential matrix effects or analyte loss before standard addition.
+
+The complete executable solution is in `R/analyse-gc-hplc.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

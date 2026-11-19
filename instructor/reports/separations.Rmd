@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Separation principles"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-separations.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. Resolved, overlap and broad runs have resolution 2.2222, 0.6667 and 0.9091. The broad run shares retention times with the resolved run; its larger widths cause lower resolution. The component areas remain 100 and 150 by construction. A lower height does not mean less introduced analyte in this model.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+Transfer: k1=2, k2=3, alpha=1.5, Rs=1.6. Doubling widths halves resolution without changing k or alpha. Use baseline widths in this formula. Coelution prevents a simple compound-specific area interpretation; expected retention alone is not definitive identification.
+
+The complete executable solution is in `R/analyse-separations.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

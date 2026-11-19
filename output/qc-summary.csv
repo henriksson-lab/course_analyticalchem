@@ -1,0 +1,3 @@
+block,mean_absorbance,reference_mg_l,estimated_mg_l,recovery_percent,qc_pass
+A,0.40007,2,1.99294454557788,99.64722727889401,TRUE
+B,0.34253333333333336,2,1.7035237736526632,85.17618868263315,FALSE

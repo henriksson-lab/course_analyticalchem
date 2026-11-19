@@ -1,0 +1,115 @@
+---
+title: "Worked example: iron by visible absorption"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r analysis, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=8, fig.height=4.5)
+source("R/analyse-uv-visible.R")
+p01 <- results |> filter(preparation_id=="P01")
+p04 <- results |> filter(preparation_id=="P04")
+```
+
+## Chemical question and measurement
+
+These simulated data describe supplied filtered, fortified waters. Under the
+assumed quantitative reduction and complex formation, dissolved iron forms
+[Fe(phen)₃]²⁺ and is measured at 510 nm in a 1.00 cm cell. Results refer to
+mg elemental Fe/L in the supplied filtered water. They do not establish
+particulate iron, original oxidation-state speciation, or validated total
+recovery from arbitrary water matrices.
+
+Standards, samples, and independent QC receive matched colour development.
+Absorbances are already reagent-blank referenced. The remaining fitted offset
+is retained; its source cannot be identified from these data alone.
+
+```{r spectrum, fig.cap="Illustrative simulated spectra, not identification reference spectra."}
+spectrum_plot
+```
+
+## Calibration and checks
+
+The fitted response is A = `r sprintf("%.6f", a)` +
+`r sprintf("%.6f", b)` × c, where c is mg Fe/L in the final coloured solution.
+The slope is in L/mg Fe; the response is dimensionless. We fit absorbance on
+concentration, then invert the fitted relation.
+
+```{r calibration, fig.cap="Three independently prepared calibration solutions per concentration."}
+calibration_plot
+```
+
+```{r residual, fig.cap="Small residuals support this teaching linear model, but cannot validate sample matrix recovery."}
+residual_plot
+```
+
+The calibration covers 0–4 mg Fe/L. The supplied decision rule requires all
+repeat readings within the fitted response range. Independent QC must recover
+95–105% of its 2.00 mg Fe/L reference value, a teaching window selected for this
+exercise.
+
+```{r qc, fig.cap="Independent QC for accepted block A and later block B."}
+qc_plot
+knitr::kable(qc_summary, digits=3)
+```
+
+Block A is accepted by the exercise check. Later block B fails. P05 therefore
+cannot be reported. A correction based solely on its QC ratio would assume the
+cause of the error; investigation and new satisfactory measurements are needed.
+A passing QC also cannot exclude all sample-specific interferences.
+
+## Preparation and supported results
+
+Measurements are joined by preparation ID to the reversed preparation table.
+P01 and P02 are separate preparations of W1, each read three times. They are
+not six independent water samples. Their shared calibration also means their
+uncertainties are correlated.
+
+```{r table}
+knitr::kable(results |> select(preparation_id, sample_id, mean_absorbance,
+  dilution_factor, original_mg_l, u_original_mg_l, status), digits=4)
+```
+
+P01 gives `r sprintf("%.3f",p01$original_mg_l)` mg Fe/L; its factor is 50/10=5.
+P03 is outside range. P04 is a new preparation using 5.00 mL made to 50.00 mL,
+and gives `r sprintf("%.3f",p04$original_mg_l)` mg Fe/L with factor 10. It is not
+an extrapolation of P03's old reading. The CSV retains the reasons for withheld
+values and exports their concentration fields as `NA`.
+
+## Uncertainty and its limits
+
+The supplied helper uses a first-order inverse-calibration approximation. For
+P01 it includes the variance of the mean of three readings and the covariance
+of the fitted intercept and slope. The calibration residual SD estimates
+response noise. Its approximate 95% interval applies to the final solution
+under normal, independent, constant-variance response errors, negligible
+standard-concentration uncertainty, and a well-determined positive slope.
+
+```{r inverse}
+inverse_calibration(fit, readings$absorbance[readings$preparation_id=="P01"])
+```
+
+The independent volume contributions are then combined with the calibration
+and reading contribution by root-sum-of-squares. The result for P01 is
+`r sprintf("%.3f",p01$original_mg_l)` mg Fe/L with a **standard uncertainty**
+of `r sprintf("%.3f",p01$u_original_mg_l)` mg Fe/L, not a 95% half-width.
+
+```{r budget, fig.cap="Standard uncertainty contributions in the original-water concentration for P01."}
+uncertainty_plot
+```
+
+This is a conditional teaching budget: it omits sampling, standard preparation
+uncertainty, recovery, matrix bias, and unmodelled variation between preparations.
+The two preparations are not sufficient to validate those omissions or claim a
+full method uncertainty. A real report must evaluate the assumptions before
+claiming the result is fit for its intended purpose.
+
+## Transfer result
+
+For the new 2.00 mL aliquot made up to 50.00 mL, mean absorbance is 0.400.
+The estimated final concentration is `r sprintf("%.4f",(0.400-a)/b)` mg Fe/L.
+Multiplying by 25 gives **`r sprintf("%.2f",(0.400-a)/b*25)` mg Fe/L** in the
+original supplied sample, assuming accepted block A and matching chemistry.
+This remains a point estimate until its own uncertainty is evaluated.

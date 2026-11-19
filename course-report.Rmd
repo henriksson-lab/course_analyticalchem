@@ -1,0 +1,58 @@
+---
+title: "Analytical Chemistry report"
+author: "Your name"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=7, fig.height=4)
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Analytical question
+
+State the analyte, matrix, sample scope, quantity and unit. Name the unit of the
+course you are working on. All supplied datasets are simulated teaching data.
+
+## Data and preparation
+
+The initial example below checks the introductory water dataset so the template
+renders immediately. Replace it with the imports and records for your chosen
+lesson. Keep this source at the project root.
+
+```{r import}
+data <- read_csv("data/course/water.csv", show_col_types=FALSE)
+knitr::kable(head(data))
+```
+
+Explain one row, independent samples versus repeat readings, and the mass or
+volume chain connecting original material to the measured solution. Preserve
+sample and preparation identifiers.
+
+## Chemical relationship and calculation
+
+Add the chemical equation or measurement model, its unit convention and its
+assumptions. Include the necessary calibration and diagnostic plots for the
+chosen method. Keep unrounded values in code.
+
+## Checks and reporting decisions
+
+Give the relevant blank, range, independent QC, matrix/recovery and separation
+evidence. Include a table with supported values and explicit withheld reasons.
+A withheld estimate is not zero analyte.
+
+## Uncertainty and limitations
+
+State what each uncertainty or interval describes, which sources are included,
+and which sources are omitted. Do not imply a full method uncertainty from a
+reading SD alone.
+
+## Transfer task and conclusion
+
+Complete the chosen lesson's transfer task. Explain the chemical conclusion and
+next analytical action. Save CSV results in output/. Restart R and render again.

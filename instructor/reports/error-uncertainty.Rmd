@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Error and uncertainty"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-error-uncertainty.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. A and B have the same reading SD, about 0.01581 mg/L; B has estimated bias +0.50 mg/L. C has no mean difference in this small series but much larger reading SD, 0.31623 mg/L. These properties must not be confused with the full method uncertainty.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+The dilution is 10.00 mg/L with standard uncertainty 0.04219 mg/L from independent stock and volume inputs. Halving the stock uncertainty gives 0.02408 mg/L. C's reading uncertainty in its mean is 0.14142 mg/L. Sampling, recovery and common biases remain outside those models.
+
+The complete executable solution is in `R/analyse-error-uncertainty.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

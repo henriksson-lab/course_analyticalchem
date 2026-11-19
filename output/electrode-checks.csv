@@ -1,0 +1,3 @@
+block,check_fluoride_mol_l,potential_mv,allowed_abs_error_mv,expected_mv,error_mv,check_pass
+early,1e-4,139.1,2,138.9799999999999,0.12000000000008981,TRUE
+late,1e-4,145,2,138.9799999999999,6.0200000000000955,FALSE

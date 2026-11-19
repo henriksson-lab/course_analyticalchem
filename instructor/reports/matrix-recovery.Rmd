@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Matrix effects and recovery"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-matrix-recovery.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. The standard-addition x-intercept is −2.00802 mg/L in the final flask. Its magnitude multiplied by 25/10 gives 5.02005 mg/L original. The external-calibration answer is 3.76126 mg/L because the simulated sample matrix suppresses sensitivity. Incremental recovery is 75%.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+The transfer result is 8.00 mg/L. Fixed sample fraction, equal final volume, linear additive response, appropriate background correction and equivalent native/spike behaviour are essential. A late spike cannot establish early extraction recovery. The negative-intercept estimate remains uncertain; no full interval is supplied.
+
+The complete executable solution is in `R/analyse-matrix-recovery.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

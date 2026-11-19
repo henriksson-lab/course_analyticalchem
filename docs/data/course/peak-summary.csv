@@ -1,0 +1,7 @@
+"run","compound","t0_min","t_r_min","baseline_width_min","area"
+"resolved","A",1,3,0.4,100
+"resolved","B",1,4,0.5,150
+"overlap","A",1,3,0.4,100
+"overlap","B",1,3.3,0.5,150
+"broad","A",1,3,1,100
+"broad","B",1,4,1.2,150

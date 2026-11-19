@@ -1,0 +1,4 @@
+preparation_id,sample_id,dry_mass_g,digest_ml,further_dilution,emission_counts,measured_mg_l,in_range,digest_corrected_mg_l,copper_mg_kg
+A1,leaf1,0.25,50,2,410,0.4018928827026159,TRUE,0.8017935647830343,160.35871295660687
+A2,leaf2,0.2,50,2,610,0.6018432237428251,TRUE,1.2016942468634526,300.4235617158632
+PB,method_blank,NA,50,1,10,0.0019922006221975356,TRUE,0,NA

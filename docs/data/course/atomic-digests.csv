@@ -1,0 +1,4 @@
+"preparation_id","sample_id","dry_mass_g","digest_ml","further_dilution","emission_counts"
+"A1","leaf1",0.25,50,2,410
+"A2","leaf2",0.2,50,2,610
+"PB","method_blank",NA,50,1,10

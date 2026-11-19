@@ -1,0 +1,6 @@
+:root { --bs-link-color: #006b78; }
+body { font-size: 1.06rem; }
+h1, h2, h3 { color: #123e52; }
+.quarto-figure img { max-height: 33rem; object-fit: contain; }
+figcaption { color: #394c58; }
+.callout { margin-block: 1.5rem; }

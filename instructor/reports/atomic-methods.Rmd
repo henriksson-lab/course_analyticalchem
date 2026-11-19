@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Atomic measurements"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-atomic-methods.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. The dissolved copper checks pass, but they do not validate plant digestion. The method blank is measured undiluted; undo the sample's further dilution before subtracting it on the digest concentration basis. Conditional dry-mass results are 160.3587 and 300.4236 mg Cu/kg. The method blank has no dry-mass result.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+The transfer digest is 0.0800 × 5 − 0.0100 = 0.3900 mg/L; result 48.75 mg/kg dry mass. Elemental detection does not preserve molecular identity or original oxidation states. Recovery, mass, volume, calibration and blank variation need attention in a full uncertainty budget.
+
+The complete executable solution is in `R/analyse-atomic-methods.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

@@ -1,0 +1,133 @@
+---
+title: "Iron in supplied water by visible absorption"
+author: "Your name"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE,
+                     fig.width = 7, fig.height = 4)
+library(readr)
+library(dplyr)
+library(ggplot2)
+source("R/inverse-calibration.R")
+```
+
+## Question and chemical basis
+
+Replace this paragraph with your explanation of the absorbing species, why we
+measure at 510 nm, and the concentration basis. These are simulated teaching
+data. The intended measurand is mg Fe/L in the supplied filtered water under
+the assumed quantitative reduction and complex formation conditions.
+
+## Spectrum and calibration
+
+```{r import}
+spectra <- read_csv("data/spectra.csv", show_col_types = FALSE)
+standards <- read_csv("data/standards.csv", show_col_types = FALSE)
+readings <- read_csv("data/readings.csv", show_col_types = FALSE)
+preparations <- read_csv("data/preparations.csv", show_col_types = FALSE)
+qc <- read_csv("data/qc.csv", show_col_types = FALSE)
+fit <- lm(absorbance ~ standard_mg_l, data = standards)
+a <- unname(coef(fit)[1])
+b <- unname(coef(fit)[2])
+coef(fit)
+```
+
+```{r spectrum, fig.cap="Simulated spectral series; each trace is one solution, not multiple independent samples."}
+ggplot(spectra, aes(wavelength_nm, absorbance, colour = trace)) +
+  geom_line() +
+  labs(x = "Wavelength (nm)", y = "Absorbance", colour = "Solution") +
+  theme_minimal()
+```
+
+```{r calibration, fig.cap="Independent final calibration solutions, measured at 510 nm."}
+ggplot(standards, aes(standard_mg_l, absorbance)) +
+  geom_point() + geom_abline(intercept = a, slope = b) +
+  labs(x = "Iron in final solution (mg Fe/L)", y = "Absorbance at 510 nm") +
+  theme_minimal()
+```
+
+```{r residuals, fig.cap="Observed minus fitted response at each calibration concentration."}
+standards <- standards |> mutate(residual = residuals(fit))
+ggplot(standards, aes(standard_mg_l, residual)) +
+  geom_hline(yintercept = 0, linetype = "dashed") + geom_point() +
+  labs(x = "Iron in final solution (mg Fe/L)", y = "Residual absorbance") +
+  theme_minimal()
+```
+
+Explain what supports using a straight line and what the residuals cannot tell
+us about the sample matrix. Explain the units of the slope and why an
+intercept was fitted.
+
+## Independent check and range
+
+```{r quality-control}
+qc_summary <- qc |>
+  group_by(block) |>
+  summarise(mean_absorbance = mean(absorbance),
+            reference_mg_l = first(reference_mg_l), .groups = "drop") |>
+  mutate(estimated_mg_l = (mean_absorbance - a) / b,
+         recovery_percent = 100 * estimated_mg_l / reference_mg_l,
+         qc_pass = recovery_percent >= 95 & recovery_percent <= 105)
+knitr::kable(qc_summary, digits = 3)
+```
+
+This exercise uses a supplied 95–105% check recovery window. Explain the
+consequence of each block's check result.
+
+```{r match-and-calculate}
+stopifnot(!anyDuplicated(preparations$preparation_id),
+          all(readings$preparation_id %in% preparations$preparation_id))
+response_limits <- predict(fit, newdata = data.frame(standard_mg_l = c(0, 4)))
+results <- readings |>
+  group_by(preparation_id) |>
+  summarise(m = n(), mean_absorbance = mean(absorbance),
+            in_range = all(absorbance >= response_limits[1] &
+                           absorbance <= response_limits[2]), .groups = "drop") |>
+  left_join(preparations, by = "preparation_id") |>
+  left_join(qc_summary |> select(block, qc_pass), by = "block") |>
+  mutate(reportable = in_range & qc_pass,
+         final_mg_l = if_else(reportable,
+                              (mean_absorbance - a) / b, NA_real_),
+         dilution_factor = final_ml / aliquot_ml,
+         original_mg_l = final_mg_l * dilution_factor,
+         decision = case_when(!qc_pass ~ "Withhold: QC failed",
+                              !in_range ~ "Remeasure: outside range",
+                              TRUE ~ "Report under stated assumptions"))
+knitr::kable(results |> select(preparation_id, sample_id, dilution_factor,
+                              original_mg_l, decision), digits = 3)
+write_csv(results, "output/student-concentrations.csv", na = "NA")
+```
+
+Explain why P04 supports a W2 result whereas P03 does not. Explain why matching
+by row order would fail, and why `NA` is not zero iron. P01 and P02 are separate
+preparations of the same collected sample, not independent water samples.
+
+## P01 uncertainty
+
+```{r uncertainty}
+p01_readings <- readings |> filter(preparation_id == "P01")
+u_p01 <- inverse_calibration(fit, p01_readings$absorbance)
+p01 <- results |> filter(preparation_id == "P01")
+u_original <- sqrt(
+  (p01$dilution_factor * u_p01$u_cal_mg_l)^2 +
+  (p01$original_mg_l * p01$u_final_ml / p01$final_ml)^2 +
+  (p01$original_mg_l * p01$u_aliquot_ml / p01$aliquot_ml)^2)
+knitr::kable(u_p01, digits = 5)
+u_original
+```
+
+P01 gave `r sprintf("%.3f", p01$original_mg_l)` mg Fe/L with a standard
+uncertainty of `r sprintf("%.3f", u_original)` mg Fe/L from the stated model.
+Explain why this is neither a full method uncertainty nor a 95% interval.
+State the helper's assumptions and the omitted sources of uncertainty.
+
+## Transfer and conclusion
+
+Add the new 2.00 mL to 50.00 mL preparation from the lesson and calculate its
+concentration. Conclude with supported results, withheld results, and the next
+analytical action. Retain the simulated-data statement and the limitations.

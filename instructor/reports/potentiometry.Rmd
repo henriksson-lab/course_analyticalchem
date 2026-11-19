@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Electrodes and potentiometry"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-potentiometry.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. The fitted fluoride slope is −59.10 mV/decade; the accepted 121.2 mV sample gives 1.99915e−4 mol/L. The early check error is +0.12 mV and later error +6.02 mV; the later block fails the supplied ±2 mV criterion and its sample estimate is withheld.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+A 17.8 mV decrease gives concentration factor about 2.001. Activity/concentration matching, temperature, junction and interferences matter. This free-ion-responsive procedure does not establish total fluorine across chemical forms.
+
+The complete executable solution is in `R/analyse-potentiometry.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

@@ -1,0 +1,5 @@
+"preparation_id","sample_id","aliquot_ml","final_ml","area","resolved","qc_pass","u_final_concentration_mg_l"
+"C1","drink_A",5,50,604,TRUE,TRUE,0.15
+"C2","drink_B",5,50,1604,TRUE,TRUE,0.4
+"C3","drink_B",2,50,644,TRUE,TRUE,0.16
+"C4","drink_C",5,50,484,FALSE,TRUE,0.12

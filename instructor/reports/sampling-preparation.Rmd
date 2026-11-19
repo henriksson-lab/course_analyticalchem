@@ -1,0 +1,40 @@
+---
+title: "Worked solution: Sampling and preparation"
+output:
+  html_document:
+    toc: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, fig.width=9, fig.height=4.8)
+source("R/analyse-sampling-preparation.R", local=TRUE)
+```
+
+## Chemical interpretation
+
+All inputs are simulated teaching data. Equal-mass strata average to 15.67 mg/kg. Top-only sampling averages about 8 mg/kg despite small within-position scatter. Extracted caffeine is 0.480, 0.490 and 0.750 mg/g for T1a, T1b and T2a. T1a/T1b are preparations of one material. These are extracted amounts, conditional on the supplied concentration and transfer model; total native recovery is not established.
+
+## Derived tables
+
+```{r tables, results='asis'}
+for (name in names(result_tables)) {
+  cat("\n\n### ", gsub("_", " ", name), "\n\n", sep="")
+  print(knitr::kable(result_tables[[name]], digits=5))
+  cat("\n\n")
+}
+```
+
+## Analytical figures
+
+```{r plots}
+for (name in names(plots)) print(plots[[name]])
+```
+
+## Transfer and limits
+
+The new preparation gives 1.50 mg/g. Ideal extraction recoveries are 81.8% for one 10 mL extraction and 90.5% for two 5 mL extractions. A post-extraction spike cannot establish extraction recovery.
+
+The complete executable solution is in `R/analyse-sampling-preparation.R`. The student lesson
+and data dictionary specify the measurand, input units and row meanings. A
+conditional teaching result is not full method validation.

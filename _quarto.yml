@@ -1,0 +1,72 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - demos/index.qmd
+    - reference/*.qmd
+    - lessons/*.qmd
+    - slides/*.qmd
+  resources:
+    - demos/*.html
+    - demos/*.js
+    - demos/*.css
+    - demos/modules/*.js
+    - downloads/*.zip
+    - data/**
+    - course-report.Rmd
+    - report.Rmd
+    - analyticalchem.Rproj
+website:
+  title: "Analytical Chemistry"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Course topics
+      - href: demos/index.qmd
+        text: Interactive demos
+      - href: reference/r.qmd
+        text: R reference
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - section: "Measurement foundations"
+        contents:
+          - href: lessons/sample-answer.qmd
+            text: "From sample to answer"
+          - href: lessons/sampling-preparation.qmd
+            text: "Sampling and preparation"
+          - href: lessons/error-uncertainty.qmd
+            text: "Error and uncertainty"
+          - href: lessons/calibration-qc.qmd
+            text: "Calibration and quality control"
+      - section: "Chemical methods"
+        contents:
+          - href: lessons/titration.qmd
+            text: "Equilibrium and titration"
+          - href: lessons/potentiometry.qmd
+            text: "Electrodes and potentiometry"
+          - href: lessons/uv-visible.qmd
+            text: "UV and visible absorption"
+          - href: lessons/matrix-recovery.qmd
+            text: "Matrix effects and recovery"
+          - href: lessons/atomic-methods.qmd
+            text: "Atomic measurements"
+          - href: lessons/separations.qmd
+            text: "Separation principles"
+          - href: lessons/gc-hplc.qmd
+            text: "GC and HPLC"
+      - section: "Integration"
+        contents:
+          - href: lessons/defending-results.qmd
+            text: "Choosing and defending a result"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+execute:
+  eval: false
